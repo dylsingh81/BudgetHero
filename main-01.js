@@ -11,36 +11,56 @@ window.addEventListener("load", function(event) {
     //// FUNCTIONS ////
   ///////////////////
 
+  
+  var keyDownUp = function(event) {
+
+    controller.keyDownUp(event.type, event.keyCode);
+
+  };
+
+
+  var resize = function(event) {
+
+    display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+    display.render();
+
+  };
+
   var render = function() {
 
-    display.renderColor(game.color);
+    display.fill(game.world.background_color);// Clear background to game's background color.
+    display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, game.world.player.color);
     display.render();
 
   };
 
   var update = function() {
 
+    if (controller.left.active)  { game.world.player.moveLeft();  }
+    if (controller.right.active) { game.world.player.moveRight(); }
+    if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
+
     game.update();
 
   };
 
-    /* The controller handles user input. */
-    var controller = new Controller();
-    /* The display handles window resizing, as well as the on screen canvas. */
-    var display    = new Display(document.querySelector("canvas"));
-    /* The game will eventually hold our game logic. */
-    var game       = new Game();
-    /* The engine is where the above three sections can interact. */
-    //30 FPS 1000/30
-    var engine     = new Engine(1000/30, render, update);
+  var controller = new Controller();
+  var display    = new Display(document.querySelector("canvas"));
+  var game       = new Game();
+  var engine     = new Engine(1000/30, render, update);
 
-    //Intialize event listeners and start engine and display
-    window.addEventListener("resize",  display.handleResize);
-    window.addEventListener("keydown", controller.handleKeyDownUp);
-    window.addEventListener("keyup",   controller.handleKeyDownUp);
+  /* This is very important. The buffer canvas must be pixel for pixel the same
+  size as the world dimensions to properly scale the graphics. All the game knows
+  are player location and world dimensions. We have to tell the display to match them. */
+  display.buffer.canvas.height = game.world.height;
+  display.buffer.canvas.width = game.world.width;
 
-    display.resize();
-    //Exceute render and update 30 times per second
-    engine.start();
+  window.addEventListener("keydown", keyDownUp);
+  window.addEventListener("keyup",   keyDownUp);
+  window.addEventListener("resize",  resize);
+
+  resize();
+
+  engine.start();
 
 });
