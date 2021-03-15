@@ -10,7 +10,7 @@ const Display = function(canvas) {
   this.buffer  = document.createElement("canvas").getContext("2d"),
   this.context = canvas.getContext("2d");
   
-  this.tile_sheet = new Display.TileSheet(16, 17);
+  this.tile_sheet = new Display.TileSheet(16, 12);
 
   /* This function draws the map to the buffer. */
   this.drawMap = function(map, columns) {
