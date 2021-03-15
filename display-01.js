@@ -17,7 +17,9 @@ const Display = function(canvas) {
 
       //Draw background:
       //console.log(this.tile_sheet.bgImg)
-      this.buffer.drawImage(this.tile_sheet.backgroundImage, 0,0, 288, 208,0,0, 288, 208);
+
+      pic = this.tile_sheet.backgroundImage
+      this.buffer.drawImage(pic, 0,0, pic.width, pic.height,0,0, pic.width, pic.height);
 
     for (let index = map.length - 1; index > -1; -- index) {
 
