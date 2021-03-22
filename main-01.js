@@ -66,13 +66,17 @@ window.addEventListener("load", function(event) {
   
   
 
-  display.tile_sheet.image.src = "./maps/final_maps/level1/level1tiles.png";
-  display.tile_sheet.backgroundImage.src = "./maps/final_maps/level1/level1bg.png"
+  //display.tile_sheet.image.src = "./maps/final_maps/level1/level1tiles.png";
+  //display.tile_sheet.backgroundImage.src = "./maps/final_maps/level1/level1bg.png"
   
   //display.tile_sheet.image.src = "./maps/final_maps/binning/bin_tiles.png";
   //display.tile_sheet.backgroundImage.src = "./maps/final_maps/binning/bin_bg.png"
 
+  // display.tile_sheet.image.src = "./maps/final_maps/level2/level2tiles.png";
+  // display.tile_sheet.backgroundImage.src = "./maps/final_maps/level2/level2bg.png"
 
+  display.tile_sheet.image.src = "./maps/final_maps/level3/level3tiles.png";
+  display.tile_sheet.backgroundImage.src = "./maps/final_maps/level3/level3bg.png"
 
 
   window.addEventListener("keydown", keyDownUp);
