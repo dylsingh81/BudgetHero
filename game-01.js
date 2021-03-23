@@ -1,17 +1,16 @@
-// Frank Poth 03/23/2018
+// Frank Poth 03/28/2018
 
-/* I moved the world object into its own class and I made the Player class a class
-inside of Game.World. I am doing this in order to compartmentalize my objects more
-accurately. The Player class will never be used outside of the World class, and the
-World class will never be used outside of the Game class, therefore the classes will
-be nested: Game -> Game.World -> Game.World.Player */
+/* In part 4 I added collision detection and response for the tile map. I also
+fixed the tile map offset from part 3, where every graphical value was offset by
+1 due to the export format of the tile map editor I used. I added the collision_map
+and the collider object to handle collision. I also added a superclass called Object
+that all other game objects will extend. It has a bunch of methods for working with
+object position. */
 
 const Game = function() {
 
-  /* The world object is now its own class. */
-  this.world = new Game.World();
+  this.world = new Game.World();// All the changes are in the world class.
 
-  /* The Game.update function works the same as in part 2. */
   this.update = function() {
 
     this.world.update();
@@ -22,121 +21,127 @@ const Game = function() {
 
 Game.prototype = { constructor : Game };
 
-/* The world is now its own class. */
-Game.World = function(friction = 0.9, gravity = 2) {
+Game.World = function(friction = 0.9, gravity = 3) {
+
+  this.collider = new Game.World.Collider();// Here's the new collider class.
 
   this.friction = friction;
   this.gravity  = gravity;
 
-  /* Player is now its own class inside of the Game.World object. */
   this.player   = new Game.World.Player();
 
-  /* Here is the map data. Later on I will load it from a json file, but for now
-  I will just hardcode it here. */
   this.columns   = 28;
   this.rows      = 16;
   //this.rows      = 18;
   this.tile_size = 16;
 
-  
+  /* This map stays the same. It is the graphical map. It only places graphics and
+  has nothing to do with collision. */
   this.map = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5866,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5188,5866,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5188,5866,5866,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6019,5189,5188,5866,5866,5866,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6103,5188,5866,5866,5866,5866,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6272,6611,6612,6613,6613,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
--1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2793,2794,2795,2796,2797,
-2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2877,2878,2879,2880,2881]  
-  
-  /*
-  this.map = [9,1,0,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,64,64,64,64,64,64,64,64,64,64,64,64,64,64,75,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,12,
-    9,64,64,64,64,64,64,64,64,64,64,64,64,64,64,48,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
-    30,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,48,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,12,
-    29,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,75,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,21,
-    29,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,30,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    19,18,19,19,19,3,19,19,19,19,3,19,19,19,19,3,19,19,19,19,3,19,19,19,19,3,19,30,
-    10,9,10,10,10,30,10,10,10,10,30,10,10,10,10,30,10,10,10,10,30,10,10,10,10,30,10,30];
-    */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5866,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5188,5866,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5852,5189,5188,5866,5866,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6019,5189,5188,5866,5866,5866,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6103,5188,5866,5866,5866,5866,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6272,6611,6612,6613,6613,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2792,2793,2794,2795,2796,2797,
+    2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2876,2877,2878,2879,2880,2881,];
 
-   /*   
-  this.map = [6618,6619,6620,6621,6610,6611,6612,6613,6614,6615,6616,6617,6618,6619,6620,6621,6610,6611,6612,6613,6614,6615,6616,6617,6618,6619,6620,6621,
-    6698,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5853,6611,6612,6613,6614,
-    4998,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3920,4268,4269,4268,4269,
-    5082,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    4998,-1,-1,5183,5184,5185,5186,5187,5188,5189,5190,5191,5192,5193,5191,5192,5193,5193,5185,5186,5093,5094,-1,-1,-1,6023,5939,-1,
-    5082,-1,-1,5079,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3847,3512,3513,3512,3513,3512,
-    4998,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5082,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    5182,5183,5184,5185,5186,5187,5188,5189,5190,5191,5192,5193,5193,5185,5186,5187,5188,5189,5190,5191,5192,5193,5193,6191,6107,6023,5939,5855,
-    5266,5267,5268,5269,5270,5271,5272,5273,5274,5275,5276,5277,5277,5269,5270,5271,5272,5273,5274,5275,5276,5277,5277,6192,6108,6024,5940,6933,
-    5277,5276,5275,5274,5273,5272,5271,5270,5269,5268,5267,5277,5276,5275,5274,5273,5272,5271,5270,5269,5268,5267,5266,-1,-1,-1,-1,-1,
-    5193,5192,5191,5190,5189,5188,5187,5186,5185,5184,5183,5193,5192,5191,5190,5189,5188,5187,5186,5185,5184,5183,5182,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6191,6107,6023,5939,5855,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6108,6024,5940,6933,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,6191,6192,6276,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,6275,6191,6107,6023,5939,5855,-1,-1,-1,6275,6191,6107,6023,5939,5855,6275,6276,-1,-1,-1,-1,
-    5188,5189,5190,5191,5867,5868,-1,6970,6192,6108,6024,5940,6933,5772,-1,-1,6970,6192,6108,6024,5940,6933,-1,-1,-1,-1,-1,-1,
-    5272,5273,5274,5275,5275,5952,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829];
-    */
+  /* These collision values correspond to collision functions in the Collider class.
+  00 is nothing. everything else is run through a switch statement and routed to the
+  appropriate collision functions. These particular values aren't arbitrary. Their binary
+  representation can be used to describe which sides of the tile have boundaries.
 
-   /*
-  this.map = [3848,3849,3850,3851,3848,3849,3850,3851,3851,3848,3849,3850,3851,3848,3849,3850,3851,3848,3849,3850,3851,3848,3849,5634,6566,6567,6566,6566,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5888,6566,6567,6568,6566,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,5802,6650,6651,6652,6650,
-    3764,3765,3766,3767,3768,-1,-1,3519,-1,-1,-1,-1,-1,-1,-1,3687,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3848,3849,3850,3851,3852,-1,-1,3603,-1,-1,-1,-1,-1,-1,-1,3771,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,3687,-1,-1,-1,-1,-1,-1,-1,3855,-1,-1,3763,3764,3765,3766,3767,3768,5144,5145,5146,5147,
-    -1,-1,-1,-1,-1,-1,-1,3771,-1,3500,3501,3502,3503,3504,-1,3435,-1,-1,3847,3848,3849,3850,3851,3852,-1,-1,-1,-1,
-    3765,3766,3767,3768,-1,-1,-1,3855,-1,3584,3585,3586,3587,3588,-1,3519,-1,-1,-1,3585,3586,3587,-1,-1,-1,-1,-1,-1,
-    3849,3850,3851,3852,-1,-1,-1,3435,-1,3668,3669,3670,3671,3672,-1,3435,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,3519,-1,3752,3753,3754,3755,3756,-1,3519,-1,-1,3752,3753,3754,-1,3755,3756,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,3603,-1,3836,3837,3838,3839,3840,-1,3603,-1,-1,3836,3837,3838,-1,3839,3840,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,3687,-1,3920,3921,3922,3923,3924,-1,3687,-1,-1,3920,3921,3922,-1,3923,3924,-1,-1,-1,-1,
-    -1,-1,3765,3766,3767,3768,-1,3603,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    3849,3850,3849,3850,3851,3852,-1,3687,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,3771,-1,-1,-1,2831,2832,2831,2832,2831,2832,2831,2832,-1,-1,2831,2832,2831,2832,2831,2832,-1,
-    -1,-1,-1,-1,-1,-1,-1,3855,2831,2832,3512,2916,2921,2922,2916,2924,2925,2915,2916,2831,2832,2915,2916,2915,2916,2915,2831,2832,
-    2830,2831,2832,2833,2834,2835,2836,2837,2915,2916,2920,2921,2922,2916,2924,2916,2921,2922,2923,2916,2920,2920,2920,2921,2922,2923,2924,2916,
-    2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2920,2921,2916,2923,2924,2925,2920,2920,2920,2916,2921,2922,2920,2916,2916,2916,2924,2925];
-    */
+  0000 = 0  tile 0:    0    tile 1:   1     tile 2:    0    tile 15:    1
+  0001 = 1           0   0          0   0            0   1            1   1
+  0010 = 2             0              0                0                1
+  1111 = 15        No walls     Wall on top      Wall on Right      four walls
 
+  This binary representation can be used to describe which sides of a tile are boundaries.
+  Each bit represents a side: 0 0 0 0 = l b r t (left bottom right top). Keep in mind
+  that this is just one way to look at it. You could assign your collision values
+  any way you want. This is just the way I chose to keep track of which values represent
+  which tiles. I haven't tested this representation approach with more advanced shapes. */
 
+  this.collision_map = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,];
 
-    
-  /* Height and Width now depend on the map size. */
   this.height   = this.tile_size * this.rows;
   this.width    = this.tile_size * this.columns;
 
 };
 
-/* Now that world is a class, I moved its more generic functions into its prototype. */
 Game.World.prototype = {
 
   constructor: Game.World,
 
-  collideObject:function(object) {// Same as in part 2.
+  /* This function has been hugely modified. */
+  collideObject:function(object) {
 
-    if (object.x < 0) { object.x = 0; object.velocity_x = 0; }
-    else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocity_x = 0; }
-    if (object.y < 0) { object.y = 0; object.velocity_y = 0; }
-    else if (object.y + object.height > this.height) { object.jumping = false; object.y = this.height - object.height; object.velocity_y = 0; }
+    /* Let's make sure we can't leave the world boundaries. */
+    if      (object.getLeft()   < 0          ) { object.setLeft(0);             object.velocity_x = 0; }
+    else if (object.getRight()  > this.width ) { object.setRight(this.width);   object.velocity_x = 0; }
+    if      (object.getTop()    < 0          ) { object.setTop(0);              object.velocity_y = 0; }
+    else if (object.getBottom() > this.height) { object.setBottom(this.height); object.velocity_y = 0; object.jumping = false; }
+
+    /* Now let's collide with some tiles!!! The side values refer to the tile grid
+    row and column spaces that the object is occupying on each of its sides. For
+    instance bottom refers to the row in the collision map that the bottom of the
+    object occupies. Right refers to the column in the collision map occupied by
+    the right side of the object. Value refers to the value of a collision tile in
+    the map under the specified row and column occupied by the object. */
+    var bottom, left, right, top, value;
+
+    /* First we test the top left corner of the object. We get the row and column
+    he occupies in the collision map, then we get the value from the collision map
+    at that row and column. In this case the row is top and the column is left. Then
+    we hand the information to the collider's collide function. */
+    top    = Math.floor(object.getTop()    / this.tile_size);
+    left   = Math.floor(object.getLeft()   / this.tile_size);
+    value  = this.collision_map[top * this.columns + left];
+    this.collider.collide(value, object, left * this.tile_size, top * this.tile_size, this.tile_size);
+
+    /* We must redifine top since the last collision check because the object may
+    have moved since the last collision check. Also, the reason I check the top corners
+    first is because if the object is moved down while checking the top, he will be
+    moved back up when checking the bottom, and it is better to look like he is standing
+    on the ground than being pushed down through the ground by the cieling. */
+    top    = Math.floor(object.getTop()    / this.tile_size);
+    right  = Math.floor(object.getRight()  / this.tile_size);
+    value  = this.collision_map[top * this.columns + right];
+    this.collider.collide(value, object, right * this.tile_size, top * this.tile_size, this.tile_size);
+
+    bottom = Math.floor(object.getBottom() / this.tile_size);
+    left   = Math.floor(object.getLeft()   / this.tile_size);
+    value  = this.collision_map[bottom * this.columns + left];
+    this.collider.collide(value, object, left * this.tile_size, bottom * this.tile_size, this.tile_size);
+
+
+    bottom = Math.floor(object.getBottom() / this.tile_size);
+    right  = Math.floor(object.getRight()  / this.tile_size);
+    value  = this.collision_map[bottom * this.columns + right];
+    this.collider.collide(value, object, right * this.tile_size, bottom * this.tile_size, this.tile_size);
 
   },
 
@@ -154,25 +159,172 @@ Game.World.prototype = {
 
 };
 
-/* The player is also its own class now. Since player only appears in the context
-of Game.World, that is where it is defined. */
+Game.World.Collider = function() {
+
+  /* This is the function routing method. Basically, you know what the tile looks like
+  from its value. You know which object you want to collide with, and you know the
+  x and y position of the tile as well as its dimensions. This function just decides
+  which collision functions to use based on the value and allows you to tweak the
+  other values to fit the specific tile shape. */
+  this.collide = function(value, object, tile_x, tile_y, tile_size) {
+
+    switch(value) { // which value does our tile have?
+
+      /* All 15 tile types can be described with only 4 collision methods. These
+      methods are mixed and matched for each unique tile. */
+
+      case  1: this.collidePlatformTop      (object, tile_y            ); break;
+      case  2: this.collidePlatformRight    (object, tile_x + tile_size); break;
+      case  3: if (this.collidePlatformTop  (object, tile_y            )) return;// If there's a collision, we don't need to check for anything else.
+               this.collidePlatformRight    (object, tile_x + tile_size); break;
+      case  4: this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case  5: if (this.collidePlatformTop  (object, tile_y            )) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case  6: if (this.collidePlatformRight(object, tile_x + tile_size)) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case  7: if (this.collidePlatformTop  (object, tile_y            )) return;
+               if (this.collidePlatformRight(object, tile_x + tile_size)) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case  8: this.collidePlatformLeft     (object, tile_x            ); break;
+      case  9: if (this.collidePlatformTop  (object, tile_y            )) return;
+               this.collidePlatformLeft     (object, tile_x            ); break;
+      case 10: if (this.collidePlatformLeft (object, tile_x            )) return;
+               this.collidePlatformRight    (object, tile_x + tile_size); break;
+      case 11: if (this.collidePlatformTop  (object, tile_y            )) return;
+               if (this.collidePlatformLeft (object, tile_x            )) return;
+               this.collidePlatformRight    (object, tile_x + tile_size); break;
+      case 12: if (this.collidePlatformLeft (object, tile_x            )) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case 13: if (this.collidePlatformTop  (object, tile_y            )) return;
+               if (this.collidePlatformLeft (object, tile_x            )) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case 14: if (this.collidePlatformLeft (object, tile_x            )) return;
+               if (this.collidePlatformRight(object, tile_x            )) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+      case 15: if (this.collidePlatformTop  (object, tile_y            )) return;
+               if (this.collidePlatformLeft (object, tile_x            )) return;
+               if (this.collidePlatformRight(object, tile_x + tile_size)) return;
+               this.collidePlatformBottom   (object, tile_y + tile_size); break;
+
+    }
+
+  }
+
+};
+
+/* Here's where all of the collision functions live. */
+Game.World.Collider.prototype = {
+
+  constructor: Game.World.Collider,
+
+  /* This will resolve a collision (if any) between an object and the y location of
+  some tile's bottom. All of these functions are pretty much the same, just adjusted
+  for different sides of a tile and different trajectories of the object. */
+  collidePlatformBottom:function(object, tile_bottom) {
+
+    /* If the top of the object is above the bottom of the tile and on the previous
+    frame the top of the object was below the bottom of the tile, we have entered into
+    this tile. Pretty simple stuff. */
+    if (object.getTop() < tile_bottom && object.getOldTop() >= tile_bottom) {
+
+      object.setTop(tile_bottom);// Move the top of the object to the bottom of the tile.
+      object.velocity_y = 0;     // Stop moving in that direction.
+      return true;               // Return true because there was a collision.
+
+    } return false;              // Return false if there was no collision.
+
+  },
+
+  collidePlatformLeft:function(object, tile_left) {
+
+    if (object.getRight() > tile_left && object.getOldRight() <= tile_left) {
+
+      object.setRight(tile_left - 0.01);// -0.01 is to fix a small problem with rounding
+      object.velocity_x = 0;
+      return true;
+
+    } return false;
+
+  },
+
+  collidePlatformRight:function(object, tile_right) {
+
+    if (object.getLeft() < tile_right && object.getOldLeft() >= tile_right) {
+
+      object.setLeft(tile_right);
+      object.velocity_x = 0;
+      return true;
+
+    } return false;
+
+  },
+
+  collidePlatformTop:function(object, tile_top) {
+
+    if (object.getBottom() > tile_top && object.getOldBottom() <= tile_top) {
+
+      object.setBottom(tile_top - 0.01);
+      object.velocity_y = 0;
+      object.jumping    = false;
+      return true;
+
+    } return false;
+
+  }
+
+ };
+
+/* The object class is just a basic rectangle with a bunch of prototype functions
+to help us work with positioning this rectangle. */
+Game.World.Object = function(x, y, width, height) {
+
+ this.height = height;
+ this.width  = width;
+ this.x      = x;
+ this.x_old  = x;
+ this.y      = y;
+ this.y_old  = y;
+
+};
+
+Game.World.Object.prototype = {
+
+  constructor:Game.World.Object,
+
+  /* These functions are used to get and set the different side positions of the object. */
+  getBottom:   function()  { return this.y     + this.height; },
+  getLeft:     function()  { return this.x;                   },
+  getRight:    function()  { return this.x     + this.width;  },
+  getTop:      function()  { return this.y;                   },
+  getOldBottom:function()  { return this.y_old + this.height; },
+  getOldLeft:  function()  { return this.x_old;               },
+  getOldRight: function()  { return this.x_old + this.width;  },
+  getOldTop:   function()  { return this.y_old                },
+  setBottom:   function(y) { this.y     = y    - this.height; },
+  setLeft:     function(x) { this.x     = x;                  },
+  setRight:    function(x) { this.x     = x    - this.width;  },
+  setTop:      function(y) { this.y     = y;                  },
+  setOldBottom:function(y) { this.y_old = y    - this.height; },
+  setOldLeft:  function(x) { this.x_old = x;                  },
+  setOldRight: function(x) { this.x_old = x    - this.width;  },
+  setOldTop:   function(y) { this.y_old = y;                  }
+
+};
+
 Game.World.Player = function(x, y) {
+
+  Game.World.Object.call(this, 100, 100, 12, 12);
 
   this.color1     = "#404040";
   this.color2     = "#f0f0f0";
-  this.height     = 12;
+
   this.jumping    = true;
   this.velocity_x = 0;
   this.velocity_y = 0;
-  this.width      = 12;
-  this.x          = 100;
-  this.y          = 50;
 
 };
 
 Game.World.Player.prototype = {
-
-  constructor : Game.World.Player,
 
   jump:function() {
 
@@ -190,9 +342,14 @@ Game.World.Player.prototype = {
 
   update:function() {
 
-    this.x += this.velocity_x;
-    this.y += this.velocity_y;
+    this.x_old = this.x;
+    this.y_old = this.y;
+    this.x    += this.velocity_x;
+    this.y    += this.velocity_y;
 
   }
 
 };
+
+Object.assign(Game.World.Player.prototype, Game.World.Object.prototype);
+Game.World.Player.prototype.constructor = Game.World.Player;
