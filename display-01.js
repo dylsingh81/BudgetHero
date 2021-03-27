@@ -11,8 +11,8 @@ const Display = function(canvas) {
   this.buffer  = document.createElement("canvas").getContext("2d"),
   this.context = canvas.getContext("2d");
 
-  //this.tile_sheet = new Display.TileSheet(16, 8);
-  this.tile_sheet = new Display.TileSheet(16, 84);
+  this.tile_sheet = new Display.TileSheet(16, 9);
+  //this.tile_sheet = new Display.TileSheet(16, 84);
 
   /* This function draws the map to the buffer. */
   this.drawMap = function(map, columns) {
@@ -20,6 +20,12 @@ const Display = function(canvas) {
     //Draw background of the level
     pic = this.tile_sheet.backgroundImage
     this.buffer.drawImage(pic, 0,0, pic.width, pic.height,0,0, pic.width, pic.height);
+    /*
+    this.buffer.fillStyle = "black"
+    this.buffer.font = "12px Arial bolder";
+    this.buffer.fillText("x0", 160, 95);
+    */
+    
 
     for (let index = map.length - 1; index > -1; -- index) {
 
