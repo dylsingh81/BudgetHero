@@ -14,6 +14,12 @@ window.addEventListener("load", function(event) {
 
   };
 
+  var keyPress = function(event) {
+
+    controller.keyPress(event.type, event.keyCode);
+
+  };
+
   var resize = function(event) {
 
     display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
@@ -23,7 +29,7 @@ window.addEventListener("load", function(event) {
 
   var render = function() {
 
-    display.drawMap(game.world.map, game.world.columns);
+    display.drawMap(game.world.map, game.world.columns, game.world.isBinning, game.world.coin_bins, game.world.coins_map);
     display.drawPlayer(game.world.player, game.world.player.color1, game.world.player.color2);
     display.render();
 
@@ -34,6 +40,8 @@ window.addEventListener("load", function(event) {
     if (controller.left.active)  { game.world.player.moveLeft();  }
     if (controller.right.active) { game.world.player.moveRight(); }
     if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
+    
+    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false; }
 
     game.update();
 
@@ -81,6 +89,7 @@ window.addEventListener("load", function(event) {
 
   window.addEventListener("keydown", keyDownUp);
   window.addEventListener("keyup",   keyDownUp);
+  window.addEventListener("keypress",   keyPress);
   window.addEventListener("resize",  resize);
 
 });

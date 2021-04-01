@@ -15,16 +15,27 @@ const Display = function(canvas) {
   //this.tile_sheet = new Display.TileSheet(16, 84);
 
   /* This function draws the map to the buffer. */
-  this.drawMap = function(map, columns) {
+  this.drawMap = function(map, columns, isBinning, coin_bins, coins_map) {
 
-    //Draw background of the level
+    //Draw backdrop for level
     pic = this.tile_sheet.backgroundImage
     this.buffer.drawImage(pic, 0,0, pic.width, pic.height,0,0, pic.width, pic.height);
-    /*
-    this.buffer.fillStyle = "black"
-    this.buffer.font = "12px Arial bolder";
-    this.buffer.fillText("x0", 160, 95);
-    */
+    
+    if(isBinning){
+      let j = 0
+      for (let index = 0; index < coins_map.length; index++) {
+        let value = coins_map[index]
+        
+        if(value == 505)
+        {
+          let x_text =           (index % columns) * this.tile_sheet.tile_size;
+          let y_text = Math.floor(index / columns) * this.tile_sheet.tile_size;
+          let s = "x" + coin_bins[j]
+          j++
+          texter(s, x_text+2, y_text-1, this.buffer)
+        }
+      }
+    }
     
 
     for (let index = map.length - 1; index > -1; -- index) {
@@ -88,3 +99,20 @@ Display.TileSheet = function(tile_size, columns) {
 };
 
 Display.TileSheet.prototype = {};
+
+
+function texter(str, x, y, ctx){
+  for(var i = 0; i <= str.length; ++i){
+      var ch = str.charAt(i);
+      if(i == 0){
+        ctx.fillStyle = "black"
+        ctx.font = 'bolder 10px sans-serif';
+      }
+      else{
+        ctx.fillStyle = "black"
+        ctx.font = 'bolder 12px sans-serif';
+      }
+      ctx.fillText(ch, x, y);
+      x += ctx.measureText(ch).width;
+  }
+}

@@ -6,6 +6,7 @@ const Controller = function() {
   this.left  = new Controller.ButtonInput();
   this.right = new Controller.ButtonInput();
   this.up    = new Controller.ButtonInput();
+  this.deposit = false
 
   this.keyDownUp = function(type, key_code) {
 
@@ -16,11 +17,20 @@ const Controller = function() {
       case 37: this.left.getInput(down);  break;
       case 38: this.up.getInput(down);    break;
       case 39: this.right.getInput(down);
-
     }
 
   };
 
+  this.spacePressed = function(){
+    this.deposit = true
+  }
+
+  this.keyPress = function(type, key_code) {
+    switch(key_code) {
+      case 32: this.spacePressed();
+    }
+
+  };
 };
 
 Controller.prototype = {
@@ -47,3 +57,4 @@ Controller.ButtonInput.prototype = {
   }
 
 };
+
