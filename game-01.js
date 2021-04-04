@@ -1,17 +1,31 @@
-// Frank Poth 03/28/2018
+// Frank Poth 04/03/2018
 
-/* In part 4 I added collision detection and response for the tile map. I also
-fixed the tile map offset from part 3, where every graphical value was offset by
-1 due to the export format of the tile map editor I used. I added the collision_map
-and the collider object to handle collision. I also added a superclass called Object
-that all other game objects will extend. It has a bunch of methods for working with
-object position. */
+/* Changes since part 4:
+1. Added the Game.World.TileSet & Game.World.TileSet.Frame classes.
+2. Added the Game.World.Object.Animator class.
+3. Updated the Player object to include frame sets for his animations.
+   Updated the Player to update position and animation separately.
+4. Removed tile_size from the world object and only use tile_size from the tile_set object.
+5. Moved Game.World.Player to Game.World.Object.Player.
+6. Changed Game.World.prototype.update to better handle player animation updates.
+
+I'm starting to realize that perhaps the nesting constructor naming convension is
+getting out of hand. Game.World.Object.Animator is a very long and confusing constructor.
+I may just move everything under Game so everything is still namespaced, but things won't
+have super long ridiculous constructors. However, the long constructor is still useful
+to determine where a class is pertinent and what it's purpose is. Still, it feels very
+clunky, and I will probably change it soon. */
+
+/* 04/11/2018 I noticed a problem with tunneling in the lower right nook of the T
+on the floor of the level. If you run into from the right and jump up, the player
+seemingly moves through the wall. This is not a problem with tile collision, but rather,
+tunneling. His jump velocity moves him upwards more than one full tile space. */
 
 const Game = function() {
 
-  this.world = new Game.World();// All the changes are in the world class.
+  this.world    = new Game.World();
 
-  this.update = function() {
+  this.update   = function() {
 
     this.world.update();
 
@@ -19,24 +33,30 @@ const Game = function() {
 
 };
 
-Game.prototype = { constructor : Game };
+Game.prototype = {
 
-Game.World = function(friction = 0.9, gravity = 2.52) {
+  constructor : Game,
 
-  this.collider = new Game.World.Collider();// Here's the new collider class.
+};
+
+Game.World = function(friction = 0.8, gravity = 1.5) {
+
+  this.collider = new Game.World.Collider();
 
   this.friction = friction;
   this.gravity  = gravity;
 
-  this.player   = new Game.World.Player();
-
   this.columns   = 28;
-  //this.rows      = 16;
+    //this.rows      = 16;
   this.rows      = 18;
-  this.tile_size = 16;
+  //this.tile_size = 16;
 
-  /* This map stays the same. It is the graphical map. It only places graphics and
-  has nothing to do with collision. */
+  /* Here's where I define the new TileSet class. I give it complete control over
+  tile_size because there should only be one source for tile_size for both drawing
+  and collision as this game won't use scaling on individual objects. */
+  this.tile_set = new Game.World.TileSet(9, 16);
+  this.player   = new Game.World.Object.Player(100, 100);// The player in its new "namespace".
+
   this.map = [9,1,0,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,3,
     9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
     9,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,3,
@@ -55,23 +75,6 @@ Game.World = function(friction = 0.9, gravity = 2.52) {
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     19,18,20,19,19,18,20,19,19,19,19,30,19,19,19,19,30,19,19,19,19,18,20,19,19,18,20,19,
     10,9,11,10,10,9,11,10,10,10,10,30,10,10,10,10,30,10,10,10,10,9,11,10,10,9,11,10,]
-
-
-    /* These collision values correspond to collision functions in the Collider class.
-  00 is nothing. everything else is run through a switch statement and routed to the
-  appropriate collision functions. These particular values aren't arbitrary. Their binary
-  representation can be used to describe which sides of the tile have boundaries.
-
-  0000 = 0  tile 0:    0    tile 1:   1     tile 2:    0    tile 15:    1
-  0001 = 1           0   0          0   0            0   1            1   1
-  0010 = 2             0              0                0                1
-  1111 = 15        No walls     Wall on top      Wall on Right      four walls
-
-  This binary representation can be used to describe which sides of a tile are boundaries.
-  Each bit represents a side: 0 0 0 0 = l b r t (left bottom right top). Keep in mind
-  that this is just one way to look at it. You could assign your collision values
-  any way you want. This is just the way I chose to keep track of which values represent
-  which tiles. I haven't tested this representation approach with more advanced shapes. */
 
   this.collision_map = [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,
     15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,
@@ -92,150 +95,138 @@ Game.World = function(friction = 0.9, gravity = 2.52) {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,];
 
-  this.height   = this.tile_size * this.rows;
-  this.width    = this.tile_size * this.columns;
+  this.height   = this.tile_set.tile_size * this.rows;   // these changed to use tile_set.tile_size
+  this.width    = this.tile_set.tile_size * this.columns;// I got rid of this.tile_size in Game.
   
+  //Map of where to print coin text information
   this.coins_map = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,505,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,505,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-  -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,]  
-
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,505,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,505,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,-1,-1,-1,-1,-1,-1,505,-1,-1,-1,-1,505,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,]  
+  
+  //Map of where the bins are mapped to space
   this.bins_map = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,-1,
     -1,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,1,1,1,1,1,1,1,1,1,1,-1,
+    -1,2,2,2,2,2,-1,3,3,3,3,3,-1,-1,-1,-1,-1,4,4,4,4,4,4,4,4,4,4,-1,
     -1,2,2,2,2,2,-1,3,3,3,3,3,-1,-1,-1,-1,4,4,4,4,4,4,4,4,4,4,4,-1,
     -1,2,2,2,2,2,-1,3,3,3,3,3,-1,-1,-1,-1,4,4,4,4,4,4,4,4,4,4,4,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+    -1,5,5,5,5,5,5,5,5,6,6,6,-1,-1,-1,-1,-1,7,7,8,8,8,8,8,8,8,8,-1,
     -1,5,5,5,5,5,5,5,5,6,6,6,-1,-1,-1,-1,7,7,7,8,8,8,8,8,8,8,8,-1,
     -1,5,5,5,5,5,5,5,5,6,6,6,-1,-1,-1,-1,7,7,7,8,8,8,8,8,8,8,8,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,9,9,9,9,9,9,10,10,10,10,10,-1,-1,-1,-1,-1,11,11,11,11,11,12,12,12,12,12,-1,
     -1,9,9,9,9,9,9,10,10,10,10,10,-1,-1,-1,-1,-1,11,11,11,11,11,12,12,12,12,12,-1,
+    -1,9,9,9,9,9,9,10,10,10,10,10,-1,-1,-1,-1,-1,11,11,11,11,11,12,12,12,12,12,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,]    
-
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]    
   
-  this.num_coins = 10
-  this.isBinning = true
-  //14 Bins
-  this.coin_bins = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-  
-  tile_sheet_tilesize = 16
-  this.bins_grouping = []
-  for (let index = 0; index < this.coin_bins.length; index++) {
-      binFirstIndex = this.bins_map.indexOf(index)
-      binLastIndex = this.bins_map.lastIndexOf(index)
-
-      pixelX1 = (binFirstIndex % this.columns) * tile_sheet_tilesize
-      pixelX2 = (binLastIndex % this.columns) * tile_sheet_tilesize
-      pixelY1 = Math.floor(binFirstIndex / this.columns) * tile_sheet_tilesize
-      pixelY2 = Math.floor(binLastIndex / this.columns) * tile_sheet_tilesize 
-      //console.log(index, binFirstIndex, binLastIndex, pixelX1, pixelX2, pixelY1, pixelY2)
-      this.bins_grouping.push([pixelX1, pixelX2, pixelY1, pixelY2])
-  }
-
-
-  this.getCoinBin = function(x, y){
-    for (let i = 0; i < this.bins_grouping.length; i++) {
-      bin = this.bins_grouping[i]
-      if(x > bin[0] && x < bin[1] && y > bin[2] && y < bin[3])
-        return i
-    }
-    return -1
-  }
-
-  this.deposit = function(playerX, playerY){
     
-    console.log(playerX)
-    console.log(playerY)
-    console.log(this.bins_grouping)
-    binNum = this.getCoinBin(playerX, playerY)
-    console.log(binNum)
-    this.coin_bins[binNum] += 1
-  }
+    this.num_coins = 10
+    //13 Bins
+    this.coin_bins = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    
+    tile_sheet_tilesize = 16
+    this.bins_grouping = []
+    //Create coin bins
+    for (let index = 0; index < this.coin_bins.length; index++) {
+        binFirstIndex = this.bins_map.indexOf(index)
+        binLastIndex = this.bins_map.lastIndexOf(index)
+  
+        pixelX1 = (binFirstIndex % this.columns) * tile_sheet_tilesize
+        pixelX2 = (binLastIndex % this.columns) * tile_sheet_tilesize
+        pixelY1 = Math.floor(binFirstIndex / this.columns) * tile_sheet_tilesize
+        pixelY2 = Math.floor(binLastIndex / this.columns) * tile_sheet_tilesize 
+        //console.log(index, binFirstIndex, binLastIndex, pixelX1, pixelX2, pixelY1, pixelY2)
+        this.bins_grouping.push([pixelX1, pixelX2, pixelY1, pixelY2])
+    }
+    //Gets bin index given x and y
+    this.getCoinBin = function(x, y){
+      for (let i = 0; i < this.bins_grouping.length; i++) {
+        bin = this.bins_grouping[i]
+        if(x > bin[0] && x < bin[1] && y > bin[2] && y < bin[3])
+          return i
+      }
+      return -1
+    }
+    //Deposits coin into respective bin
+    this.deposit = function(playerX, playerY){
+      
+      console.log(playerX)
+      console.log(playerY)
+      console.log(this.bins_grouping)
+      binNum = this.getCoinBin(playerX, playerY)
+      console.log(binNum)
+      this.coin_bins[binNum] += 1
+    }
+
+
+    //Tile size of sprite sheet
+    this.sprite_tile_size = 32
+
 };
 
 Game.World.prototype = {
 
   constructor: Game.World,
 
-  /* This function has been hugely modified. */
   collideObject:function(object) {
 
-    /* Let's make sure we can't leave the world boundaries. */
     if      (object.getLeft()   < 0          ) { object.setLeft(0);             object.velocity_x = 0; }
     else if (object.getRight()  > this.width ) { object.setRight(this.width);   object.velocity_x = 0; }
     if      (object.getTop()    < 0          ) { object.setTop(0);              object.velocity_y = 0; }
     else if (object.getBottom() > this.height) { object.setBottom(this.height); object.velocity_y = 0; object.jumping = false; }
 
-    /* Now let's collide with some tiles!!! The side values refer to the tile grid
-    row and column spaces that the object is occupying on each of its sides. For
-    instance bottom refers to the row in the collision map that the bottom of the
-    object occupies. Right refers to the column in the collision map occupied by
-    the right side of the object. Value refers to the value of a collision tile in
-    the map under the specified row and column occupied by the object. */
     var bottom, left, right, top, value;
 
-    /* First we test the top left corner of the object. We get the row and column
-    he occupies in the collision map, then we get the value from the collision map
-    at that row and column. In this case the row is top and the column is left. Then
-    we hand the information to the collider's collide function. */
-    top    = Math.floor(object.getTop()    / this.tile_size);
-    left   = Math.floor(object.getLeft()   / this.tile_size);
+    top    = Math.floor(object.getTop()    / this.tile_set.tile_size);
+    left   = Math.floor(object.getLeft()   / this.tile_set.tile_size);
     value  = this.collision_map[top * this.columns + left];
-    this.collider.collide(value, object, left * this.tile_size, top * this.tile_size, this.tile_size);
+    this.collider.collide(value, object, left * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size);
 
-    /* We must redifine top since the last collision check because the object may
-    have moved since the last collision check. Also, the reason I check the top corners
-    first is because if the object is moved down while checking the top, he will be
-    moved back up when checking the bottom, and it is better to look like he is standing
-    on the ground than being pushed down through the ground by the cieling. */
-    top    = Math.floor(object.getTop()    / this.tile_size);
-    right  = Math.floor(object.getRight()  / this.tile_size);
+    top    = Math.floor(object.getTop()    / this.tile_set.tile_size);
+    right  = Math.floor(object.getRight()  / this.tile_set.tile_size);
     value  = this.collision_map[top * this.columns + right];
-    this.collider.collide(value, object, right * this.tile_size, top * this.tile_size, this.tile_size);
+    this.collider.collide(value, object, right * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size);
 
-    bottom = Math.floor(object.getBottom() / this.tile_size);
-    left   = Math.floor(object.getLeft()   / this.tile_size);
+    bottom = Math.floor(object.getBottom() / this.tile_set.tile_size);
+    left   = Math.floor(object.getLeft()   / this.tile_set.tile_size);
     value  = this.collision_map[bottom * this.columns + left];
-    this.collider.collide(value, object, left * this.tile_size, bottom * this.tile_size, this.tile_size);
+    this.collider.collide(value, object, left * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size);
 
-
-    bottom = Math.floor(object.getBottom() / this.tile_size);
-    right  = Math.floor(object.getRight()  / this.tile_size);
+    bottom = Math.floor(object.getBottom() / this.tile_set.tile_size);
+    right  = Math.floor(object.getRight()  / this.tile_set.tile_size);
     value  = this.collision_map[bottom * this.columns + right];
-    this.collider.collide(value, object, right * this.tile_size, bottom * this.tile_size, this.tile_size);
+    this.collider.collide(value, object, right * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size);
 
   },
 
+  /* This function changed to update the player's position and then do collision,
+  and then update the animation based on the player's final condition. */
   update:function() {
 
-    this.player.velocity_y += this.gravity;
-    this.player.update();
-
-    this.player.velocity_x *= this.friction;
-    this.player.velocity_y *= this.friction;
+    this.player.updatePosition(this.gravity, this.friction);
 
     this.collideObject(this.player);
+
+    this.player.updateAnimation();
 
   }
 
@@ -243,17 +234,9 @@ Game.World.prototype = {
 
 Game.World.Collider = function() {
 
-  /* This is the function routing method. Basically, you know what the tile looks like
-  from its value. You know which object you want to collide with, and you know the
-  x and y position of the tile as well as its dimensions. This function just decides
-  which collision functions to use based on the value and allows you to tweak the
-  other values to fit the specific tile shape. */
   this.collide = function(value, object, tile_x, tile_y, tile_size) {
 
-    switch(value) { // which value does our tile have?
-
-      /* All 15 tile types can be described with only 4 collision methods. These
-      methods are mixed and matched for each unique tile. */
+    switch(value) {
 
       case  1: this.collidePlatformTop      (object, tile_y            ); break;
       case  2: this.collidePlatformRight    (object, tile_x + tile_size); break;
@@ -281,7 +264,7 @@ Game.World.Collider = function() {
                if (this.collidePlatformLeft (object, tile_x            )) return;
                this.collidePlatformBottom   (object, tile_y + tile_size); break;
       case 14: if (this.collidePlatformLeft (object, tile_x            )) return;
-               if (this.collidePlatformRight(object, tile_x            )) return;
+               if (this.collidePlatformRight(object, tile_x + tile_size)) return; // Had to change this since part 4. I forgot to add tile_size
                this.collidePlatformBottom   (object, tile_y + tile_size); break;
       case 15: if (this.collidePlatformTop  (object, tile_y            )) return;
                if (this.collidePlatformLeft (object, tile_x            )) return;
@@ -294,26 +277,19 @@ Game.World.Collider = function() {
 
 };
 
-/* Here's where all of the collision functions live. */
 Game.World.Collider.prototype = {
 
   constructor: Game.World.Collider,
 
-  /* This will resolve a collision (if any) between an object and the y location of
-  some tile's bottom. All of these functions are pretty much the same, just adjusted
-  for different sides of a tile and different trajectories of the object. */
   collidePlatformBottom:function(object, tile_bottom) {
 
-    /* If the top of the object is above the bottom of the tile and on the previous
-    frame the top of the object was below the bottom of the tile, we have entered into
-    this tile. Pretty simple stuff. */
     if (object.getTop() < tile_bottom && object.getOldTop() >= tile_bottom) {
 
-      object.setTop(tile_bottom);// Move the top of the object to the bottom of the tile.
-      object.velocity_y = 0;     // Stop moving in that direction.
-      return true;               // Return true because there was a collision.
+      object.setTop(tile_bottom);
+      object.velocity_y = 0;
+      return true;
 
-    } return false;              // Return false if there was no collision.
+    } return false;
 
   },
 
@@ -321,7 +297,7 @@ Game.World.Collider.prototype = {
 
     if (object.getRight() > tile_left && object.getOldRight() <= tile_left) {
 
-      object.setRight(tile_left - 0.01);// -0.01 is to fix a small problem with rounding
+      object.setRight(tile_left - 0.01);
       object.velocity_x = 0;
       return true;
 
@@ -356,8 +332,6 @@ Game.World.Collider.prototype = {
 
  };
 
-/* The object class is just a basic rectangle with a bunch of prototype functions
-to help us work with positioning this rectangle. */
 Game.World.Object = function(x, y, width, height) {
 
  this.height = height;
@@ -393,22 +367,96 @@ Game.World.Object.prototype = {
 
 };
 
-Game.World.Player = function(x, y) {
+Game.World.Object.Animator = function(frame_set, delay) {
 
-  Game.World.Object.call(this, 100, 200, 12, 12);
-
-  this.color1     = "#404040";
-  this.color2     = "#f0f0f0";
-
-  this.jumping    = true;
-  this.velocity_x = 0;
-  this.velocity_y = 0;
+  this.count       = 0;
+  this.delay       = (delay >= 1) ? delay : 1;
+  this.frame_set   = frame_set;
+  this.frame_index = 0;
+  this.frame_value = frame_set[0];
+  this.mode        = "pause";
 
 };
 
-Game.World.Player.prototype = {
+Game.World.Object.Animator.prototype = {
 
-  jump:function() {
+  constructor:Game.World.Object.Animator,
+
+  animate:function() {
+
+    switch(this.mode) {
+
+      case "loop" : this.loop(); break;
+      case "pause":              break;
+
+    }
+
+  },
+
+  changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
+
+    if (this.frame_set === frame_set) { return; }
+
+    this.count       = 0;
+    this.delay       = delay;
+    this.frame_set   = frame_set;
+    this.frame_index = frame_index;
+    this.frame_value = frame_set[frame_index];
+    this.mode        = mode;
+
+  },
+
+  loop:function() {
+
+    this.count ++;
+
+    while(this.count > this.delay) {
+
+      this.count -= this.delay;
+
+      this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
+
+      this.frame_value = this.frame_set[this.frame_index];
+
+    }
+
+  }
+
+};
+
+/* The player now also extends the Game.World.Object.Animator class. I also added
+a direction_x variable to help determine which way the player is facing for animation. */
+Game.World.Object.Player = function(x, y) {
+
+  Game.World.Object.call(this, 35, 200, 7, 22);
+  Game.World.Object.Animator.call(this, Game.World.Object.Player.prototype.frame_sets["idle-left"], 10);
+
+  this.jumping     = true;
+  this.direction_x = -1;
+  this.velocity_x  = 0;
+  this.velocity_y  = 0;
+
+};
+
+Game.World.Object.Player.prototype = {
+
+  constructor:Game.World.Object.Player,
+
+  /* The values in these arrays correspond to the TileSet.Frame objects in the tile_set.
+  They are just hardcoded in here now, but when the tileset information is eventually
+  loaded from a json file, this will be allocated dynamically in some sort of loading function. */
+  frame_sets: {
+
+    "idle-left" : [0],
+    "jump-left" : [1],
+    "move-left" : [2, 3, 4, 5],
+    "idle-right": [6],
+    "jump-right": [7],
+    "move-right": [8, 9, 10, 11]
+
+  },
+
+  jump: function() {
 
     if (!this.jumping) {
 
@@ -419,22 +467,110 @@ Game.World.Player.prototype = {
 
   },
 
-  moveLeft:function()  { this.velocity_x -= 0.5; },
-  moveRight:function() { this.velocity_x += 0.5; },
+  moveLeft: function() {
 
-  update:function() {
+    this.direction_x = -1;// Make sure to set the player's direction.
+    this.velocity_x -= 0.55;
+
+  },
+
+  moveRight:function(frame_set) {
+
+    this.direction_x = 1;
+    this.velocity_x += 0.55;
+
+  },
+
+  /* Because animation is entirely dependent on the player's movement at this point,
+  I made a separate update function just for animation to be called after collision
+  between the player and the world. This gives the most accurate animations for what
+  the player is doing movement wise on the screen. */
+  updateAnimation:function() {
+
+    if (this.velocity_y < 0) {
+
+      if (this.direction_x < 0) this.changeFrameSet(this.frame_sets["jump-left"], "pause");
+      else this.changeFrameSet(this.frame_sets["jump-right"], "pause");
+
+    } else if (this.direction_x < 0) {
+
+      if (this.velocity_x < -0.1) this.changeFrameSet(this.frame_sets["move-left"], "loop", 5);
+      else this.changeFrameSet(this.frame_sets["idle-left"], "pause");
+
+    } else if (this.direction_x > 0) {
+
+      if (this.velocity_x > 0.1) this.changeFrameSet(this.frame_sets["move-right"], "loop", 5);
+      else this.changeFrameSet(this.frame_sets["idle-right"], "pause");
+
+    }
+
+    this.animate();
+
+  },
+
+  /* This used to be the update function, but now it's a little bit better. It takes
+  gravity and friction as parameters so the player class can decide what to do with
+  them. */
+  updatePosition:function(gravity, friction) {// Changed from the update function
 
     this.x_old = this.x;
     this.y_old = this.y;
+    this.velocity_y += gravity;
     this.x    += this.velocity_x;
     this.y    += this.velocity_y;
+
+    this.velocity_x *= friction;
+    this.velocity_y *= friction;
 
   }
 
 };
 
-Object.assign(Game.World.Player.prototype, Game.World.Object.prototype);
-Game.World.Player.prototype.constructor = Game.World.Player;
+/* Double prototype inheritance from Object and Animator. */
+Object.assign(Game.World.Object.Player.prototype, Game.World.Object.prototype);
+Object.assign(Game.World.Object.Player.prototype, Game.World.Object.Animator.prototype);
+Game.World.Object.Player.prototype.constructor = Game.World.Object.Player;
 
+/* The TileSheet class was taken from the Display class and renamed TileSet.
+It does all the same stuff, but it doesn't have an image reference and it also
+defines specific regions in the tile set image that correspond to the player's sprite
+animation frames. Later, this will all be set in a level loading function just in case
+I want to add functionality to add in another tile sheet graphic with different terrain. */
+Game.World.TileSet = function(columns, tile_size) {
 
+  this.columns    = columns;
+  this.tile_size  = tile_size;
 
+  let f = Game.World.TileSet.Frame;
+
+  /* An array of all the frames in the tile sheet image. */
+  this.frames = [new f(224,0, 29,32,0,-8), // idle-left
+                new f(96,416, 29, 32, 0, -8), // jump-left
+                 new f(32, 288, 29, 32, 0, -8), new f( 64, 288, 29, 32, 0, -8), new f( 98, 288, 29, 32, 0, -8), new f( 128, 288, 29, 32, 0, -8), // walk-left
+                 new f(32, 0, 29,32,0,-8), // idle-right
+                 new f(96,160, 29, 32, 0, -8), // jump-right
+                 new f(32, 32, 29, 32, 0, -8), new f( 64, 32, 29, 32, 0, -8), new f( 98, 32, 29, 32, 0, -8), new f( 128, 32, 29, 32, 0, -8) // walk-right
+                
+                ];
+
+};
+
+Game.World.TileSet.prototype = { constructor: Game.World.TileSet };
+
+/* The Frame class just defines a region in a tilesheet to cut out. It's a rectangle.
+It has an x and y offset used for drawing the cut out sprite image to the screen,
+which allows sprites to be positioned anywhere in the tile sheet image rather than
+being forced to adhere to a grid like tile graphics. This is more natural because
+sprites often fluctuate in size and won't always fit in a 16x16 grid. */
+Game.World.TileSet.Frame = function(x, y, width, height, offset_x, offset_y) {
+
+  this.x        = x;
+  this.y        = y;
+  this.width    = width;
+  this.height   = height;
+  this.offset_x = offset_x;
+  this.offset_y = offset_y;
+
+};
+
+Game.World.TileSet.Frame.prototype = { constructor: Game.World.TileSet.Frame };

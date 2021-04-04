@@ -1,8 +1,76 @@
-// Frank Poth 03/23/2017
+// Frank Poth 04/03/2018
+
+/* Changes:
+
+1. I added an AssetsManager class which will eventually store all my graphics and sounds.
+2. The render function now draws the player's frame instead of a square like in part 4.
+3. The resize function now stretches the display canvas to the full viewport capacity.
+
+The project is starting to grow unmanagable as it grows. Luckily my IPO structure
+is dramatically decreasing the amount of rewrites I have to do to other classes,
+but since most of my code is in the Game class, edits in that class are becoming
+rather tedious. As the project grows I will have to focus my videos more on individual
+changes and ignore the vast bulk of existing code. */
 
 window.addEventListener("load", function(event) {
 
   "use strict";
+
+  //// CLASSES ////
+
+  /* The assets manager will be responsible for loading and storing graphics for
+  the game. Because it only has to load the tilesheet image right now, it's very specific
+  about what it does. */
+  const AssetsManager = function() {
+
+    this.tile_set_image = undefined;
+    this.background_image = undefined;
+    this.sprite_sheet = undefined;
+
+  };
+
+  AssetsManager.prototype = {
+
+    constructor: Game.AssetsManager,
+
+    loadTileSetImage:function(tileUrl, bgImgURL, spriteSheetURL, callback) {
+
+      this.tile_set_image = new Image();
+
+      this.tile_set_image.addEventListener("load", function(event) {
+
+        callback();
+
+      }, { once : true});
+
+      this.tile_set_image.src = tileUrl
+
+      this.background_image = new Image();
+
+      this.background_image.addEventListener("load", function(event) {
+
+        callback();
+
+      }, { once : true});
+
+
+      this.background_image.src = bgImgURL;
+
+
+      this.sprite_sheet = new Image();
+
+      this.sprite_sheet.addEventListener("load", function(event) {
+
+        callback();
+
+      }, { once : true});
+
+
+      this.sprite_sheet.src = spriteSheetURL;
+
+    }
+
+  };
 
       ///////////////////
     //// FUNCTIONS ////
@@ -15,33 +83,43 @@ window.addEventListener("load", function(event) {
   };
 
   var keyPress = function(event) {
-
     controller.keyPress(event.type, event.keyCode);
-
   };
 
   var resize = function(event) {
 
-    display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+    display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
     display.render();
 
   };
 
+  /* The render function uses the new display methods now. I will eventually have to create
+  some sort of object manager when I get more objects on the screen. */
   var render = function() {
+    display.drawBackground(assets_manager.background_image) //CHeck*
+    display.drawCoinBins(game.world.columns,game.world.coins_map, game.world.coin_bins, game.world.tile_set.tile_size)
+    display.drawMap   (assets_manager.tile_set_image,
+    game.world.tile_set.columns, game.world.map, game.world.columns,  game.world.tile_set.tile_size);
 
-    display.drawMap(game.world.map, game.world.columns, game.world.isBinning, game.world.coin_bins, game.world.coins_map);
-    display.drawPlayer(game.world.player, game.world.player.color1, game.world.player.color2);
+    let frame = game.world.tile_set.frames[game.world.player.frame_value];
+
+    display.drawObject(assets_manager.sprite_sheet,
+    frame.x, frame.y,
+    game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+    game.world.player.y + frame.offset_y, frame.width, frame.height);
+
     display.render();
 
   };
 
   var update = function() {
 
-    if (controller.left.active)  { game.world.player.moveLeft();  }
-    if (controller.right.active) { game.world.player.moveRight(); }
-    if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
-    
+    if (controller.left.active ) { game.world.player.moveLeft ();                               }
+    if (controller.right.active) { game.world.player.moveRight();                               }
+    if (controller.up.active   ) { game.world.player.jump();      controller.up.active = false; }
+
     if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false; }
+  
 
     game.update();
 
@@ -51,41 +129,31 @@ window.addEventListener("load", function(event) {
     //// OBJECTS ////
   /////////////////
 
-  var controller = new Controller();
-  var display    = new Display(document.querySelector("canvas"));
-  var game       = new Game();
-  var engine     = new Engine(1000/30, render, update);
+  var assets_manager = new AssetsManager();// Behold the new assets manager!
+  var controller     = new Controller();
+  var display        = new Display(document.querySelector("canvas"));
+  var game           = new Game();
+  var engine         = new Engine(1000/30, render, update);
 
       ////////////////////
     //// INITIALIZE ////
   ////////////////////
 
+  /* This is going to have to be moved to a setup function inside of the Display class or something.
+  Leaving it out here is kind of sloppy. */
   display.buffer.canvas.height = game.world.height;
-  display.buffer.canvas.width = game.world.width;
+  display.buffer.canvas.width  = game.world.width;
+  display.buffer.imageSmoothingEnabled = false;
 
-  display.tile_sheet.image.addEventListener("load", function(event) {
+  /* Now my image is loaded into the assets manager instead of the display object.
+  The callback starts the game engine when the graphic is loaded. */
+  assets_manager.loadTileSetImage("./maps/final_maps/binning/bin_tiles.png",
+  "./maps/final_maps/binning/bin_bg.png", "sprites.png", () => {
 
     resize();
-
     engine.start();
 
-  }, { once:true });
-
-  
-  
-
-  //display.tile_sheet.image.src = "./maps/final_maps/level1/level1tiles.png";
-  //display.tile_sheet.backgroundImage.src = "./maps/final_maps/level1/level1bg2.png"
-  
-  display.tile_sheet.image.src = "./maps/final_maps/binning/bin_tiles.png";
-  display.tile_sheet.backgroundImage.src = "./maps/final_maps/binning/bin_bg.png"
-
-  //display.tile_sheet.image.src = "./maps/final_maps/level2/level2tiles.png";
-  //display.tile_sheet.backgroundImage.src = "./maps/final_maps/level2/level2bg.png"
-
-  //display.tile_sheet.image.src = "./maps/final_maps/level3/level3tiles.png";
-  //display.tile_sheet.backgroundImage.src = "./maps/final_maps/level3/level3bg.png"
-
+  });
 
   window.addEventListener("keydown", keyDownUp);
   window.addEventListener("keyup",   keyDownUp);
@@ -93,4 +161,3 @@ window.addEventListener("load", function(event) {
   window.addEventListener("resize",  resize);
 
 });
-
