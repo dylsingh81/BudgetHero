@@ -292,7 +292,7 @@ Game.Door.prototype.constructor = Game.Door;
 
 Game.Player = function(x, y) {
 
-  Game.MovingObject.call(this, x, y, 7, 22);
+  Game.MovingObject.call(this, x, y, 7, 16);
   Game.Animator.call(this, Game.Player.prototype.frame_sets["idle-left"], 10);
 
   this.jumping     = true;
@@ -381,6 +381,8 @@ Game.Player.prototype = {
     this.x    += this.velocity_x;
     this.y    += this.velocity_y;
 
+    //console.log(this.x, this.y)
+
   }
 
 };
@@ -395,12 +397,12 @@ Game.TileSet = function(columns, tile_size) {
 
   let f = Game.Frame;
 
-  this.frames =  [new f(224,0, 29,32,0,-8), // idle-left
-                  new f(96,416, 29, 32, 0, -8), // jump-left
-                  new f(32, 288, 29, 32, 0, -8), new f( 64, 288, 29, 32, 0, -8), new f( 98, 288, 29, 32, 0, -8), new f( 128, 288, 29, 32, 0, -8), // walk-left
-                  new f(32, 0, 29,32,0,-8), // idle-right
-                  new f(96,160, 29, 32, 0, -8), // jump-right
-                  new f(32, 32, 29, 32, 0, -8), new f( 64, 32, 29, 32, 0, -8), new f( 98, 32, 29, 32, 0, -8), new f( 128, 32, 29, 32, 0, -8) // walk-right
+  this.frames =  [new f(224,0, 29,32,0,-15), // idle-left
+                  new f(96,416, 29, 32, 0, -15), // jump-left
+                  new f(32, 288, 29, 32, 0, -15), new f( 64, 288, 29, 32, 0, -15), new f( 98, 288, 29, 32, 0, -15), new f( 128, 288, 29, 32, 0, -15), // walk-left
+                  new f(32, 0, 29,32,0,-15), // idle-right
+                  new f(96,160, 29, 32, 0, -15), // jump-right
+                  new f(32, 32, 29, 32, 0, -15), new f( 64, 32, 29, 32, 0, -15), new f( 98, 32, 29, 32, 0, -15), new f( 128, 32, 29, 32, 0, -15) // walk-right
                   ];
 
 };
@@ -509,6 +511,13 @@ Game.World.prototype = {
     /* I got rid of the world boundary collision. Now it's up to the tiles to keep
     the player from falling out of the world. */
 
+    //Dylan added back
+    if      (object.getLeft()   < 0          ) { object.setLeft(0);             object.velocity_x = 0; }
+    else if (object.getRight()  > this.width ) { object.setRight(this.width);   object.velocity_x = 0; }
+    if      (object.getTop()    < 0          ) { object.setTop(0);              object.velocity_y = 0; }
+    else if (object.getBottom() > this.height) { object.setBottom(this.height); object.velocity_y = 0; object.jumping = false; }
+
+
     var bottom, left, right, top, value;
 
     top    = Math.floor(object.getTop()    / this.tile_set.tile_size);
@@ -547,7 +556,7 @@ Game.World.prototype = {
     this.doors              = new Array();
     this.zone_id            = zone.id;
     this.tile_set           = new Game.TileSet(zone.tile_set_columns, zone.tile_sheet_size);
-    
+    this.is_bin             = zone.is_bin
 
     /* Generate new doors. */
     for (let index = zone.doors.length - 1; index > -1; -- index) {
@@ -559,6 +568,7 @@ Game.World.prototype = {
     /* If the player entered into a door, this.door will reference that door. Here
     it will be used to set the player's location to the door's destination. */
     if (this.door) {
+      console.log("Hit")
 
       /* if a destination is equal to -1, that means it won't be used. Since each zone
       spans from 0 to its width and height, any negative number would be invalid. If

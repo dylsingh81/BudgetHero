@@ -97,7 +97,9 @@ window.addEventListener("load", function(event) {
 
   var render = function() {
     display.drawBackground(assets_manager.background_image)
-    display.drawCoinBins(game.world.columns,game.world.coins_map, game.world.coin_bins, game.world.tile_set.tile_size)
+    if(game.world.is_bin){
+      display.drawCoinBins(game.world.columns,game.world.coins_map, game.world.coin_bins, game.world.tile_set.tile_size)
+    }
     display.drawMap   (assets_manager.tile_set_image,
     game.world.tile_set.columns, game.world.graphical_map, game.world.columns,  game.world.tile_set.tile_size);
 
@@ -161,7 +163,7 @@ window.addEventListener("load", function(event) {
   var controller     = new Controller();
   var display        = new Display(document.querySelector("canvas"));
   var game           = new Game();
-  var engine         = new Engine(1000/30, render, update);
+  var engine         = new Engine(1000/60, render, update);
 
       ////////////////////
     //// INITIALIZE ////
