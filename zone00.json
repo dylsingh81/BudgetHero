@@ -50,12 +50,16 @@
     
   
     "id":"00",
-  
+    
     "tile_set_path": "./maps/final_maps/level1/level1tiles.png",
-    "background_image_path": "./maps/final_maps/level1/level1bg.png",
+    "background_image_path": "./maps/final_maps/level1/level1bgtext.png",
     "sprite_sheet_path": "sprites.png",
+    "coin_sheet_path": "coin_sheet.png",
     "tile_sheet_size": 16,
     "tile_set_columns": 84,
-    "is_bin": false
+    "is_bin": false,
+
+
+    "coins":[[3, 12], [6, 12],[9, 12],[12, 12], [15, 12],[18, 12]]
   }
   

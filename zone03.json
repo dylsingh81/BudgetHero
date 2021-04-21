@@ -55,6 +55,8 @@
     "background_image_path": "./maps/final_maps/level3/level3bg.png",
     "sprite_sheet_path": "sprites.png",
     "tile_sheet_size": 16,
-    "tile_set_columns": 84
+    "tile_set_columns": 84,
+    
+    "coins":[]
   }
   

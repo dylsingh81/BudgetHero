@@ -1,3 +1,4 @@
+//old main 07
 // Frank Poth 04/06/2018
 
 /* Changes:
@@ -33,6 +34,7 @@ window.addEventListener("load", function(event) {
     this.tile_set_image = undefined;
     this.background_image = undefined;
     this.sprite_sheet = undefined;
+    this.coin_sheet = undefined;
   };
 
   AssetsManager.prototype = {
@@ -90,12 +92,21 @@ window.addEventListener("load", function(event) {
 
   var resize = function(event) {
 
-    display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
-    display.render();
-
-  };
+      display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
+      display.render();
+  
+      var rectangle = display.context.canvas.getBoundingClientRect();
+  
+      p.style.left = rectangle.left + "px";
+      p.style.top  = rectangle.top + "px";
+      p.style.fontSize = game.world.tile_set.tile_size * rectangle.height / game.world.height + "px";
+  
+    };
 
   var render = function() {
+
+      var frame = undefined
+
     display.drawBackground(assets_manager.background_image)
     if(game.world.is_bin){
       display.drawCoinBins(game.world.columns,game.world.coins_map, game.world.coin_bins, game.world.tile_set.tile_size)
@@ -103,13 +114,31 @@ window.addEventListener("load", function(event) {
     display.drawMap   (assets_manager.tile_set_image,
     game.world.tile_set.columns, game.world.graphical_map, game.world.columns,  game.world.tile_set.tile_size);
 
-    let frame = game.world.tile_set.frames[game.world.player.frame_value];
+
+
+    for (let index = game.world.coins.length - 1; index > -1; -- index) {
+
+      let coin = game.world.coins[index];
+
+      frame = game.world.tile_set.frames[coin.frame_value];
+
+      display.drawObject(assets_manager.coin_sheet,
+        frame.x, frame.y,
+        coin.x + Math.floor(coin.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+        coin.y + frame.offset_y, frame.width, frame.height);
+
+    }
+
+    frame = game.world.tile_set.frames[game.world.player.frame_value];
 
     display.drawObject(assets_manager.sprite_sheet,
     frame.x, frame.y,
     game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
     game.world.player.y + frame.offset_y, frame.width, frame.height);
 
+
+    
+    p.innerHTML = "Coins: " + game.world.coin_count;
     display.render();
 
   };
@@ -120,7 +149,7 @@ window.addEventListener("load", function(event) {
     if (controller.right.active) { game.world.player.moveRight();                               }
     if (controller.up.active   ) { game.world.player.jump();      controller.up.active = false; }
 
-    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false; }
+    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false;}
     
 
 
@@ -163,7 +192,12 @@ window.addEventListener("load", function(event) {
   var controller     = new Controller();
   var display        = new Display(document.querySelector("canvas"));
   var game           = new Game();
-  var engine         = new Engine(1000/60, render, update);
+  var engine         = new Engine(1000/30, render, update);
+
+  var p              = document.createElement("p");
+  p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
+  p.innerHTML = "Coins: 0";
+  document.body.appendChild(p);
 
       ////////////////////
     //// INITIALIZE ////
@@ -197,6 +231,15 @@ window.addEventListener("load", function(event) {
     assets_manager.requestImage(zone.sprite_sheet_path, (image) => {
 
       assets_manager.sprite_sheet = image;
+
+      resize();
+      engine.start();
+
+    });
+
+    assets_manager.requestImage(zone.coin_sheet_path, (image) => {
+
+      assets_manager.coin_sheet = image;
 
       resize();
       engine.start();
