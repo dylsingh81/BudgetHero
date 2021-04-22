@@ -468,6 +468,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.coin_count = 0;// the number of coins you have.
   this.doors        = [];
   this.door         = undefined;
+  this.health       = 3
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;

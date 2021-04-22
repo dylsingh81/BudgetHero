@@ -97,9 +97,17 @@ window.addEventListener("load", function(event) {
   
       var rectangle = display.context.canvas.getBoundingClientRect();
   
-      p.style.left = rectangle.left + "px";
-      p.style.top  = rectangle.top + "px";
-      p.style.fontSize = game.world.tile_set.tile_size * rectangle.height / game.world.height + "px";
+      coin_p.style.right = rectangle.left + "px";
+      coin_p.style.top  = rectangle.top + "px";
+      coin_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
+      coin_p.style.backgroundColor = "rgba(0,0,0,0.7)"
+      coin_p.style.padding = "5px"
+
+      health_p.style.left = rectangle.left + "px";
+      health_p.style.top  = rectangle.top + "px";
+      health_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
+      health_p.style.backgroundColor = "rgba(0,0,0,0.7)"
+      health_p.style.padding = "5px"
   
     };
 
@@ -138,7 +146,8 @@ window.addEventListener("load", function(event) {
 
 
     
-    p.innerHTML = "Coins: " + game.world.coin_count;
+    coin_p.innerHTML = "Coins: " + game.world.coin_count;
+    health_p.innerHTML = "Health: " + game.world.health;
     display.render();
 
   };
@@ -194,10 +203,15 @@ window.addEventListener("load", function(event) {
   var game           = new Game();
   var engine         = new Engine(1000/30, render, update);
 
-  var p              = document.createElement("p");
-  p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
-  p.innerHTML = "Coins: 0";
-  document.body.appendChild(p);
+  var coin_p              = document.createElement("p");
+  coin_p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
+  coin_p.innerHTML = "Coins: 0";
+  document.body.appendChild(coin_p);
+
+  var health_p              = document.createElement("p");
+  health_p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
+  health_p.innerHTML = "Health: 3";
+  document.body.appendChild(health_p);
 
       ////////////////////
     //// INITIALIZE ////
