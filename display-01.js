@@ -86,12 +86,12 @@ function drawBinLabels(str, x, y, ctx){
   for(var i = 0; i <= str.length; ++i){
       var ch = str.charAt(i);
       if(i == 0){
-        ctx.fillStyle = "black"
-        ctx.font = 'bolder 10px sans-serif';
+        ctx.fillStyle = "darkblue"
+        ctx.font = 'bolder 13px sans-serif';
       }
       else{
-        ctx.fillStyle = "black"
-        ctx.font = 'bolder 12px sans-serif';
+        ctx.fillStyle = "darkblue"
+        ctx.font = 'bolder 13px sans-serif';
       }
       ctx.fillText(ch, x, y);
       x += ctx.measureText(ch).width;

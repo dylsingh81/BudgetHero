@@ -477,10 +477,11 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "00";
+  this.zone_id      = "02";
 
-  this.coins      = [];// the array of coins in this zone;
-  this.coin_count = 0;// the number of coins you have.
+  this.coins        = [];// the array of coins in this zone;
+  this.coin_count   = 0;// the number of coins you have.
+  this.level        = 0
   this.doors        = [];
   this.door         = undefined;
   this.health       = 3
@@ -630,6 +631,8 @@ Game.World.prototype = {
     this.tile_set           = new Game.TileSet(zone.tile_set_columns, zone.tile_sheet_size);
     this.is_bin             = zone.is_bin
     this.spawn_point        = zone.spawn_point
+    this.level_num_coins    = zone.coins.length 
+
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
 
@@ -689,14 +692,14 @@ Game.World.prototype = {
 
     }
 
+    //Collide with door
     for(let index = this.doors.length - 1; index > -1; -- index) {
 
       let door = this.doors[index];
 
       if (door.collideObjectCenter(this.player)) {
-
         this.door = door;
-
+        logData(this.level, this.level_num_coins, this.coin_count)
       };
 
     }
@@ -706,3 +709,9 @@ Game.World.prototype = {
   }
 
 };
+
+function logData(level_num, level_num_coins, coins_collected){
+  //console.log("Log of data")
+  //console.log(level_num,level_num_coins, coins_collected)
+  console.log("Percentage Coins Collected: ", coins_collected/level_num_coins)
+}
