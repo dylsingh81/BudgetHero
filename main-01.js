@@ -146,8 +146,14 @@ window.addEventListener("load", function(event) {
 
 
     
-    coin_p.innerHTML = "Coins: " + game.world.coin_count;
-    health_p.innerHTML = "Health: " + game.world.health;
+    coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Coins!\"> x "+ game.world.coin_count
+    
+    let heart_IMG_HTML = "<img src=\"/heart.gif\" width = 30 px alt=\"Heart!\">"
+    let health_HTML = ""
+    for (var i = 0; i < game.world.health; i++) {
+        health_HTML += heart_IMG_HTML
+    }
+    health_p.innerHTML = health_HTML
     display.render();
 
   };
@@ -183,7 +189,7 @@ window.addEventListener("load", function(event) {
         assets_manager.requestImage(zone.background_image_path, (image) => {
           assets_manager.background_image = image;
         });
-        console.log(zone)
+        //console.log(zone)
         game.world.setup(zone);
         
         engine.start();
@@ -205,14 +211,13 @@ window.addEventListener("load", function(event) {
   var display        = new Display(document.querySelector("canvas"));
   var game           = new Game();
   var engine         = new Engine(1000/30, render, update);
+  var coin_p         = document.createElement("p");
+  var health_p       = document.createElement("p");
 
-  var coin_p              = document.createElement("p");
-  coin_p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
-  coin_p.innerHTML = "Coins: 0";
+  coin_p.className = "game-label"
+  coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
   document.body.appendChild(coin_p);
-
-  var health_p              = document.createElement("p");
-  health_p.setAttribute("style", "color:#c07000; font-size:2.0em; position:fixed;");
+  health_p.className = "game-label"
   health_p.innerHTML = "Health: 3";
   document.body.appendChild(health_p);
 

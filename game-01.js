@@ -477,7 +477,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "02";
+  this.zone_id      = "00";
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.
@@ -699,7 +699,7 @@ Game.World.prototype = {
 
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
-        logData(this.level, this.level_num_coins, this.coin_count)
+        logData(this.level, this.level_num_coins, this.coin_count, this.is_bin)
       };
 
     }
@@ -710,8 +710,13 @@ Game.World.prototype = {
 
 };
 
-function logData(level_num, level_num_coins, coins_collected){
+function logData(level_num, level_num_coins, coins_collected, is_bin){
   //console.log("Log of data")
   //console.log(level_num,level_num_coins, coins_collected)
-  console.log("Percentage Coins Collected: ", coins_collected/level_num_coins)
+  if(is_bin){
+    console.log("is bin")
+  }
+  else{
+    console.log("Percentage Coins Collected: ", coins_collected/level_num_coins)
+  }
 }
