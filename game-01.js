@@ -699,7 +699,7 @@ Game.World.prototype = {
 
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
-        logData(this.level, this.level_num_coins, this.coin_count, this.is_bin)
+        logData(this.level, this.level_num_coins, this.coin_count, this.is_bin, this.coin_bins)
       };
 
     }
@@ -710,11 +710,11 @@ Game.World.prototype = {
 
 };
 
-function logData(level_num, level_num_coins, coins_collected, is_bin){
+function logData(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
   //console.log("Log of data")
   //console.log(level_num,level_num_coins, coins_collected)
   if(is_bin){
-    console.log("is bin")
+    console.log("Current bins", coin_bins)
   }
   else{
     console.log("Percentage Coins Collected: ", coins_collected/level_num_coins)
