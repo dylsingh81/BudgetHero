@@ -1,5 +1,8 @@
 {
-
+  "spawn_point": {
+    "x":10,
+    "y":240
+  },
   "doors" : [
 
     { "x":440, "y":230, "width":32, "height":40,

@@ -86,7 +86,7 @@ Game.Animator.prototype = {
 Game.Collider = function() {
 
   /* I changed this so all the checks happen in y first order. */
-  this.collide = function(value, object, tile_x, tile_y, tile_size) {
+  this.collide = function(value, object, tile_x, tile_y, tile_size, world) {
 
     switch(value) {
 
@@ -122,6 +122,7 @@ Game.Collider = function() {
                if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
                if (this.collidePlatformLeft   (object, tile_x            )) return;
                    this.collidePlatformRight  (object, tile_x + tile_size); break;
+      case -2:     this.collideSpike          (world                     );break;
 
     }
 
@@ -179,6 +180,20 @@ Game.Collider.prototype = {
 
     } return false;
 
+  },
+
+  collideSpike:function(world) {
+    console.log("Hit Spike")
+    world.health--
+    //Respawn Player
+    const respawnX = world.spawn_point.x
+    const respawnY = world.spawn_point.y
+    //console.log(respawnX, respawnY, world.spawn_point)
+    world.player.setCenterX   (respawnX);
+    world.player.setOldCenterX(respawnX);
+    world.player.setCenterY   (respawnY);
+    world.player.setOldCenterY(respawnY);
+    return
   }
 
  };
@@ -580,22 +595,22 @@ Game.World.prototype = {
     top    = Math.floor(object.getTop()    / this.tile_set.tile_size);
     left   = Math.floor(object.getLeft()   / this.tile_set.tile_size);
     value  = this.collision_map[top * this.columns + left];
-    this.collider.collide(value, object, left * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size);
+    this.collider.collide(value, object, left * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size, this);
 
     top    = Math.floor(object.getTop()    / this.tile_set.tile_size);
     right  = Math.floor(object.getRight()  / this.tile_set.tile_size);
     value  = this.collision_map[top * this.columns + right];
-    this.collider.collide(value, object, right * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size);
+    this.collider.collide(value, object, right * this.tile_set.tile_size, top * this.tile_set.tile_size, this.tile_set.tile_size, this);
 
     bottom = Math.floor(object.getBottom() / this.tile_set.tile_size);
     left   = Math.floor(object.getLeft()   / this.tile_set.tile_size);
     value  = this.collision_map[bottom * this.columns + left];
-    this.collider.collide(value, object, left * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size);
+    this.collider.collide(value, object, left * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size, this);
 
     bottom = Math.floor(object.getBottom() / this.tile_set.tile_size);
     right  = Math.floor(object.getRight()  / this.tile_set.tile_size);
     value  = this.collision_map[bottom * this.columns + right];
-    this.collider.collide(value, object, right * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size);
+    this.collider.collide(value, object, right * this.tile_set.tile_size, bottom * this.tile_set.tile_size, this.tile_set.tile_size, this);
 
   },
 
@@ -610,6 +625,7 @@ Game.World.prototype = {
     this.zone_id            = zone.id;
     this.tile_set           = new Game.TileSet(zone.tile_set_columns, zone.tile_sheet_size);
     this.is_bin             = zone.is_bin
+    this.spawn_point        = zone.spawn_point
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
 
