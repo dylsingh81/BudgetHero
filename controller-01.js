@@ -7,6 +7,7 @@ const Controller = function() {
   this.right = new Controller.ButtonInput();
   this.up    = new Controller.ButtonInput();
   this.deposit = false
+  this.withdraw = false
 
   this.keyDownUp = function(type, key_code) {
 
@@ -25,11 +26,17 @@ const Controller = function() {
     this.deposit = true
   }
 
-  this.keyPress = function(type, key_code) {
-    switch(key_code) {
-      case 32: this.spacePressed();
-    }
+  this.vPressed = function(){
+    this.withdraw = true
+  }
 
+  this.keyPress = function(type, key_code) {
+    
+    switch(key_code) {
+      case 32: this.spacePressed(); break;
+      //LOWER AND UPPCASE V
+      case 86: case 118: this.vPressed(); break;
+    }
   };
 };
 

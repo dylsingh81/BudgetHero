@@ -542,10 +542,20 @@ Game.World = function(friction = 0.85, gravity = 2) {
     this.deposit = function(playerX, playerY){
       
       binNum = this.getCoinBin(playerX, playerY)
-      console.log(this.is_bin)
+      //console.log(this.is_bin)
       if(binNum > -1 && this.is_bin && this.coin_count > 0){
         this.coin_bins[binNum] += 1
         this.coin_count--
+      }
+    }
+    //Withdraws coin into respective bin
+    this.withdraw = function(playerX, playerY){
+      
+      binNum = this.getCoinBin(playerX, playerY)
+      //console.log(this.is_bin)
+      if(binNum > -1 && this.is_bin && this.coin_bins[binNum] > 0){
+        this.coin_bins[binNum] -= 1
+        this.coin_count++
       }
     }
   }
