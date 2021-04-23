@@ -488,6 +488,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
   this.tile_sheet_size = 16
+  this.ip           = -1
 
   //Handle all binning functions
   {
@@ -565,13 +566,16 @@ Game.World = function(friction = 0.85, gravity = 2) {
     }
     //Withdraws coin into respective bin
     this.withdraw = function(playerX, playerY){
-      
       binNum = this.getCoinBin(playerX, playerY)
       //console.log(this.is_bin)
       if(binNum > -1 && this.is_bin && this.coin_bins[binNum] > 0){
         this.coin_bins[binNum] -= 1
         this.coin_count++
       }
+    }
+
+    this.setIp = function(ip){
+      this.ip = ip
     }
   }
 };

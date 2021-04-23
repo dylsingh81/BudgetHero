@@ -264,9 +264,10 @@ window.addEventListener("load", function(event) {
     });
   });
 
- 
-
- 
+  var ip;
+  fetch('https://api.ipify.org/?format=json')
+    .then(results => results.json())
+    .then(data => game.world.ip = data.ip)
 
   window.addEventListener("keydown", keyDownUp);
   window.addEventListener("keyup"  , keyDownUp);
