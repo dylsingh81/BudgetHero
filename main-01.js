@@ -164,7 +164,7 @@ window.addEventListener("load", function(event) {
     if (controller.right.active) { game.world.player.moveRight();                               }
     if (controller.up.active   ) { game.world.player.jump();      controller.up.active = false; }
 
-    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false; display.toggleModal();}
+    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false;}
     if (controller.withdraw)  { game.world.withdraw(game.world.player.x, game.world.player.y); controller.withdraw = false;}
     
     if(game.world.hitModal)  {display.toggleModal(); game.world.hitModal = false; }
