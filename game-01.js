@@ -123,6 +123,13 @@ Game.Collider = function() {
                if (this.collidePlatformLeft   (object, tile_x            )) return;
                    this.collidePlatformRight  (object, tile_x + tile_size); break;
       case -2:     this.collideSpike          (world                     );break;
+      case -3: if (this.collidePlatformTop    (object, tile_y            )) return;
+               if (this.collidePlatformBottom (object, tile_y + tile_size)){
+                world.hitModal = true
+                return; 
+               }
+               if (this.collidePlatformLeft   (object, tile_x            )) return;
+                   this.collidePlatformRight  (object, tile_x + tile_size); break;
 
     }
 
@@ -638,6 +645,7 @@ Game.World.prototype = {
     this.is_bin             = zone.is_bin
     this.spawn_point        = zone.spawn_point
     this.level_num_coins    = zone.coins.length 
+    this.hitModal           = false
 
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
@@ -708,7 +716,6 @@ Game.World.prototype = {
 
     this.closeDoors()
     this.openDoors()
-
   },
 
   update:function() {

@@ -164,12 +164,10 @@ window.addEventListener("load", function(event) {
     if (controller.right.active) { game.world.player.moveRight();                               }
     if (controller.up.active   ) { game.world.player.jump();      controller.up.active = false; }
 
-    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false;}
+    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false; display.toggleModal();}
     if (controller.withdraw)  { game.world.withdraw(game.world.player.x, game.world.player.y); controller.withdraw = false;}
     
-    //if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false;}
-    
-
+    if(game.world.hitModal)  {display.toggleModal(); game.world.hitModal = false; }
 
     game.update();
 
@@ -214,6 +212,9 @@ window.addEventListener("load", function(event) {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
+
+  setupModal(display)
+  
   coin_p.className = "game-label"
   coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
   document.body.appendChild(coin_p);
@@ -279,4 +280,15 @@ window.addEventListener("load", function(event) {
   window.addEventListener("keypress",   keyPress);
   window.addEventListener("resize" , resize);
 
+
 });
+
+
+setupModal = function(display){
+  $('#pie-chart').modal({ show: false})
+  var btn1 = document.getElementById("pie-modal-close-1")
+  btn1.onclick = function() {display.toggleModal();};
+  
+  var btn2 = document.getElementById("pie-modal-close-2")
+  btn2.onclick = function() {display.toggleModal();};
+}
