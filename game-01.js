@@ -477,7 +477,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "00";
+  this.zone_id      = "02";
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.
@@ -564,7 +564,12 @@ Game.World = function(friction = 0.85, gravity = 2) {
         this.coin_bins[binNum] += 1
         this.coin_count--
       }
+
+      this.openDoors()
+      
     }
+
+
     //Withdraws coin into respective bin
     this.withdraw = function(playerX, playerY){
       binNum = this.getCoinBin(playerX, playerY)
@@ -573,6 +578,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
         this.coin_bins[binNum] -= 1
         this.coin_count++
       }
+      this.closeDoors()
     }
 
     this.setIp = function(ip){
@@ -621,7 +627,7 @@ Game.World.prototype = {
 
   setup:function(zone) {
 
-    this.coins            = new Array();
+    this.coins              = new Array();
     this.doors              = new Array();
     this.collision_map      = zone.collision_map;
     this.graphical_map      = zone.graphical_map;
@@ -667,6 +673,41 @@ Game.World.prototype = {
       this.door = undefined;// Make sure to reset this.door so we don't trigger a zone load.
 
     }
+
+    this.closeDoors = function()
+    {
+      //Make empty space into solid blocks
+      //Arrary pos 419 and 447 are the door
+      if(this.is_bin && this.coin_count > 0)
+      {
+        //Close Doors
+        //Collision Block
+        this.collision_map[419] = 10
+        this.collision_map[447] = 10
+        //Known tile values:
+        this.graphical_map[419] = 56
+        this.graphical_map[447] = 56
+      }
+      //Else leave doors open
+    }
+
+    this.openDoors = function()
+    {
+      if(this.is_bin && this.coin_count <= 0)
+      {
+        //Close Doors
+        //Collision Block
+        this.collision_map[419] = -1
+        this.collision_map[447] = -1
+        //Known tile values:
+        this.graphical_map[419] = -1
+        this.graphical_map[447] = -1
+      }
+      //Else leave doors closed
+    }
+
+    this.closeDoors()
+    this.openDoors()
 
   },
 
