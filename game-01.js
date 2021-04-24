@@ -495,8 +495,10 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
-  this.tile_sheet_size = 16
-  this.ip           = -1
+  this.ip           = -1;
+  this.pie_chart    = undefined;
+  this.tile_sheet_size = 16;
+
 
   //Handle all binning functions
   {

@@ -71,8 +71,102 @@ const Display = function(canvas) {
 
   };
 
-  this.toggleModal= function(){
-    $('#pie-chart').modal('toggle');
+  this.toggleModal= function(bin_data){
+    console.log("Here")
+    $('#pie-chart-modal').modal('toggle');
+ 
+    const open = $('#pie-chart-modal').is(':visible')
+    if((document.getElementById("pie-chart-container").childElementCount) > 0){
+      this.removePieChart()
+    }
+
+    if(open){
+        this.createPieChart(bin_data);
+    }
+    else{
+        this.removePieChart();
+    }
+  }
+
+  this.createPieChart = function(bin_data){
+    if(bin_data.every(function(d) { return d == 0 }))
+    {
+      document.getElementById("pie-chart-container").innerHTML = "<div>No Data to display. 0 Coins Deposited!<div>"
+      return;
+    }
+    this.addPieChartCanvas()
+
+    var ctx = document.getElementById('pie-chart-canvas').getContext('2d');
+    const labels = [
+      'Econ. Assitance to needy in the World',
+      'Econ. Assitance to needy in the US',
+      'US Anti-Terrorism',
+      'Health Care',
+      'Rebuilding Highways, Bridges, Roads',
+      'Environmental Protection',
+      'Medicare',
+      'Eduction',
+      'Gov\'t Assist. To Unemployed',
+      'Scientific Research',
+      'Military Defense',
+      'Social Security',
+      'Veterans Benefits'
+
+    ];
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Current Economic Distribution',
+        data: bin_data,
+        backgroundColor: [
+          '#FFDAB9', //Peach
+          '#00FFFF', //Aqua
+          '#ADFF2F', //Green Yellow
+          '#FFFF00', //yellow
+          '#DC143C', //Light red
+          '#8A2BE2', //Light purple
+          '#8B008B', //Dark Magenta
+          '#FF1493', //Deep Pink
+          '#FF8C00', //Dark Orange
+          '#40E0D0', //Turqoise
+          '#191970', //Dark Blue
+          '#006400', //Dark green
+          '#A9A9A9', //Dark Grey
+
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    const config = {
+      type: 'pie',
+      data,
+      options: {
+        legend: {
+            display: true,
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+        }
+      }     
+    };
+
+    var myChart = new Chart(
+      ctx,
+      config
+    );
+
+  }
+
+  this.addPieChartCanvas = function(){
+    var pieChartCanvas = document.createElement("canvas");
+    pieChartCanvas.id = "pie-chart-canvas"
+    document.getElementById("pie-chart-container").appendChild(pieChartCanvas)
+  }
+
+  this.removePieChart = function(data){
+    canvas_container = document.getElementById("pie-chart-container")
+    removeAllChildNodes(canvas_container)
   }
 
 
@@ -102,5 +196,11 @@ function drawBinLabels(str, x, y, ctx){
       }
       ctx.fillText(ch, x, y);
       x += ctx.measureText(ch).width;
+  }
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
   }
 }
