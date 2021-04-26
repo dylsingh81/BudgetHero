@@ -488,6 +488,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.
+  this.level_coin_coint = 0
   this.level        = 0
   this.doors        = [];
   this.door         = undefined;
@@ -544,6 +545,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
     this.num_coins = 10
     //13 Bins
     this.coin_bins = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    //this.coin_bins = [1,1,1,1,1,1,1,1,1,1,1,1,1]
     this.bins_grouping = []
     //Create coin bins
     for (let index = 0; index < this.coin_bins.length; index++) {
@@ -737,6 +739,7 @@ Game.World.prototype = {
 
         this.coins.splice(this.coins.indexOf(coin), 1);
         this.coin_count ++;
+        this.level_coin_coint++;
 
       }
 
@@ -749,7 +752,8 @@ Game.World.prototype = {
 
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
-        logData(this.level, this.level_num_coins, this.coin_count, this.is_bin, this.coin_bins)
+        logData(this.level, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
+        this.level_coin_coint = 0
       };
 
     }

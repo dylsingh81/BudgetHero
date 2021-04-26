@@ -29,3 +29,6 @@ canvas { image-rendering: -moz-crisp-edges;
 }
 
 
+#pie-modal-content{
+  background-color: rgba(176,154,157,0.8) !important;
+}

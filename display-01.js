@@ -97,6 +97,7 @@ const Display = function(canvas) {
     this.addPieChartCanvas()
 
     var ctx = document.getElementById('pie-chart-canvas').getContext('2d');
+
     const labels = [
       'Econ. Assitance to needy in the World',
       'Econ. Assitance to needy in the US',
@@ -143,15 +144,17 @@ const Display = function(canvas) {
       data,
       options: {
         legend: {
-            display: true,
             labels: {
-                fontColor: 'rgb(255, 99, 132)'
-            }
+                fontColor: 'white',
+            },
+            
+            position: 'left',
+            align: 'end'
         }
       }     
     };
 
-    var myChart = new Chart(
+    new Chart(
       ctx,
       config
     );
@@ -161,6 +164,8 @@ const Display = function(canvas) {
   this.addPieChartCanvas = function(){
     var pieChartCanvas = document.createElement("canvas");
     pieChartCanvas.id = "pie-chart-canvas"
+    pieChartCanvas.width = "400"
+    pieChartCanvas.height = "275"
     document.getElementById("pie-chart-container").appendChild(pieChartCanvas)
   }
 
