@@ -129,7 +129,7 @@ const Display = function(canvas) {
           '#8B008B', //Dark Magenta
           '#FF1493', //Deep Pink
           '#FF8C00', //Dark Orange
-          '#40E0D0', //Turqoise
+          '#663300', //Brown
           '#191970', //Dark Blue
           '#006400', //Dark green
           '#A9A9A9', //Dark Grey

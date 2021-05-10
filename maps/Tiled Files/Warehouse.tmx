@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="28" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="49">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="28" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="52">
  <editorsettings>
   <export target="../final_maps/binning/Warehouse_main.csv" format="csv"/>
  </editorsettings>
@@ -12,6 +12,7 @@
  <tileset firstgid="116" source="main_lev_buildA.tsx"/>
  <tileset firstgid="7172" source="spritesheet_16x16.tsx"/>
  <tileset firstgid="7524" source="itembox.tsx"/>
+ <tileset firstgid="7525" source="pie-chart.tsx"/>
  <layer id="1" name="bg" width="28" height="18">
   <data encoding="csv">
 33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,
@@ -93,7 +94,7 @@
 0,106,107,108,109,107,110,106,107,108,109,110,0,0,0,0,0,106,107,108,109,110,106,107,107,109,110,0,
 0,111,113,112,113,112,115,111,113,112,113,115,0,0,0,0,0,111,113,112,113,115,111,112,113,114,115,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,7446,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147491094,0,0,0,0,0,0,
+0,0,0,0,0,0,7525,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7525,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

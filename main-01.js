@@ -11,7 +11,7 @@
 
 */
 
-window.addEventListener("load", function(event) {
+function startGame() {
 
   "use strict";
 
@@ -92,7 +92,7 @@ window.addEventListener("load", function(event) {
 
   var resize = function(event) {
 
-      display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight, game.world.height / game.world.width);
+      display.resize(document.documentElement.clientWidth, document.documentElement.clientHeight-5, game.world.height / game.world.width);
       display.render();
   
       var rectangle = display.context.canvas.getBoundingClientRect();
@@ -214,10 +214,14 @@ window.addEventListener("load", function(event) {
   setupModal(display)
   
   coin_p.className = "game-label"
+  coin_p.id = "coin-label"
+  coin_p.style.display = "none"
   coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
   document.body.appendChild(coin_p);
   health_p.className = "game-label"
   health_p.innerHTML = "Health: 3";
+  health_p.id = "health-label"
+  health_p.style.display = "none"
   document.body.appendChild(health_p);
 
       ////////////////////
@@ -277,9 +281,7 @@ window.addEventListener("load", function(event) {
   window.addEventListener("keyup"  , keyDownUp);
   window.addEventListener("keypress",   keyPress);
   window.addEventListener("resize" , resize);
-
-
-});
+}
 
 
 setupModal = function(display){
