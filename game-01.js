@@ -484,10 +484,10 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "02";
+  this.zone_id      = "00";
 
   this.coins        = [];// the array of coins in this zone;
-  this.coin_count   = 2;// the number of coins you have.
+  this.coin_count   = 0;// the number of coins you have.
   this.level_coin_coint = 0
   this.level        = 0
   this.doors        = [];
