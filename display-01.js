@@ -91,7 +91,7 @@ const Display = function(canvas) {
   this.createPieChart = function(bin_data){
     if(bin_data.every(function(d) { return d == 0 }))
     {
-      document.getElementById("pie-chart-container").innerHTML = "<div>No Data to display. 0 Coins Deposited!<div>"
+      document.getElementById("pie-chart-container").innerHTML = "<div>0 Coins Deposited!<div>"
       return;
     }
     this.addPieChartCanvas()

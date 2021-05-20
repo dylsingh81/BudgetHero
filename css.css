@@ -45,12 +45,12 @@ canvas { image-rendering: -moz-crisp-edges;
 .play-btn {
   width: 100px;
   height: 100px;
-  background: radial-gradient( rgba(255, 154, 205, 0.8) 60%, rgba(255, 255, 255, 1) 62%);
+  background: radial-gradient( rgba(2, 8, 83, 0.8) 60%, rgba(255, 255, 255, 1) 62%);
   border-radius: 50%;
   position: relative;
   display: block;
   margin: 100px auto;
-  box-shadow: 0px 0px 25px 3px rgba(255, 0, 128, 0.8);
+  box-shadow: 0px 0px 25px 3px rgba(2, 8, 83, 0.8);
   cursor: pointer;
 }
 
@@ -92,8 +92,8 @@ canvas { image-rendering: -moz-crisp-edges;
   opacity: 1;
   border-radius: 50%;
   border: 5px solid rgba(255, 255, 255, .75);
-  top: -30%;
-  left: -30%;
+  top: -25%;
+  left: -25%;
   background: rgba(198, 16, 0, 0);
 }
 
@@ -138,7 +138,7 @@ canvas { image-rendering: -moz-crisp-edges;
 
 
 .logo-1 {
-  color: white;
+  color: rgb(32, 7, 73);
   animation: neon 3s infinite;
   user-select: none;
   font-size: 80px;

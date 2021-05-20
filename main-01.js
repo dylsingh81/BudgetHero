@@ -160,11 +160,16 @@ function startGame() {
 
   var update = function() {
 
-    if (controller.left.active ) { game.world.player.moveLeft ();                               }
-    if (controller.right.active) { game.world.player.moveRight();                               }
-    if (controller.up.active   ) { game.world.player.jump();      controller.up.active = false; }
-    if (controller.deposit)  { game.world.deposit(game.world.player.x, game.world.player.y); controller.deposit = false;}
-    if (controller.withdraw)  { game.world.withdraw(game.world.player.x, game.world.player.y); controller.withdraw = false;}
+    if (controller.left.active  ) { game.world.player.moveLeft ();                                                                 }
+    if (controller.right.active ) { game.world.player.moveRight();                                                                 }
+    if (controller.up.active    ) { game.world.player.jump();                                        controller.up.active = false; }
+
+
+    if (controller.deposit)       { game.world.deposit(game.world.player.x, game.world.player.y);    controller.deposit = false;   }
+    if (controller.withdraw)      { game.world.withdraw(game.world.player.x, game.world.player.y);   controller.withdraw = false;  }
+    if (controller.attack)        { game.world.player.attack();                                      controller.attack = false;    }
+
+
     if(game.world.hitModal)  {display.toggleModal(game.world.coin_bins); game.world.hitModal = false; }
 
     game.update();

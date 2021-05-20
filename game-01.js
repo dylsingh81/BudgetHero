@@ -12,6 +12,8 @@
   8. Added the grass array to the zone file. Also reflected in Game.World
 
 */
+const left_attacks = ["attack-left-up", "attack-left-down", "attack-left-jab"];
+const right_attacks = ["attack-right-up", "attack-right-down", "attack-right-jab"];
 
 const Game = function() {
 
@@ -275,6 +277,7 @@ Game.MovingObject = function(x, y, width, height, velocity_max = 15) {
   Game.Object.call(this, x, y, width, height);
 
   this.jumping      = false;
+  this.attacking    = false
   this.velocity_max = velocity_max;// added velocity_max so velocity can't go past 16
   this.velocity_x   = 0;
   this.velocity_y   = 0;
@@ -321,7 +324,7 @@ Game.Coin = function(x, y) {
 };
 Game.Coin.prototype = {
 
-  frame_sets: { "twirl":[12, 13, 14, 15, 16] },
+  frame_sets: { "twirl":[16, 17, 18, 19, 20] },
 
   updatePosition:function() {
 
@@ -358,23 +361,35 @@ Game.Player = function(x, y) {
 
   Game.Animator.call(this, Game.Player.prototype.frame_sets["idle-left"], 10);
 
-  this.jumping     = true;
-  this.direction_x = -1;
-  this.velocity_x  = 0;
-  this.velocity_y  = 0;
+  this.jumping      = true;
+  this.attacking    = false;
+  this.attack_type  = 0;
+  this.direction_x  = -1;
+  this.velocity_x   = 0;
+  this.velocity_y   = 0;
+  this.attack_count = 0;
+
+  this.index = Math.floor(Math.random() * 3);
 
 };
 Game.Player.prototype = {
 
   frame_sets: {
 
-    "idle-left" : [0],
-    "jump-left" : [1],
-    "move-left" : [2, 3, 4, 5],
-    "idle-right": [6],
-    "jump-right": [7],
-    "move-right": [8, 9, 10, 11]
-
+    "idle-left"         : [0],                         //1
+    "jump-left"         : [1,2,3],                     //3
+    "move-left"         : [4, 5, 6, 7],                //4
+    "idle-right"        : [8],                         //1
+    "jump-right"        : [9, 10, 11],                 //3
+    "move-right"        : [12, 13, 14, 15],            //4
+    //frame_sets: { "twirl":[16, 17, 18, 19, 20] },    //5
+    "attack-left-up"    : [21,22,23,24,25,26,27,28],   //8
+    "attack-left-down"  : [29,30,31,32,33,34,35,36],   //8
+    "attack-left-jab"   : [37,38,39,40,41,42,43,44],   //8
+    "attack-right-up"   : [45,46,47,48,49,50,51,52],   //8
+    "attack-right-down" : [53,54,55,56,57,58,59,60],   //8
+    "attack-right-jab"  : [61,62,63,64,65,66,67,68],   //8
+    "death"             : []                           //?
   },
 
   jump: function() {
@@ -386,7 +401,6 @@ Game.Player.prototype = {
       this.velocity_y -= 15;
 
     }
-
   },
 
   moveLeft: function() {
@@ -403,25 +417,58 @@ Game.Player.prototype = {
 
   },
 
+
+  attack:function(frame_set) {
+    this.attacking = true
+  },
+
   updateAnimation:function() {
 
-    if (this.velocity_y < 0) {
 
-      if (this.direction_x < 0) this.changeFrameSet(this.frame_sets["jump-left"], "pause");
-      else this.changeFrameSet(this.frame_sets["jump-right"], "pause");
+    if(this.attacking) {
+      
+      let frame_set = []
+      
+      this.attack_count+= 1
+      if (this.direction_x < 0) {
+        frame_set = this.frame_sets[left_attacks[this.index]]
+      }
+      else{
+        frame_set = this.frame_sets[right_attacks[this.index]]
+      } 
+      
+      if(frame_set != undefined){
+        this.changeFrameSet(frame_set, "loop", 2);
+      }
+      else{
+        console.log(this.index)
+      }
+
+      if(this.attack_count >= 10){
+        this.attacking = false
+        this.attack_count = 0
+        
+        this.zone_id
+        this.index = Math.floor(Math.random() * 3);
+      }
+    }
+
+    else if (this.velocity_y < 0) {
+
+      if (this.direction_x < 0) this.changeFrameSet(this.frame_sets["jump-left"], "pause", 8);
+      else this.changeFrameSet(this.frame_sets["jump-right"], "pause", 8);
 
     } else if (this.direction_x < 0) {
 
-      if (this.velocity_x < -0.1) this.changeFrameSet(this.frame_sets["move-left"], "loop", 5);
+      if (this.velocity_x < -0.1) this.changeFrameSet(this.frame_sets["move-left"], "loop", 2);
       else this.changeFrameSet(this.frame_sets["idle-left"], "pause");
 
     } else if (this.direction_x > 0) {
 
-      if (this.velocity_x > 0.1) this.changeFrameSet(this.frame_sets["move-right"], "loop", 5);
+      if (this.velocity_x > 0.1) this.changeFrameSet(this.frame_sets["move-right"], "loop", 2);
       else this.changeFrameSet(this.frame_sets["idle-right"], "pause");
 
     }
-
     this.animate();
 
   },
@@ -459,13 +506,35 @@ Game.TileSet = function(columns, tile_size) {
   let f = Game.Frame;
 
   //f = (x, y, width, height, offset_x = 0, offset_y = 0) 
-  this.frames =  [new f(224,0, 29,32,0,-15), // idle-left
-                    new f(96,416, 29, 32, 0, -15), // jump-left
-                    new f(32, 288, 29, 32, 0, -15), new f( 64, 288, 29, 32, 0, -15), new f( 98, 288, 29, 32, 0, -15), new f( 128, 288, 29, 32, 0, -15), // walk-left
-                    new f(32, 0, 29,32,0,-15), // idle-right
-                    new f(96,160, 29, 32, 0, -15), // jump-right
-                    new f(32, 32, 29, 32, 0, -15), new f( 64, 32, 29, 32, 0, -15), new f( 98, 32, 29, 32, 0, -15), new f( 128, 32, 29, 32, 0, -15), // walk-right
-                    new f(0, 0, 16, 16, 0, 0), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0)   // coin  
+  this.frames =  [new f(224,0, 29,32,0,-15),                                                                                                                    // idle-left - 1
+                    new f(64, 416, 29, 32, 0, -15), new f(96, 416, 29, 32, 0, -15), new f(128, 416, 29, 32, 0, -15),                                            // jump-left - 3                                                       
+                    new f(32, 288, 29, 32, 0, -15), new f( 64, 288, 29, 32, 0, -15), new f( 96, 288, 29, 32, 0, -15), new f( 128, 288, 29, 32, 0, -15),         // walk-left - 4
+
+                    new f(32, 0, 29,32,0,-15),                                                                                                                  // idle-right - 1
+                    new f(64,160, 29, 32, 0, -15), new f(96,160, 29, 32, 0, -15), new f(128,160, 29, 32, 0, -15),                                               // jump-right - 3
+                    new f(32, 32, 29, 32, 0, -15), new f( 64, 32, 29, 32, 0, -15), new f( 96, 32, 29, 32, 0, -15), new f( 128, 32, 29, 32, 0, -15),             // walk-right - 4
+
+                    new f(0, 0, 16, 16, 0, 0), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0),  // coin - 5
+
+                    new f(32, 320, 29, 32, 0, -15), new f(64, 320, 29, 32, 0, -15), new f( 96, 320, 29, 32, 0, -15), new f( 128, 320, 29, 32, 0, -15),          // Attack Up Left - 8
+                    new f(160, 320, 29, 32, 0, -15), new f(192, 320, 29, 32, 0, -15), new f( 224, 320, 29, 32, 0, -15), new f( 256, 320, 29, 32, 0, -15),       // ___________________
+
+                    new f(32, 352, 29, 32, 0, -15), new f(64, 352, 29, 32, 0, -15), new f( 96, 352, 29, 32, 0, -15), new f( 128, 352, 29, 32, 0, -15),          // Attack Down Left - 8
+                    new f(160, 352, 29, 32, 0, -15), new f(192, 352, 29, 32, 0, -15), new f( 224, 352, 29, 32, 0, -15), new f( 256, 352, 29, 32, 0, -15),       // ___________________
+
+                    new f(32, 384, 29, 32, 0, -15), new f(64, 384, 29, 32, 0, -15), new f( 96, 384, 29, 32, 0, -15), new f( 128, 384, 29, 32, 0, -15),          // Attack Jab Left - 8
+                    new f(160, 384, 29, 32, 0, -15), new f(192, 384, 29, 32, 0, -15), new f( 224, 384, 29, 32, 0, -15), new f( 256, 384, 29, 32, 0, -15),       // ___________________
+
+                    
+                    new f(32, 64, 32, 38, 0, -15), new f( 64, 64, 32, 32, 0, -15), new f( 96, 64, 32, 32, 0, -15), new f( 128, 64, 32, 32, 0, -15),             // Attack Up Right - 8
+                    new f(160, 64, 32, 38, 0, -15), new f( 192, 64, 32, 32, 0, -15), new f( 224, 64, 32, 32, 0, -15), new f( 256, 64, 32, 32, 0, -15),          // ___________________
+                    
+                    new f(32, 96, 32, 38, 0, -15), new f( 64, 96, 32, 32, 0, -15), new f( 96, 96, 32, 32, 0, -15), new f( 128, 96, 32, 32, 0, -15),             // Attack Down Right - 8
+                    new f(160, 96, 32, 38, 0, -15), new f( 192, 96, 32, 32, 0, -15), new f( 224, 96, 32, 32, 0, -15), new f( 256, 96, 32, 32, 0, -15),          // ___________________
+                    
+                    new f(32, 128, 32, 38, 0, -15), new f( 64, 128, 32, 32, 0, -15), new f( 96, 128, 32, 32, 0, -15), new f( 128, 128, 32, 32, 0, -15),         // Attack Jab Right - 8
+                    new f(160, 128, 32, 38, 0, -15), new f( 192, 128, 32, 32, 0, -15), new f( 224, 128, 32, 32, 0, -15), new f( 256, 128, 32, 32, 0, -15),      // ___________________
+                  
                   ];
   };
   

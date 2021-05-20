@@ -6,6 +6,7 @@ const Controller = function() {
   this.left  = new Controller.ButtonInput();
   this.right = new Controller.ButtonInput();
   this.up    = new Controller.ButtonInput();
+  this.attack = false;
   this.deposit = false
   this.withdraw = false
 
@@ -14,7 +15,6 @@ const Controller = function() {
     var down = (type == "keydown") ? true : false;
 
     switch(key_code) {
-
       case 37: this.left.getInput(down);  break;
       case 38: this.up.getInput(down);    break;
       case 39: this.right.getInput(down);
@@ -23,19 +23,24 @@ const Controller = function() {
   };
 
   this.spacePressed = function(){
-    this.deposit = true
+    
+    this.attack = true
   }
 
-  this.vPressed = function(){
+  this.wPressed = function(){
     this.withdraw = true
+  }
+
+  this.dPressed = function(){
+    this.deposit = true
   }
 
   this.keyPress = function(type, key_code) {
     
     switch(key_code) {
       case 32: this.spacePressed(); break;
-      //LOWER AND UPPCASE V
-      case 86: case 118: this.vPressed(); break;
+      case 68: case 100: this.dPressed(); break; // d + D key
+      case 87: case 119: this.wPressed(); break; // w + W Key
     }
   };
 };
