@@ -302,3 +302,7 @@ setupModal = function(display){
   btn2.onclick = function() {display.toggleModal();};
   */
 }
+
+toggleControlModal = function(e){
+  $('#control-modal').modal('toggle');
+}

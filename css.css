@@ -40,6 +40,23 @@ canvas { image-rendering: -moz-crisp-edges;
   text-align: center;
 }
 
+
+
+#controls-content{
+  background: rgba(255, 114, 184, 0.897);
+  color: rgb(43, 43, 43);
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
 /*  #####################################          Button         ######################################################## */
 
 .play-btn {

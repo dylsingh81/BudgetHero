@@ -24,7 +24,7 @@
             <a class="play-btn" id="StartButton"></a>
 
             <div class="wrap">
-               <button class="button">Controls</button>
+               <button class="button"  onclick="toggleControlModal()">Controls</button>
              </div>
          </div>
       </div>
@@ -60,6 +60,49 @@
                <!-- <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" id="pie-modal-close-2">Close</button>
                   </div> -->
+            </div>
+         </div>
+      </div>
+
+      <div class="modal" tabindex="-1" role="dialog" id ="control-modal">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content" id="controls-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Controls</h5>
+                  <button type="button" id="controls-close-1" aria-label="Close" onclick="toggleControlModal()">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body" id="controls-container">
+                  <div>
+                     <img src="./controls_images/Arrow_Up_Key_Dark.png" alt="Up arrow" style="width:50px;height:50px;"> 
+                     - Jump
+                  </div>
+                  <div>
+                     <img src="./controls_images/Arrow_Left_Key_Dark.png" alt="Left arrow" style="width:50px;height:50px;"> 
+                     - Move Left
+                  </div>
+                  <div>
+                     <img src="./controls_images/Arrow_Right_Key_Dark.png" alt="Right arrow" style="width:50px;height:50px;"> 
+                     - Move Right
+                  </div>
+                  <div>
+                     <img src="./controls_images/Space_Key_Dark.png" alt="Space Bar" style="width:50px;height:50px;"> 
+                     - Attack
+                  </div>
+                  <div>
+                     <img src="./controls_images/D_Key_Dark.png" alt="D Key" style="width:50px;height:50px;"> 
+                     - Deposit into bin
+                  </div>
+                  <div>
+                     <img src="./controls_images/W_Key_Dark.png" alt="W Key" style="width:50px;height:50px;"> 
+                     - Withdraw from bin
+                  </div>
+
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" id="pie-modal-close-2" onclick="toggleControlModal()">Close</button>
+                  </div>
             </div>
          </div>
       </div>
