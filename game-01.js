@@ -193,17 +193,9 @@ Game.Collider.prototype = {
 
   collideSpike:function(world) {
     console.log("Hit Spike")
-    world.health--
-    //Respawn Player
-    const respawnX = world.spawn_point.x
-    const respawnY = world.spawn_point.y
-    //console.log(respawnX, respawnY, world.spawn_point)
-    world.player.setCenterX   (respawnX);
-    world.player.setOldCenterX(respawnX);
-    world.player.setCenterY   (respawnY);
-    world.player.setOldCenterY(respawnY);
+    world.respawn()
     return
-  }
+  },
 
  };
 
@@ -389,7 +381,7 @@ Game.Player.prototype = {
     "attack-right-up"   : [45,46,47,48,49,50,51,52],   //8
     "attack-right-down" : [53,54,55,56,57,58,59,60],   //8
     "attack-right-jab"  : [61,62,63,64,65,66,67,68],   //8
-    "death"             : []                           //?
+    "death"             : [69,70,71,72,73]             //5
   },
 
   jump: function() {
@@ -474,29 +466,59 @@ Game.Player.prototype = {
 
   updateAttack:function(world) {
 
-
     if(this.attacking) {
       
-      if (this.direction_x < 0) {
-        
-        x = Math.floor((this.x-16)/16)
-      }
-      else{
-        
-        x = Math.floor((this.x+16)/16)
-      } 
-      
-      y = Math.floor((this.y)/16)+1
-      console.log(x,y)
-      i = world.columns * y + x
+      x = this.x
+      y = this.y
+      for(var i = 0; i < world.enemies.length; i++) {
+          enemy = world.enemies[i]
+          dist = 24
+          //console.log(y-enemy.y)
+          if(y-enemy.y > -10 && y-enemy.y < 0){
+            if (this.direction_x < 0) {
+              if(x-enemy.x < dist && x-enemy.x > 0){
+                //console.log(x-enemy.x)
+            
+                console.log("Hit enemy", i)
+                enemy.die()
+              }
+            }
+            else{
+              if(x-enemy.x > -dist && x-enemy.x < 0){
+                //console.log(x-enemy.x)
+                console.log("Hit enemy", i)
+                enemy.die()
 
-      if(world.graphical_map[i] == 2792){
-          console.log("Hit Enemy")
+              }
+            } 
+          }
       }
       
 
     }
 
+  },
+
+  checkCollideEnemy:function(world) {
+    x = this.x
+    y = this.y
+    for(var i = 0; i < world.enemies.length; i++) {
+        enemy = world.enemies[i]
+        if(enemy.dead)
+        {
+          return
+        }
+        //console.log(enemy)
+        dist = 10
+
+        if( ((enemy.x + enemy.width - (this.x + this.width) > 0)) && (enemy.x + enemy.width - (this.x + this.width) < dist) &&
+        (enemy.y + enemy.height - (this.y + this.height) > 0) && ((enemy.y + enemy.height - (this.y + this.height) < dist))) {
+          
+          //console.log(enemy.x + enemy.width - (this.x + this.width))
+          //console.log("Enemy Kill player")
+          world.respawn()
+        }
+    }
   },
 
   updatePosition:function(gravity, friction) {
@@ -524,6 +546,122 @@ Object.assign(Game.Player.prototype, Game.MovingObject.prototype);
 Object.assign(Game.Player.prototype, Game.Animator.prototype);
 Game.Player.prototype.constructor = Game.Player;
 
+
+Game.Enemy = function(x, y) {
+
+  Game.MovingObject.call(this, x, y, 13, 16);
+
+  Game.Animator.call(this, Game.Enemy.prototype.frame_sets["idle-left"], 3);
+
+  this.direction_x  = -1;
+  this.velocity_x   = 0;
+  this.velocity_y   = 0;
+  this.maxRight = 50;
+  this.maxLeft = 50;
+  this.dead = false;
+  this.deadCount = 0
+};
+Game.Enemy.prototype = {
+
+  frame_sets: {
+
+    "idle-left"         : [74],                        //1
+    "move-left"         : [74, 75, 76, 77, 78],        //5
+    "idle-right"        : [79],                        //1
+    "move-right"        : [79, 80, 81, 82, 83],        //5
+    "death"             : [84, 85, 86, 87, 88]         //5
+  },
+
+  moveLeft: function() {
+    this.direction_x = -1;
+    this.velocity_x -= 0.7;
+
+  },
+
+  moveRight:function() {
+    this.direction_x = 1;
+    this.velocity_x += 0.7;
+
+  },
+
+  move:function() {
+    
+    //console.log(this.maxRight,this.maxLeft)
+    while(this.maxRight > 0)
+    {
+      this.moveRight()
+      this.maxRight -= 1
+      return
+    }
+    while(this.maxLeft > 0){
+      this.moveLeft()
+      this.maxLeft -= 1
+      return
+    }
+    this.maxLeft = 50
+    this.maxRight = 50
+  },
+
+  die:function(){
+    this.dead = true
+  },
+
+  updateAnimation:function(world) {
+
+    if(this.dead){
+      this.changeFrameSet(this.frame_sets["death"], "loop", 3);
+      this.deadCount += 1
+      if(this.deadCount > 10){
+        world.enemies.splice(world.enemies.indexOf(this), 1)
+      }
+    }
+
+    else if (this.direction_x < 0) {
+
+      if (this.velocity_x < -0.1) this.changeFrameSet(this.frame_sets["move-left"], "loop", 3);
+      else this.changeFrameSet(this.frame_sets["idle-left"], "pause");
+    }
+
+    else if (this.direction_x > 0) {
+
+      if (this.velocity_x > 0.1) this.changeFrameSet(this.frame_sets["move-right"], "loop", 3);
+      else this.changeFrameSet(this.frame_sets["idle-right"], "pause");
+
+    }
+
+    
+
+    this.animate();
+
+  },
+
+  updatePosition:function(gravity=0, friction=0.4) {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+
+    this.velocity_y += gravity;
+    this.velocity_x *= friction;
+
+    /* Made it so that velocity cannot exceed velocity_max */
+    if (Math.abs(this.velocity_x) > this.velocity_max)
+    this.velocity_x = this.velocity_max * Math.sign(this.velocity_x);
+
+    if (Math.abs(this.velocity_y) > this.velocity_max)
+    this.velocity_y = this.velocity_max * Math.sign(this.velocity_y);
+
+    this.x    += this.velocity_x;
+    this.y    += this.velocity_y;
+
+  }
+
+};
+Object.assign(Game.Enemy.prototype, Game.MovingObject.prototype);
+Object.assign(Game.Enemy.prototype, Game.Animator.prototype);
+Game.Enemy.prototype.constructor = Game.Enemy ;
+
+
+
 Game.TileSet = function(columns, tile_size) {
 
   this.columns    = columns;
@@ -542,14 +680,14 @@ Game.TileSet = function(columns, tile_size) {
 
                     new f(0, 0, 16, 16, 0, 0), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0),  // coin - 5
 
-                    new f(32, 320, 29, 32, 0, -15), new f(64, 320, 29, 32, 0, -15), new f( 96, 320, 29, 32, 0, -15), new f( 128, 320, 29, 32, 0, -15),          // Attack Up Left - 8
-                    new f(160, 320, 29, 32, 0, -15), new f(192, 320, 29, 32, 0, -15), new f( 224, 320, 29, 32, 0, -15), new f( 256, 320, 29, 32, 0, -15),       // ___________________
+                    new f(32, 320, 32, 32, 0, -15), new f(64, 320, 32, 32, 0, -15), new f( 96, 320, 32, 32, 0, -15), new f( 128, 320, 32, 32, 0, -15),          // Attack Up Left - 8
+                    new f(160, 320, 32, 32, 0, -15), new f(192, 320, 32, 32, 0, -15), new f( 224, 320, 32, 32, 0, -15), new f( 256, 320, 32, 32, 0, -15),       // ___________________
 
-                    new f(32, 352, 29, 32, 0, -15), new f(64, 352, 29, 32, 0, -15), new f( 96, 352, 29, 32, 0, -15), new f( 128, 352, 29, 32, 0, -15),          // Attack Down Left - 8
-                    new f(160, 352, 29, 32, 0, -15), new f(192, 352, 29, 32, 0, -15), new f( 224, 352, 29, 32, 0, -15), new f( 256, 352, 29, 32, 0, -15),       // ___________________
+                    new f(32, 352, 32, 32, 0, -15), new f(64, 352, 32, 32, 0, -15), new f( 96, 352, 32, 32, 0, -15), new f( 128, 352, 32, 32, 0, -15),          // Attack Down Left - 8
+                    new f(160, 352, 32, 32, 0, -15), new f(192, 352, 32, 32, 0, -15), new f( 224, 352, 32, 32, 0, -15), new f( 256, 352, 32, 32, 0, -15),       // ___________________
 
-                    new f(32, 384, 29, 32, 0, -15), new f(64, 384, 29, 32, 0, -15), new f( 96, 384, 29, 32, 0, -15), new f( 128, 384, 29, 32, 0, -15),          // Attack Jab Left - 8
-                    new f(160, 384, 29, 32, 0, -15), new f(192, 384, 29, 32, 0, -15), new f( 224, 384, 29, 32, 0, -15), new f( 256, 384, 29, 32, 0, -15),       // ___________________
+                    new f(32, 384, 32, 32, 0, -15), new f(64, 384, 32, 32, 0, -15), new f( 96, 384, 32, 32, 0, -15), new f( 128, 384, 32, 32, 0, -15),          // Attack Jab Left - 8
+                    new f(160, 384, 32, 32, 0, -15), new f(192, 384, 32, 32, 0, -15), new f( 224, 384, 32, 32, 0, -15), new f( 256, 384, 32, 32, 0, -15),       // ___________________
 
                     
                     new f(32, 64, 32, 38, 0, -15), new f( 64, 64, 32, 32, 0, -15), new f( 96, 64, 32, 32, 0, -15), new f( 128, 64, 32, 32, 0, -15),             // Attack Up Right - 8
@@ -560,6 +698,15 @@ Game.TileSet = function(columns, tile_size) {
                     
                     new f(32, 128, 32, 38, 0, -15), new f( 64, 128, 32, 32, 0, -15), new f( 96, 128, 32, 32, 0, -15), new f( 128, 128, 32, 32, 0, -15),         // Attack Jab Right - 8
                     new f(160, 128, 32, 38, 0, -15), new f( 192, 128, 32, 32, 0, -15), new f( 224, 128, 32, 32, 0, -15), new f( 256, 128, 32, 32, 0, -15),      // ___________________
+
+                    new f(0, 0, 16, 16, 0, 0), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0),  // Death - 5
+
+                    
+                    new f(96, 0, 16, 16, 0, 0), new f(112, 0, 16, 16, 0, 0), new f(128, 0, 16, 16, 0, 0), new f(144, 0, 16, 16, 0, 0), new f(160, 0, 16, 16, 0, 0), // Goblin Run left - 5
+                    new f(0, 0, 16, 16, 0, -1), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0), // Goblin Run right - 5
+                    new f(16, 64, 16, 16, 0, -1), new f(0, 64, 16, 16, 0, 0), new f(32, 16, 16, 16, 0, 0), new f(48, 16, 16, 16, 0, 0), new f(64, 16, 16, 16, 0, 0), // Goblin Die - 5
+
+
                   
                   ];
   };
@@ -587,14 +734,13 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.level        = 0
   this.doors        = [];
   this.door         = undefined;
-  this.health       = 3
+  this.health       = 3;
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
   this.ip           = -1;
   this.pie_chart    = undefined;
   this.tile_sheet_size = 16;
-
 
   //Handle all binning functions
   {
@@ -735,6 +881,7 @@ Game.World.prototype = {
 
     this.coins              = new Array();
     this.doors              = new Array();
+    this.enemies            = new Array();
     this.collision_map      = zone.collision_map;
     this.graphical_map      = zone.graphical_map;
     this.columns            = zone.columns;
@@ -744,14 +891,20 @@ Game.World.prototype = {
     this.is_bin             = zone.is_bin
     this.spawn_point        = zone.spawn_point
     this.level_num_coins    = zone.coins.length 
+    this.enemies_map        = zone.enemies_map
     this.hitModal           = false
 
+    //Create Enemies
+    for (let index = zone.enemies_map.length - 1; index > -1; -- index) {
+        x = zone.enemies_map[index][1] * 16
+        y = zone.enemies_map[index][2] * 16
+        this.enemies[index] = new Game.Enemy(x, y)
+    }
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
 
       let coin = zone.coins[index];
       this.coins[index] = new Game.Coin(coin[0] * this.tile_set.tile_size + 5, coin[1] * this.tile_set.tile_size - 2);
-
     }
 
     for (let index = zone.doors.length - 1; index > -1; -- index) {
@@ -820,7 +973,7 @@ Game.World.prototype = {
   update:function() {
 
     this.player.updatePosition(this.gravity, this.friction);
-
+    
     this.collideObject(this.player);
 
     for (let index = this.coins.length - 1; index > -1; -- index) {
@@ -855,7 +1008,33 @@ Game.World.prototype = {
 
     this.player.updateAnimation();
     this.player.updateAttack(this);
+    this.player.checkCollideEnemy(this);
 
+
+    for(let index = this.enemies.length - 1; index > -1; -- index) {
+
+      let enemy = this.enemies[index];
+      if(!enemy.dead){
+        enemy.move()
+      }
+      enemy.updatePosition();
+      enemy.updateAnimation(this);
+    }
+
+
+  },
+
+  respawn:function(){
+    this.health--
+    //Respawn Player
+    const respawnX = this.spawn_point.x
+    const respawnY = this.spawn_point.y
+    //console.log(respawnX, respawnY, this.spawn_point)
+    this.player.setCenterX   (respawnX);
+    this.player.setOldCenterX(respawnX);
+    this.player.setCenterY   (respawnY);
+    this.player.setOldCenterY(respawnY);
+    return
   }
 
 };

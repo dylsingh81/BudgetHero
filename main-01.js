@@ -35,6 +35,7 @@ function startGame() {
     this.background_image = undefined;
     this.sprite_sheet = undefined;
     this.coin_sheet = undefined;
+    this.enemy1_sheet = undefined
   };
 
   AssetsManager.prototype = {
@@ -123,11 +124,10 @@ function startGame() {
     game.world.tile_set.columns, game.world.graphical_map, game.world.columns,  game.world.tile_set.tile_size);
 
 
-
+    //Draw Coins
     for (let index = game.world.coins.length - 1; index > -1; -- index) {
 
       let coin = game.world.coins[index];
-
       frame = game.world.tile_set.frames[coin.frame_value];
 
       display.drawObject(assets_manager.coin_sheet,
@@ -137,6 +137,24 @@ function startGame() {
 
     }
 
+    //Draw Enemy
+
+    for (let index = game.world.enemies.length - 1; index > -1; -- index) {
+
+      let enemy = game.world.enemies[index];
+      frame = game.world.tile_set.frames[enemy.frame_value];
+
+
+      display.drawObject(assets_manager.enemy1_sheet,
+      frame.x, frame.y,
+      enemy.x + Math.floor(enemy.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+      enemy.y + frame.offset_y, frame.width, frame.height);
+
+    }
+    
+
+
+    //Draw Player
     frame = game.world.tile_set.frames[game.world.player.frame_value];
 
     display.drawObject(assets_manager.sprite_sheet,
@@ -179,6 +197,10 @@ function startGame() {
     and the assets_manager loads the door's level. */
     if (game.world.door) {
       
+      //Toggle Modal Off
+      display.toggleModal()
+
+
       engine.stop();
 
       /* Here I'm requesting the JSON file to use to populate the game.world object. */
@@ -275,6 +297,17 @@ function startGame() {
       engine.start();
 
     });
+
+    assets_manager.requestImage(zone.enemy1_path, (image) => {
+
+      assets_manager.enemy1_sheet = image;
+
+      resize();
+      engine.start();
+
+    });
+
+
   });
 
   var ip;
