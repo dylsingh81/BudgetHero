@@ -88,6 +88,23 @@ const Display = function(canvas) {
     }
   }
 
+
+  this.closeModal= function(bin_data){
+    const open = false
+    
+    $('#pie-chart-modal').modal('hide');
+    if((document.getElementById("pie-chart-container").childElementCount) > 0){
+      this.removePieChart()
+    }
+
+    if(open){
+        this.createPieChart(bin_data);
+    }
+    else{
+        this.removePieChart();
+    }
+  }
+
   this.createPieChart = function(bin_data){
     if(bin_data.every(function(d) { return d == 0 }))
     {

@@ -124,7 +124,7 @@ Game.Collider = function() {
                if (this.collidePlatformBottom (object, tile_y + tile_size)) return;
                if (this.collidePlatformLeft   (object, tile_x            )) return;
                    this.collidePlatformRight  (object, tile_x + tile_size); break;
-      case -2:     this.collideSpike          (world                     );break;
+      case -2:     this.collideSpike          (object, world             );break;
       case -3: if (this.collidePlatformTop    (object, tile_y            )) return;
                if (this.collidePlatformBottom (object, tile_y + tile_size)){
                 world.hitModal = true
@@ -191,10 +191,10 @@ Game.Collider.prototype = {
 
   },
 
-  collideSpike:function(world) {
-    console.log("Hit Spike")
-    world.respawn()
-    return
+  collideSpike:function(object) {
+    if(object.type == "player"){
+      object.dead = true
+    }
   },
 
  };
@@ -360,8 +360,10 @@ Game.Player = function(x, y) {
   this.velocity_x   = 0;
   this.velocity_y   = 0;
   this.attack_count = 0;
-
-  this.index = Math.floor(Math.random() * 3);
+  this.deadCount    = 0;
+  this.dead         = false
+  this.index        = Math.floor(Math.random() * 3);
+  this.type         = "player"
 
 };
 Game.Player.prototype = {
@@ -381,7 +383,8 @@ Game.Player.prototype = {
     "attack-right-up"   : [45,46,47,48,49,50,51,52],   //8
     "attack-right-down" : [53,54,55,56,57,58,59,60],   //8
     "attack-right-jab"  : [61,62,63,64,65,66,67,68],   //8
-    "death"             : [69,70,71,72,73]             //5
+    "death-right"       : [69,70,71,72,73],            //5
+    "death-left"        : [74,75,76,77,78]             //5
   },
 
   jump: function() {
@@ -414,10 +417,24 @@ Game.Player.prototype = {
     this.attacking = true
   },
 
-  updateAnimation:function() {
-
-
-    if(this.attacking) {
+  updateAnimation:function(world) {
+    if(this.dead){
+      if(this.direction_x < 0)
+        this.changeFrameSet(this.frame_sets["death-left"], "loop", 3);
+      else
+        this.changeFrameSet(this.frame_sets["death-right"], "loop", 3);
+      //delay = 10 + 3
+      this.deadCount += 1
+      this.velocity_x = 0
+      this.velocity_y = 0
+      if(this.deadCount > 13){    
+        world.respawn()
+        this.deadCount = 0
+        this.dead = false
+      }
+    }
+    
+    else if(this.attacking) {
       
       let frame_set = []
       
@@ -470,13 +487,15 @@ Game.Player.prototype = {
       
       x = this.x
       y = this.y
+
+      //console.log(x, y, enemy.x, enemy.y)
+
       for(var i = 0; i < world.enemies.length; i++) {
           enemy = world.enemies[i]
           dist = 24
-          //console.log(y-enemy.y)
-          if(y-enemy.y > -10 && y-enemy.y < 0){
+          if(y-enemy.y > -10 && y-enemy.y <= 0){
             if (this.direction_x < 0) {
-              if(x-enemy.x < dist && x-enemy.x > 0){
+              if(x-enemy.x < dist && x-enemy.x >= 0){
                 //console.log(x-enemy.x)
             
                 console.log("Hit enemy", i)
@@ -484,7 +503,7 @@ Game.Player.prototype = {
               }
             }
             else{
-              if(x-enemy.x > -dist && x-enemy.x < 0){
+              if(x-enemy.x > -dist && x-enemy.x <= 0){
                 //console.log(x-enemy.x)
                 console.log("Hit enemy", i)
                 enemy.die()
@@ -511,12 +530,13 @@ Game.Player.prototype = {
         //console.log(enemy)
         dist = 10
 
-        if( ((enemy.x + enemy.width - (this.x + this.width) > 0)) && (enemy.x + enemy.width - (this.x + this.width) < dist) &&
-        (enemy.y + enemy.height - (this.y + this.height) > 0) && ((enemy.y + enemy.height - (this.y + this.height) < dist))) {
+        if( ((enemy.x + enemy.width - (this.x + this.width) >= 0)) && (enemy.x + enemy.width - (this.x + this.width) < dist) &&
+        (enemy.y + enemy.height - (this.y + this.height) >= 0) && ((enemy.y + enemy.height - (this.y + this.height) < dist))) {
           
           //console.log(enemy.x + enemy.width - (this.x + this.width))
           //console.log("Enemy Kill player")
-          world.respawn()
+          this.dead = true
+
         }
     }
   },
@@ -556,20 +576,21 @@ Game.Enemy = function(x, y) {
   this.direction_x  = -1;
   this.velocity_x   = 0;
   this.velocity_y   = 0;
-  this.maxRight = 50;
-  this.maxLeft = 50;
-  this.dead = false;
-  this.deadCount = 0
+  this.maxRight     = 50;
+  this.maxLeft      = 50;
+  this.dead         = false;
+  this.deadCount    = 0;
+  this.type         = "enemy";
 };
 Game.Enemy.prototype = {
 
   frame_sets: {
 
-    "idle-left"         : [74],                        //1
-    "move-left"         : [74, 75, 76, 77, 78],        //5
-    "idle-right"        : [79],                        //1
-    "move-right"        : [79, 80, 81, 82, 83],        //5
-    "death"             : [84, 85, 86, 87, 88]         //5
+    "idle-left"         : [79],                        //1
+    "move-left"         : [79, 80, 81, 82, 83],        //5
+    "idle-right"        : [84],                        //1
+    "move-right"        : [84, 85, 86, 87, 88],        //5
+    "death"             : [89, 90, 91, 92, 93]         //5
   },
 
   moveLeft: function() {
@@ -611,7 +632,8 @@ Game.Enemy.prototype = {
     if(this.dead){
       this.changeFrameSet(this.frame_sets["death"], "loop", 3);
       this.deadCount += 1
-      if(this.deadCount > 10){
+      //delay = 10 + 3
+      if(this.deadCount > 13){
         world.enemies.splice(world.enemies.indexOf(this), 1)
       }
     }
@@ -635,7 +657,7 @@ Game.Enemy.prototype = {
 
   },
 
-  updatePosition:function(gravity=0, friction=0.4) {
+  updatePosition:function(gravity=0.7, friction=0.4) {
 
     this.x_old = this.x;
     this.y_old = this.y;
@@ -699,8 +721,10 @@ Game.TileSet = function(columns, tile_size) {
                     new f(32, 128, 32, 38, 0, -15), new f( 64, 128, 32, 32, 0, -15), new f( 96, 128, 32, 32, 0, -15), new f( 128, 128, 32, 32, 0, -15),         // Attack Jab Right - 8
                     new f(160, 128, 32, 38, 0, -15), new f( 192, 128, 32, 32, 0, -15), new f( 224, 128, 32, 32, 0, -15), new f( 256, 128, 32, 32, 0, -15),      // ___________________
 
-                    new f(0, 0, 16, 16, 0, 0), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0),  // Death - 5
-
+                    new f(32, 224, 32, 32, 0, -15), new f(64, 224, 32, 32, 0, -15), new f( 96, 224, 32, 32, 0, -15), new f( 128, 224, 32, 32, 0, -15),          // Player Death Left - 5
+                    new f(160, 224, 32, 32, 0, -15),
+                    new f(32, 480, 32, 32, 0, -15), new f(64, 480, 32, 32, 0, -15), new f( 96, 480, 32, 32, 0, -15), new f( 128, 480, 32, 32, 0, -15),          // Player Death Right - 5
+                    new f(160, 480, 32, 32, 0, -15),
                     
                     new f(96, 0, 16, 16, 0, 0), new f(112, 0, 16, 16, 0, 0), new f(128, 0, 16, 16, 0, 0), new f(144, 0, 16, 16, 0, 0), new f(160, 0, 16, 16, 0, 0), // Goblin Run left - 5
                     new f(0, 0, 16, 16, 0, -1), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0), // Goblin Run right - 5
@@ -726,10 +750,10 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "00";
+  this.zone_id      = "02";
 
   this.coins        = [];// the array of coins in this zone;
-  this.coin_count   = 0;// the number of coins you have.
+  this.coin_count   = 1;// the number of coins you have.
   this.level_coin_coint = 0
   this.level        = 0
   this.doors        = [];
@@ -1006,7 +1030,7 @@ Game.World.prototype = {
 
     }
 
-    this.player.updateAnimation();
+    this.player.updateAnimation(this);
     this.player.updateAttack(this);
     this.player.checkCollideEnemy(this);
 
@@ -1019,6 +1043,7 @@ Game.World.prototype = {
       }
       enemy.updatePosition();
       enemy.updateAnimation(this);
+      this.collideObject(enemy);
     }
 
 

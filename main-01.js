@@ -198,7 +198,7 @@ function startGame() {
     if (game.world.door) {
       
       //Toggle Modal Off
-      display.toggleModal()
+      display.closeModal()
 
 
       engine.stop();
