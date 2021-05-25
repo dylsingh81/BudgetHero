@@ -448,7 +448,6 @@ Game.Player.prototype = {
         this.attacking = false
         this.attack_count = 0
         
-        this.zone_id
         this.index = Math.floor(Math.random() * 3);
       }
     }
@@ -470,6 +469,33 @@ Game.Player.prototype = {
 
     }
     this.animate();
+
+  },
+
+  updateAttack:function(world) {
+
+
+    if(this.attacking) {
+      
+      if (this.direction_x < 0) {
+        
+        x = Math.floor((this.x-16)/16)
+      }
+      else{
+        
+        x = Math.floor((this.x+16)/16)
+      } 
+      
+      y = Math.floor((this.y)/16)+1
+      console.log(x,y)
+      i = world.columns * y + x
+
+      if(world.graphical_map[i] == 2792){
+          console.log("Hit Enemy")
+      }
+      
+
+    }
 
   },
 
@@ -828,6 +854,7 @@ Game.World.prototype = {
     }
 
     this.player.updateAnimation();
+    this.player.updateAttack(this);
 
   }
 
