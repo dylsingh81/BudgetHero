@@ -90,6 +90,10 @@ Game.Collider = function() {
   /* I changed this so all the checks happen in y first order. */
   this.collide = function(value, object, tile_x, tile_y, tile_size, world) {
 
+    if(object.type == "bomb" && object.velocity_x == 0){
+      object.die()
+    }
+
     switch(value) {
 
       case  1:     this.collidePlatformTop    (object, tile_y            ); break;
@@ -358,6 +362,7 @@ Game.Bomb = function(x, y, dir) {
   this.velocity_y   = 0;
   this.dead         = false;
   this.deadCount    = 0;
+  this.type = "bomb"
 };
 Game.Bomb.prototype = {
 
@@ -369,14 +374,14 @@ Game.Bomb.prototype = {
   moveLeft: function() {
 
       this.direction_x = -1;
-      this.velocity_x -= 0.65;
+      this.velocity_x -= 0.8;
   
     },
   
   moveRight:function(frame_set) {
   
       this.direction_x = 1;
-      this.velocity_x += 0.65;
+      this.velocity_x += 0.8;
   
     },
 
@@ -402,6 +407,8 @@ Game.Bomb.prototype = {
       this.deadCount += 1
       //delay = 10 + 3
       if(this.deadCount > 13){
+        
+        world.bombs.splice(world.bombs.indexOf(this), 1)
       }
     }
 
@@ -929,7 +936,7 @@ Game.TileSet = function(columns, tile_size) {
                     new f(16, 64, 16, 16, 0, -1), new f(0, 64, 16, 16, 0, 0), new f(32, 16, 16, 16, 0, 0), new f(48, 16, 16, 16, 0, 0), new f(64, 16, 16, 16, 0, 0), // Goblin Die - 5
 
                     
-                    new f(0, 0, 8, 8, 0, 0), new f(16, 0, 8, 8, 0, 0), new f(32, 0, 8, 8, 0, 0)                                                           // Bomb Move - 3
+                    new f(0, 0, 8, 16, 0, -8), new f(16, 0, 8, 16, 0, -8), new f(32, 0, 8 , 16, 0, -8)                                                           // Bomb Move - 3
 
 
                   
@@ -1256,7 +1263,6 @@ Game.World.prototype = {
     }
 
     //Update Bombs
-    console.log(this.bombs)
     for(let index = this.bombs.length - 1; index > -1; -- index) {
 
       let bomb = this.bombs[index];
