@@ -367,21 +367,21 @@ Game.Bomb = function(x, y, dir) {
 Game.Bomb.prototype = {
 
   frame_sets: {
-    "move-left"    : [95,94],  //3
-    "death"        : [94]         //5
+    "move-left"    : [95,94],  //2
+    "death"        : [96,97]   //2
   },
 
   moveLeft: function() {
 
       this.direction_x = -1;
-      this.velocity_x -= 0.8;
+      this.velocity_x -= 4;
   
     },
   
   moveRight:function(frame_set) {
   
       this.direction_x = 1;
-      this.velocity_x += 0.8;
+      this.velocity_x += 4;
   
     },
 
@@ -403,10 +403,10 @@ Game.Bomb.prototype = {
     const bombTime = 50
 
     if(this.dead){
-      this.changeFrameSet(this.frame_sets["death"], "loop", 3);
+      this.changeFrameSet(this.frame_sets["death"], "loop", 5);
       this.deadCount += 1
       //delay = 10 + 3
-      if(this.deadCount > 13){
+      if(this.deadCount > 15){
         
         world.bombs.splice(world.bombs.indexOf(this), 1)
       }
@@ -624,6 +624,7 @@ Game.Player.prototype = {
   checkCollideEnemy:function(world) {
     x = this.x
     y = this.y
+    //Collide with Enemy Body
     for(var i = 0; i < world.enemies.length; i++) {
         enemy = world.enemies[i]
         if(enemy.dead)
@@ -631,7 +632,7 @@ Game.Player.prototype = {
           return
         }
         //console.log(enemy)
-        dist = 10
+        dist = 14
 
         if( ((enemy.x + enemy.width - (this.x + this.width) >= 0)) && (enemy.x + enemy.width - (this.x + this.width) < dist) &&
         (enemy.y + enemy.height - (this.y + this.height) >= 0) && ((enemy.y + enemy.height - (this.y + this.height) < dist))) {
@@ -642,6 +643,26 @@ Game.Player.prototype = {
 
         }
     }
+    //Collide with Bomb
+    for(var i = 0; i < world.bombs.length; i++) {
+      bomb = world.bombs[i]
+      if(bomb.dead)
+      {
+        return
+      }
+      //console.log(enemy)
+      dist = 12
+      
+
+      if( ((bomb.x + bomb.width - (this.x + this.width) >= 0)) && (bomb.x + bomb.width - (this.x + this.width) < dist) &&
+      (bomb.y+8 + bomb.height - (this.y + this.height) >= 0) && ((bomb.y+8 + bomb.height - (this.y + this.height) < dist))) {
+        
+        //console.log(bomb.x + bomb.width - (this.x + this.width))
+        //console.log("Enemy Kill player")
+        bomb.dead = true;
+        this.dead = true;
+      }
+  }
   },
 
   updatePosition:function(gravity, friction) {
@@ -808,9 +829,9 @@ Game.Enemy2.prototype = {
   frame_sets: {
 
     "idle-left"         : [79],                         //1
-    "move-left"         : [79, 79, 79, 80, 81, 82, 83], //7
+    "move-left"         : [79, 79, 80, 79, 79, 80, 79, 80, 81, 82, 83], //11
     "idle-right"        : [84],                         //1
-    "move-right"        : [84, 84, 84, 85, 86, 87, 88], //7
+    "move-right"        : [84, 85, 84, 85, 84, 85, 84, 85, 86, 87, 88], //11
     "death"             : [89, 90, 91, 92, 93]          //5
   },
 
@@ -828,10 +849,10 @@ Game.Enemy2.prototype = {
 
 
     //Create bomb at animation #6
-    const anim_length = 20 
+    const anim_length = 12
     this.bombCount += 1
     //Delay = num frames * anim leng
-    if(this.bombCount > anim_length*7){
+    if(this.bombCount > anim_length*11){
       world.bombs.push(new Game.Bomb(this.x, this.y, this.direction_x))
       this.bombCount = 0
     }
@@ -931,15 +952,14 @@ Game.TileSet = function(columns, tile_size) {
                     new f(32, 480, 32, 32, 0, -15), new f(64, 480, 32, 32, 0, -15), new f( 96, 480, 32, 32, 0, -15), new f( 128, 480, 32, 32, 0, -15),          // Player Death Right - 5
                     new f(160, 480, 32, 32, 0, -15),
                     
-                    new f(96, 0, 16, 16, 0, 0), new f(112, 0, 16, 16, 0, 0), new f(128, 0, 16, 16, 0, 0), new f(144, 0, 16, 16, 0, 0), new f(160, 0, 16, 16, 0, 0), // Goblin Run left - 5
-                    new f(0, 0, 16, 16, 0, -1), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0), // Goblin Run right - 5
-                    new f(16, 64, 16, 16, 0, -1), new f(0, 64, 16, 16, 0, 0), new f(32, 16, 16, 16, 0, 0), new f(48, 16, 16, 16, 0, 0), new f(64, 16, 16, 16, 0, 0), // Goblin Die - 5
+                    new f(96, 0, 16, 16, 0, 0), new f(112, 0, 16, 16, 0, 0), new f(128, 0, 16, 16, 0, 0), new f(144, 0, 16, 16, 0, 0), new f(160, 0, 16, 16, 0, 0),   // Goblin Run left - 5
+                    new f(0, 0, 16, 16, 0, -1), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0),       // Goblin Run right - 5
+                    new f(16, 64, 16, 16, 0, -1), new f(0, 64, 16, 16, 0, 0), new f(32, 16, 16, 16, 0, 0), new f(48, 16, 16, 16, 0, 0), new f(64, 16, 16, 16, 0, 0),  // Goblin Die - 5
 
                     
-                    new f(0, 0, 8, 16, 0, -8), new f(16, 0, 8, 16, 0, -8), new f(32, 0, 8 , 16, 0, -8)                                                           // Bomb Move - 3
+                    new f(0, 0, 8, 16, 0, -8), new f(16, 0, 8, 16, 0, -8),                                                                                            // Bomb Move - 2
+                    new f(22, 0, 15, 32, 0, -8), new f(37, 0, 18, 32, 0, -8)                                                                                          // Bomb Explode - 2
 
-
-                  
                   ];
   };
   
