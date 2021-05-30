@@ -35,7 +35,8 @@ function startGame() {
     this.background_image = undefined;
     this.sprite_sheet = undefined;
     this.coin_sheet = undefined;
-    this.enemy1_sheet = undefined
+    this.enemy1_sheet = undefined;
+    this.enemy2_sheet = undefined;
   };
 
   AssetsManager.prototype = {
@@ -144,8 +145,14 @@ function startGame() {
       let enemy = game.world.enemies[index];
       frame = game.world.tile_set.frames[enemy.frame_value];
 
-
-      display.drawObject(assets_manager.enemy1_sheet,
+      var sheet = null
+      if(enemy.enemyType == 0){
+        sheet = assets_manager.enemy1_sheet
+      }
+      else if(enemy.enemyType == 1){
+        sheet = assets_manager.enemy2_sheet
+      }
+      display.drawObject(sheet,
       frame.x, frame.y,
       enemy.x + Math.floor(enemy.width * 0.5 - frame.width * 0.5) + frame.offset_x,
       enemy.y + frame.offset_y, frame.width, frame.height);
@@ -301,6 +308,15 @@ function startGame() {
     assets_manager.requestImage(zone.enemy1_path, (image) => {
 
       assets_manager.enemy1_sheet = image;
+
+      resize();
+      engine.start();
+
+    });
+
+    assets_manager.requestImage(zone.enemy2_path, (image) => {
+
+      assets_manager.enemy2_sheet = image;
 
       resize();
       engine.start();

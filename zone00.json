@@ -54,7 +54,7 @@
       15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15],
 
     
-    "enemies_map": [[0,14,15]],
+    "enemies_map": [[0,14,15],[1,12,15]],
     
   
     "id":"00",
@@ -63,6 +63,7 @@
     "background_image_path": "./maps/final_maps/level1/level1bgtext.png",
     "sprite_sheet_path": "sprites.png",
     "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
+    "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
     
     
     "coin_sheet_path": "coin_sheet.png",

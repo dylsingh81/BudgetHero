@@ -567,11 +567,11 @@ Object.assign(Game.Player.prototype, Game.Animator.prototype);
 Game.Player.prototype.constructor = Game.Player;
 
 
-Game.Enemy = function(x, y) {
+Game.Enemy1 = function(x, y) {
 
   Game.MovingObject.call(this, x, y, 13, 16);
 
-  Game.Animator.call(this, Game.Enemy.prototype.frame_sets["idle-left"], 3);
+  Game.Animator.call(this, Game.Enemy1.prototype.frame_sets["idle-left"], 3);
 
   this.direction_x  = -1;
   this.velocity_x   = 0;
@@ -581,8 +581,9 @@ Game.Enemy = function(x, y) {
   this.dead         = false;
   this.deadCount    = 0;
   this.type         = "enemy";
+  this.enemyType    = 0;
 };
-Game.Enemy.prototype = {
+Game.Enemy1.prototype = {
 
   frame_sets: {
 
@@ -678,11 +679,99 @@ Game.Enemy.prototype = {
   }
 
 };
-Object.assign(Game.Enemy.prototype, Game.MovingObject.prototype);
-Object.assign(Game.Enemy.prototype, Game.Animator.prototype);
-Game.Enemy.prototype.constructor = Game.Enemy ;
+Object.assign(Game.Enemy1.prototype, Game.MovingObject.prototype);
+Object.assign(Game.Enemy1.prototype, Game.Animator.prototype);
+Game.Enemy1.prototype.constructor = Game.Enemy1;
 
+Game.Enemy2 = function(x, y) {
 
+  Game.MovingObject.call(this, x, y, 13, 16);
+
+  Game.Animator.call(this, Game.Enemy2.prototype.frame_sets["idle-left"], 3);
+
+  this.direction_x  = -1;
+  this.velocity_x   = 0;
+  this.velocity_y   = 0;
+  this.maxRight     = 50;
+  this.maxLeft      = 50;
+  this.dead         = false;
+  this.deadCount    = 0;
+  this.type         = "enemy";
+  this.enemyType    = 1;
+};
+Game.Enemy2.prototype = {
+
+  frame_sets: {
+
+    "idle-left"         : [79],                        //1
+    "move-left"         : [79, 80, 81, 82, 83],        //5
+    "idle-right"        : [84],                        //1
+    "move-right"        : [84, 85, 86, 87, 88],        //5
+    "death"             : [89, 90, 91, 92, 93]         //5
+  },
+
+  move:function() {
+    //Doesnt move
+    return;
+  },
+
+  die:function(){
+    this.dead = true
+  },
+
+  updateAnimation:function(world) {
+
+    if(this.dead){
+      this.changeFrameSet(this.frame_sets["death"], "loop", 3);
+      this.deadCount += 1
+      //delay = 10 + 3
+      if(this.deadCount > 13){
+        world.enemies.splice(world.enemies.indexOf(this), 1)
+      }
+    }
+
+    else if (this.direction_x < 0) {
+
+      this.changeFrameSet(this.frame_sets["move-left"], "loop", 3);
+      
+    }
+
+    else if (this.direction_x > 0) {
+
+      this.changeFrameSet(this.frame_sets["move-right"], "loop", 3);
+
+    }
+
+    
+
+    this.animate();
+
+  },
+
+  updatePosition:function(gravity=0.7, friction=0.4) {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+
+    this.velocity_y += gravity;
+    this.velocity_x *= friction;
+
+    /* Made it so that velocity cannot exceed velocity_max */
+    if (Math.abs(this.velocity_x) > this.velocity_max)
+    this.velocity_x = this.velocity_max * Math.sign(this.velocity_x);
+
+    if (Math.abs(this.velocity_y) > this.velocity_max)
+    this.velocity_y = this.velocity_max * Math.sign(this.velocity_y);
+
+    this.x    += this.velocity_x;
+    this.y    += this.velocity_y;
+
+  }
+
+};
+Object.assign(Game.Enemy2.prototype, Game.MovingObject.prototype);
+Object.assign(Game.Enemy2.prototype, Game.Animator.prototype);
+Game.Enemy2.prototype.constructor = Game.Enemy2;
 
 Game.TileSet = function(columns, tile_size) {
 
@@ -750,10 +839,10 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(20, 200);
 
-  this.zone_id      = "02";
+  this.zone_id      = "00";
 
   this.coins        = [];// the array of coins in this zone;
-  this.coin_count   = 1;// the number of coins you have.
+  this.coin_count   = 0;// the number of coins you have.
   this.level_coin_coint = 0
   this.level        = 0
   this.doors        = [];
@@ -922,7 +1011,15 @@ Game.World.prototype = {
     for (let index = zone.enemies_map.length - 1; index > -1; -- index) {
         x = zone.enemies_map[index][1] * 16
         y = zone.enemies_map[index][2] * 16
-        this.enemies[index] = new Game.Enemy(x, y)
+
+        if(zone.enemies_map[index][0] == 0){
+          this.enemies[index] = new Game.Enemy1(x, y)
+        }
+        else if(zone.enemies_map[index][0] == 1){
+          this.enemies[index] = new Game.Enemy2(x, y)
+        }
+
+        console.log(this.enemies)
     }
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
