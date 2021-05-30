@@ -347,6 +347,102 @@ Game.Door.prototype = {};
 Object.assign(Game.Door.prototype, Game.Object.prototype);
 Game.Door.prototype.constructor = Game.Door;
 
+Game.Bomb = function(x, y, dir) {
+
+  Game.MovingObject.call(this, x, y, 10, 10);
+
+  Game.Animator.call(this, Game.Bomb.prototype.frame_sets["move-left"], 50);
+
+  this.direction_x  = dir;
+  this.velocity_x   = 0;
+  this.velocity_y   = 0;
+  this.dead         = false;
+  this.deadCount    = 0;
+};
+Game.Bomb.prototype = {
+
+  frame_sets: {
+    "move-left"    : [95,94],  //3
+    "death"        : [94]         //5
+  },
+
+  moveLeft: function() {
+
+      this.direction_x = -1;
+      this.velocity_x -= 0.65;
+  
+    },
+  
+  moveRight:function(frame_set) {
+  
+      this.direction_x = 1;
+      this.velocity_x += 0.65;
+  
+    },
+
+  move:function() {
+    
+    if(this.direction_x < 0){
+        this.moveLeft()
+    }else{
+        this.moveRight()
+    }
+  },
+
+  die:function(){
+    this.dead = true
+  },
+
+  updateAnimation:function(world) {
+
+    const bombTime = 50
+
+    if(this.dead){
+      this.changeFrameSet(this.frame_sets["death"], "loop", 3);
+      this.deadCount += 1
+      //delay = 10 + 3
+      if(this.deadCount > 13){
+      }
+    }
+
+    else if (this.direction_x < 0) {
+      this.changeFrameSet(this.frame_sets["move-left"], "loop", bombTime);
+    }
+
+    else if (this.direction_x > 0) {
+      this.changeFrameSet(this.frame_sets["move-left"], "loop", bombTime);
+    }
+
+    this.animate();
+
+  },
+
+  updatePosition:function(gravity=0.0, friction=0.4) {
+
+    this.x_old = this.x;
+    this.y_old = this.y;
+
+    this.velocity_y += gravity;
+    this.velocity_x *= friction;
+
+    /* Made it so that velocity cannot exceed velocity_max */
+    if (Math.abs(this.velocity_x) > this.velocity_max)
+    this.velocity_x = this.velocity_max * Math.sign(this.velocity_x);
+
+    if (Math.abs(this.velocity_y) > this.velocity_max)
+    this.velocity_y = this.velocity_max * Math.sign(this.velocity_y);
+
+    this.x    += this.velocity_x;
+    this.y    += this.velocity_y;
+
+  }
+
+};
+Object.assign(Game.Bomb.prototype, Game.MovingObject.prototype);
+Object.assign(Game.Bomb.prototype, Game.Animator.prototype);
+Game.Bomb.prototype.constructor = Game.Bomb;
+
+
 Game.Player = function(x, y) {
 
   Game.MovingObject.call(this, x, y, 7, 16);
@@ -698,20 +794,22 @@ Game.Enemy2 = function(x, y) {
   this.deadCount    = 0;
   this.type         = "enemy";
   this.enemyType    = 1;
+  this.bombCount    = 0;
 };
 Game.Enemy2.prototype = {
 
   frame_sets: {
 
-    "idle-left"         : [79],                        //1
-    "move-left"         : [79, 80, 81, 82, 83],        //5
-    "idle-right"        : [84],                        //1
-    "move-right"        : [84, 85, 86, 87, 88],        //5
-    "death"             : [89, 90, 91, 92, 93]         //5
+    "idle-left"         : [79],                         //1
+    "move-left"         : [79, 79, 79, 80, 81, 82, 83], //7
+    "idle-right"        : [84],                         //1
+    "move-right"        : [84, 84, 84, 85, 86, 87, 88], //7
+    "death"             : [89, 90, 91, 92, 93]          //5
   },
 
-  move:function() {
-    //Doesnt move
+  move:function(world) {
+    //Change directions
+    this.direction_x = (world.player.x - this.x)
     return;
   },
 
@@ -720,6 +818,17 @@ Game.Enemy2.prototype = {
   },
 
   updateAnimation:function(world) {
+
+
+    //Create bomb at animation #6
+    const anim_length = 20 
+    this.bombCount += 1
+    //Delay = num frames * anim leng
+    if(this.bombCount > anim_length*7){
+      world.bombs.push(new Game.Bomb(this.x, this.y, this.direction_x))
+      this.bombCount = 0
+    }
+
 
     if(this.dead){
       this.changeFrameSet(this.frame_sets["death"], "loop", 3);
@@ -732,13 +841,13 @@ Game.Enemy2.prototype = {
 
     else if (this.direction_x < 0) {
 
-      this.changeFrameSet(this.frame_sets["move-left"], "loop", 3);
+      this.changeFrameSet(this.frame_sets["move-left"], "loop", anim_length);
       
     }
 
     else if (this.direction_x > 0) {
 
-      this.changeFrameSet(this.frame_sets["move-right"], "loop", 3);
+      this.changeFrameSet(this.frame_sets["move-right"], "loop", anim_length);
 
     }
 
@@ -818,6 +927,9 @@ Game.TileSet = function(columns, tile_size) {
                     new f(96, 0, 16, 16, 0, 0), new f(112, 0, 16, 16, 0, 0), new f(128, 0, 16, 16, 0, 0), new f(144, 0, 16, 16, 0, 0), new f(160, 0, 16, 16, 0, 0), // Goblin Run left - 5
                     new f(0, 0, 16, 16, 0, -1), new f(16, 0, 16, 16, 0, 0), new f(32, 0, 16, 16, 0, 0), new f(48, 0, 16, 16, 0, 0), new f(64, 0, 16, 16, 0, 0), // Goblin Run right - 5
                     new f(16, 64, 16, 16, 0, -1), new f(0, 64, 16, 16, 0, 0), new f(32, 16, 16, 16, 0, 0), new f(48, 16, 16, 16, 0, 0), new f(64, 16, 16, 16, 0, 0), // Goblin Die - 5
+
+                    
+                    new f(0, 0, 8, 8, 0, 0), new f(16, 0, 8, 8, 0, 0), new f(32, 0, 8, 8, 0, 0)                                                           // Bomb Move - 3
 
 
                   
@@ -995,6 +1107,7 @@ Game.World.prototype = {
     this.coins              = new Array();
     this.doors              = new Array();
     this.enemies            = new Array();
+    this.bombs              = new Array();
     this.collision_map      = zone.collision_map;
     this.graphical_map      = zone.graphical_map;
     this.columns            = zone.columns;
@@ -1018,8 +1131,6 @@ Game.World.prototype = {
         else if(zone.enemies_map[index][0] == 1){
           this.enemies[index] = new Game.Enemy2(x, y)
         }
-
-        console.log(this.enemies)
     }
 
     for (let index = zone.coins.length - 1; index > -1; -- index) {
@@ -1127,20 +1238,34 @@ Game.World.prototype = {
 
     }
 
+    //Update Player
     this.player.updateAnimation(this);
     this.player.updateAttack(this);
     this.player.checkCollideEnemy(this);
 
-
+    //Update Enemies
     for(let index = this.enemies.length - 1; index > -1; -- index) {
 
       let enemy = this.enemies[index];
       if(!enemy.dead){
-        enemy.move()
+        enemy.move(this)
       }
       enemy.updatePosition();
       enemy.updateAnimation(this);
       this.collideObject(enemy);
+    }
+
+    //Update Bombs
+    console.log(this.bombs)
+    for(let index = this.bombs.length - 1; index > -1; -- index) {
+
+      let bomb = this.bombs[index];
+      if(!bomb.dead){
+        bomb.move(this)
+      }
+      bomb.updatePosition();
+      bomb.updateAnimation(this);
+      this.collideObject(bomb);
     }
 
 

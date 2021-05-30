@@ -37,6 +37,7 @@ function startGame() {
     this.coin_sheet = undefined;
     this.enemy1_sheet = undefined;
     this.enemy2_sheet = undefined;
+    this.bomb_sheet = undefined
   };
 
   AssetsManager.prototype = {
@@ -139,7 +140,6 @@ function startGame() {
     }
 
     //Draw Enemy
-
     for (let index = game.world.enemies.length - 1; index > -1; -- index) {
 
       let enemy = game.world.enemies[index];
@@ -158,8 +158,19 @@ function startGame() {
       enemy.y + frame.offset_y, frame.width, frame.height);
 
     }
-    
 
+    //Draw Bombs
+    for (let index = game.world.bombs.length - 1; index > -1; -- index) {
+
+      let bomb = game.world.bombs[index];
+      frame = game.world.tile_set.frames[bomb.frame_value];
+
+      display.drawObject(assets_manager.bomb_sheet,
+      frame.x, frame.y,
+      bomb.x + Math.floor(bomb.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+      bomb.y + frame.offset_y, frame.width, frame.height);
+
+    }
 
     //Draw Player
     frame = game.world.tile_set.frames[game.world.player.frame_value];
@@ -317,6 +328,15 @@ function startGame() {
     assets_manager.requestImage(zone.enemy2_path, (image) => {
 
       assets_manager.enemy2_sheet = image;
+
+      resize();
+      engine.start();
+
+    });
+
+    assets_manager.requestImage(zone.bomb_path, (image) => {
+
+      assets_manager.bomb_sheet = image;
 
       resize();
       engine.start();
