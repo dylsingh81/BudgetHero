@@ -210,21 +210,24 @@ function startGame() {
     if (controller.deposit)       { game.world.deposit(game.world.player.x, game.world.player.y);    controller.deposit = false;   }
     if (controller.withdraw)      { game.world.withdraw(game.world.player.x, game.world.player.y);   controller.withdraw = false;  }
     if (controller.attack)        { 
-
-                                    if(game.world.canAttack)
-                                    {                                        
-                                      attackBarContainer.style.display = "block"
-                                      $("#attackBarContanier").stop(true, true).fadeIn()
-                                      game.world.player.attack();                   
-                                      attackBarSuccess.style.backgroundColor ="red"
-                                      
-                                      game.world.canAttack = false
-                                      
-                                      $(".progress-bar").animate({
-                                        width: "0%"
-                                      }, 1, "swing", function(){
-                                      });
+                                    if(!game.world.player.dead)
+                                    {
+                                      if(game.world.canAttack)
+                                      {                                        
+                                        attackBarContainer.style.display = "block"
+                                        $("#attackBarContanier").stop(true, true).fadeIn()
+                                        game.world.player.attack();                   
+                                        attackBarSuccess.style.backgroundColor ="red"
+                                        
+                                        game.world.canAttack = false
+                                        
+                                        $(".progress-bar").animate({
+                                          width: "0%"
+                                        }, 1, "swing", function(){
+                                        });
+                                      }
                                     }
+                                    
                                     
                                     controller.attack = false;
                                   }
