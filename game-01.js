@@ -993,6 +993,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.ip           = -1;
   this.pie_chart    = undefined;
   this.tile_sheet_size = 16;
+  this.canAttack    = true
 
   //Handle all binning functions
   {

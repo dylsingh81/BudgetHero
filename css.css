@@ -22,7 +22,7 @@ canvas { image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges; }
 
 .game-label{
-  color:#c07000; 
+  color:#f8dc26; 
   font-size:2.0em; 
   position:fixed;
   border-radius: 10px;

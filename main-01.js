@@ -103,15 +103,21 @@ function startGame() {
       coin_p.style.right = rectangle.left + "px";
       coin_p.style.top  = rectangle.top + "px";
       coin_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
-      coin_p.style.backgroundColor = "rgba(0,0,0,0.7)"
+      coin_p.style.backgroundColor = "rgba(0,0,0,0.5)"
       coin_p.style.padding = "5px"
 
       health_p.style.left = rectangle.left + "px";
       health_p.style.top  = rectangle.top + "px";
       health_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
-      health_p.style.backgroundColor = "rgba(0,0,0,0.7)"
+      health_p.style.backgroundColor = "rgba(0,0,0,0.5)"
       health_p.style.padding = "5px"
-  
+
+      attackBarContainer.style.position = "absolute"
+      attackBarContainer.style.left = rectangle.left + rectangle.width/3 + "px";
+      attackBarContainer.style.top  = rectangle.top + "px";
+      attackBarContainer.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
+      attackBarContainer.style.width = rectangle.width/3 + "px"
+      attackBarContainer.style.padding = "5px"
     };
 
   var render = function() {
@@ -203,8 +209,39 @@ function startGame() {
 
     if (controller.deposit)       { game.world.deposit(game.world.player.x, game.world.player.y);    controller.deposit = false;   }
     if (controller.withdraw)      { game.world.withdraw(game.world.player.x, game.world.player.y);   controller.withdraw = false;  }
-    if (controller.attack)        { game.world.player.attack();                                      controller.attack = false;    }
+    if (controller.attack)        { 
 
+                                    if(game.world.canAttack)
+                                    {                                        
+                                      attackBarContainer.style.display = "block"
+                                      $("#attackBarContanier").stop(true, true).fadeIn()
+                                      game.world.player.attack();                   
+                                      attackBarSuccess.style.backgroundColor ="red"
+                                      
+                                      game.world.canAttack = false
+                                      
+                                      $(".progress-bar").animate({
+                                        width: "0%"
+                                      }, 1, "swing", function(){
+                                      });
+                                    }
+                                    
+                                    controller.attack = false;
+                                  }
+    if(attackBarSuccess.style.width == "0%"){
+      $(".progress-bar").animate({
+        width: "1%"
+      }, 500, "swing", function(){
+        $(".progress-bar").animate({
+          width: "100%"
+        }, 800, "swing", function(){
+          game.world.canAttack = true;
+          attackBarSuccess.style.backgroundColor ="green"
+          $("#attackBarContanier").fadeOut(1000, "linear", function(){
+          });
+        })
+      })
+    }
 
     if(game.world.hitModal)  {display.toggleModal(game.world.coin_bins); game.world.hitModal = false; }
 
@@ -217,7 +254,6 @@ function startGame() {
       
       //Toggle Modal Off
       display.closeModal()
-
 
       engine.stop();
 
@@ -255,6 +291,22 @@ function startGame() {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
+  var attackBarContainer = document.createElement("div");
+  attackBarContainer.id = "attackBarContanier"
+  attackBarContainer.className = "col-xs-12 col-sm-12 progress-container"
+  attackBarContainer.style.display ="none"
+  attackBarContainer.style.opacity = "0.75"
+  var attackBarActive = document.createElement("div");
+  attackBarActive.className = "progress progress-bar-striped active"
+  var attackBarSuccess = document.createElement("div");
+  attackBarSuccess.className = "progress-bar progress-bar-striped"
+  attackBarActive.appendChild(attackBarSuccess)
+  attackBarContainer.appendChild(attackBarActive)
+  document.body.appendChild(attackBarContainer)
+
+  $(".progress-bar").animate({
+    width: "100%"
+  }, 100 );
 
   setupModal(display)
   
