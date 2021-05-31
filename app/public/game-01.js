@@ -990,7 +990,6 @@ Game.World = function(friction = 0.85, gravity = 2) {
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
-  this.ip           = -1;
   this.pie_chart    = undefined;
   this.tile_sheet_size = 16;
   this.canAttack    = true
@@ -1084,10 +1083,6 @@ Game.World = function(friction = 0.85, gravity = 2) {
         this.coin_count++
       }
       this.closeDoors()
-    }
-
-    this.setIp = function(ip){
-      this.ip = ip
     }
   }
 };

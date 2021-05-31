@@ -16,12 +16,12 @@
       <script src = "display-01.js"></script>
       <script src = "engine-01.js"></script>
       <script src = "game-01.js"></script>
-      <script src = "main-01.js"></script>
+      
       <div id="SplashScreen" class="container row align-items-center">
          <div class="container  align-items-center justify-content-center">
             <h1 class="logo-1">Game Title</h1>
             
-            <a class="play-btn" id="StartButton"></a>
+            <a  class="play-btn" id="StartButton"></a>
 
             <div class="wrap">
                <button class="button"  onclick="toggleControlModal()">Controls</button>
@@ -32,6 +32,8 @@
          <canvas>
         </canvas>
       </div>
+      
+      <script src = "main-01.js"></script>
       <script>
          $("#StartButton").click(function () {
            $("#SplashScreen").fadeOut(1000,function(){

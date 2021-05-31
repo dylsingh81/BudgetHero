@@ -316,7 +316,7 @@ function startGame() {
   coin_p.className = "game-label"
   coin_p.id = "coin-label"
   coin_p.style.display = "none"
-  coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
+  coin_p.innerHTML = "<img src=\"images/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
   document.body.appendChild(coin_p);
   health_p.className = "game-label"
   health_p.innerHTML = "Health: 3";
@@ -401,10 +401,6 @@ function startGame() {
 
   });
 
-  var ip;
-  fetch('https://api.ipify.org/?format=json')
-    .then(results => results.json())
-    .then(data => game.world.ip = data.ip)
 
   window.addEventListener("keydown", keyDownUp);
   window.addEventListener("keyup"  , keyDownUp);
@@ -430,3 +426,27 @@ setupModal = function(display){
 toggleControlModal = function(e){
   $('#control-modal').modal('toggle');
 }
+
+const playButton = document.getElementById("StartButton")
+console.log(document.getElementById("StartButton"))
+playButton.addEventListener('click', async event => {
+  var ip;
+  fetch('https://api.ipify.org/?format=json')
+    .then(results => results.json())
+    .then(data => storeIP(data))
+
+  async function storeIP(data){
+    var data = { ip: data.ip, gameData: {}, date: new Date()};
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+    const response = await fetch('/api', options);
+    const json = await response.json();
+    //console.log(json);
+  }  
+    
+})
