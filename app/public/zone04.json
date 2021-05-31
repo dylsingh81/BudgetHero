@@ -6,7 +6,7 @@
   "doors" : [
 
     { "x":440, "y":230, "width":32, "height":40,
-      "destination_zone":"03", "destination_x":15, "destination_y":230 }
+      "destination_zone":"00", "destination_x":100, "destination_y":100 }
 
   ],
 
@@ -50,18 +50,15 @@
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-
+  
   
   "enemies_map": [],
-  "id":"02",
+  "id":"04",
 
   "tile_set_path": "./maps/final_maps/binning/bin_tiles.png",
   "background_image_path": "./maps/final_maps/binning/bin_bg.png",
-  "sprite_sheet_path": "sprites.png",
-  "coin_sheet_path": "coin_sheet.png",
+  "sprite_sheet_path": "images/sprites.png",
   "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
-    
-    
   "tile_sheet_size": 16,
   "tile_set_columns": 9,
   "is_bin": true,

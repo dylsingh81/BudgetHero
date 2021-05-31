@@ -109,7 +109,7 @@ function startGame() {
       health_p.style.left = rectangle.left + "px";
       health_p.style.top  = rectangle.top + "px";
       health_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
-      health_p.style.backgroundColor = "rgba(0,0,0,0.5)"
+      health_p.style.backgroundColor = "rgba(0,0,0,0.5P)"
       health_p.style.padding = "5px"
 
       attackBarContainer.style.position = "absolute"
@@ -188,9 +188,9 @@ function startGame() {
 
 
     
-    coin_p.innerHTML = "<img src=\"/coin.gif\" width = 30 px alt=\"Coins!\"> x "+ game.world.coin_count
+    coin_p.innerHTML = "<img src=\"images/coin.gif\" width = 30 px alt=\"Coins!\"> x "+ game.world.coin_count
     
-    let heart_IMG_HTML = "<img src=\"/heart.gif\" width = 30 px alt=\"Heart!\">"
+    let heart_IMG_HTML = "<img src=\"images/heart.gif\" width = 30 px alt=\"Heart!\">"
     let health_HTML = ""
     for (var i = 0; i < game.world.health; i++) {
         health_HTML += heart_IMG_HTML

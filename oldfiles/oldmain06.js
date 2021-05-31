@@ -149,7 +149,7 @@ window.addEventListener("load", function(event) {
     /* Now my image is loaded into the assets manager instead of the display object.
     The callback starts the game engine when the graphic is loaded. */
     assets_manager.loadTileSetImage("./maps/final_maps/binning/bin_tiles.png",
-    "./maps/final_maps/binning/bin_bg.png", "sprites.png", () => {
+    "./maps/final_maps/binning/bin_bg.png", "images/sprites.png", () => {
   
       resize();
       engine.start();

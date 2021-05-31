@@ -1,0 +1,20 @@
+{
+  "name": "bin_game",
+  "version": "1.0.0",
+  "description": "Bin Game Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon server.js"
+  },
+  "keywords": [
+    "game",
+    "bin"
+  ],
+  "author": "Dylan Singh",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nedb": "^1.8.0"
+  }
+}
