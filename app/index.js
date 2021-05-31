@@ -10,6 +10,7 @@ const database = new Datastore('database.db');
 database.loadDatabase();
 
 
+/*
 app.get('/api', (request, response) => {
     console.log("Here")
     database.find({}, (err, data) => {
@@ -20,9 +21,24 @@ app.get('/api', (request, response) => {
       response.json(data);
     });
   });
-  
-app.post('/api', (request, response) => {
+*/
+app.post('/ip', (request, response) => {
     const data = request.body;
-    database.insert(data);
+
+    //Check if IP Exists
+    var ip = data.ip
+    database.find({ip}, (err, data_query) => {
+        console.log(data_query)
+        //IP Exists Update Number of time Played
+        if(data_query.length != 0){
+            console.log("One IP:" , data_query.length)
+        }
+        //Else Create IP
+        else{
+            console.log("Here")
+            database.insert(data);
+        }
+
+    })
     response.json(data);
 });

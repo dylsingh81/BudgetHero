@@ -428,9 +428,7 @@ toggleControlModal = function(e){
 }
 
 const playButton = document.getElementById("StartButton")
-console.log(document.getElementById("StartButton"))
 playButton.addEventListener('click', async event => {
-  var ip;
   fetch('https://api.ipify.org/?format=json')
     .then(results => results.json())
     .then(data => storeIP(data))
@@ -444,9 +442,8 @@ playButton.addEventListener('click', async event => {
       },
       body: JSON.stringify(data)
     };
-    const response = await fetch('/api', options);
+    const response = await fetch('/ip', options);
     const json = await response.json();
-    //console.log(json);
+    console.log(json);
   }  
-    
 })
