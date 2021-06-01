@@ -1153,6 +1153,7 @@ Game.World.prototype = {
     this.level_num_coins    = zone.coins.length 
     this.enemies_map        = zone.enemies_map
     this.hitModal           = false
+    this.doorsOpen          = false
 
     this.sounds         =   {
                               coin:     new Audio('./sounds/coin.wav'),
@@ -1160,7 +1161,9 @@ Game.World.prototype = {
                               attack:   new Audio('./sounds/attack.wav'),
                               jump:     new Audio('./sounds/jump.wav'),
                               death:    new Audio('./sounds/death.wav'),
-                              enemy_death: new Audio('./sounds/enemy_death.mp3')
+                              enemy_death: new Audio('./sounds/enemy_death.mp3'),
+                              lock:    new Audio('./sounds/lock.mp3'),
+                              unlock:    new Audio('./sounds/unlock.mp3'),
                             }
     
     //Set volume of sounds
@@ -1216,6 +1219,7 @@ Game.World.prototype = {
 
     this.closeDoors = function()
     {
+
       //Make empty space into solid blocks
       //Arrary pos 419 and 447 are the door
       if(this.is_bin && this.coin_count > 0)
@@ -1227,6 +1231,12 @@ Game.World.prototype = {
         //Known tile values:
         this.graphical_map[419] = 56
         this.graphical_map[447] = 56
+
+        
+        if(this.doorsOpen){
+          this.sounds.lock.play()
+        }
+        this.doorsOpen = false
       }
       //Else leave doors open
     }
@@ -1242,6 +1252,11 @@ Game.World.prototype = {
         //Known tile values:
         this.graphical_map[419] = -1
         this.graphical_map[447] = -1
+        
+        if(!this.doorsOpen){
+          this.sounds.unlock.play()
+        }
+        this.doorsOpen = true
       }
       //Else leave doors closed
     }
