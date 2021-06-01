@@ -65,7 +65,6 @@ Engine.prototype = {
   constructor:Engine,
 
   start:function() {
-
     this.accumulated_time = this.time_step;
     this.time = window.performance.now();
     this.animation_frame_request = window.requestAnimationFrame(this.handleRun);

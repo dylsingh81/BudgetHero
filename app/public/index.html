@@ -35,8 +35,22 @@
       
       <script src = "main-01.js"></script>
       <script>
+         
+         const music = [new Audio('./music/bgm1.mp3'),
+                  new Audio('./music/bgm2.mp3'),
+                  new Audio('./music/bgm3.mp3'),
+                  new Audio('./music/bgm4.mp3'),
+                  new Audio('./music/bgm5.mp3'),]
+         track_num  = Math.floor(Math.random() * 4)
+         track = music[track_num]
+         track.volume = 0.1
+         //console.log("Playing Track", track_num)
+
+
          $("#StartButton").click(function () {
            $("#SplashScreen").fadeOut(1000,function(){
+              
+             track.play()
              startGame()
              $("#coin-label").fadeIn(7000,"linear")
              $("#health-label").fadeIn(7000,"linear")

@@ -204,7 +204,7 @@ function startGame() {
 
     if (controller.left.active  ) { game.world.player.moveLeft ();                                                                 }
     if (controller.right.active ) { game.world.player.moveRight();                                                                 }
-    if (controller.up.active    ) { game.world.player.jump();                                        controller.up.active = false; }
+    if (controller.up.active    ) { game.world.player.jump(game.world);                                        controller.up.active = false; }
 
 
     if (controller.deposit)       { game.world.deposit(game.world.player.x, game.world.player.y);    controller.deposit = false;   }
@@ -216,7 +216,7 @@ function startGame() {
                                       {                                        
                                         attackBarContainer.style.display = "block"
                                         $("#attackBarContanier").stop(true, true).fadeIn()
-                                        game.world.player.attack();                   
+                                        game.world.player.attack(game.world);                   
                                         attackBarSuccess.style.backgroundColor ="red"
                                         
                                         game.world.canAttack = false
@@ -444,6 +444,6 @@ playButton.addEventListener('click', async event => {
     };
     const response = await fetch('/ip', options);
     const json = await response.json();
-    console.log(json);
+    //console.log(json);
   }  
 })

@@ -40,5 +40,5 @@ app.post('/ip', (request, response) => {
         }
 
     })
-    response.json(data);
+    //response.json(data);
 });

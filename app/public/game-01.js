@@ -91,7 +91,7 @@ Game.Collider = function() {
   this.collide = function(value, object, tile_x, tile_y, tile_size, world) {
 
     if(object.type == "bomb" && object.velocity_x == 0){
-      object.die()
+      object.die(world)
     }
 
     switch(value) {
@@ -394,7 +394,9 @@ Game.Bomb.prototype = {
     }
   },
 
-  die:function(){
+  die:function(world){
+    world.sounds.explode.play()
+    
     this.dead = true
   },
 
@@ -490,11 +492,11 @@ Game.Player.prototype = {
     "death-left"        : [74,75,76,77,78]             //5
   },
 
-  jump: function() {
-
+  jump: function(world) {
+    
     /* Made it so you can only jump if you aren't falling faster than 10px per frame. */
     if (!this.jumping && this.velocity_y < 10) {
-
+      world.sounds.jump.play()
       this.jumping     = true;
       this.velocity_y -= 15;
 
@@ -516,12 +518,15 @@ Game.Player.prototype = {
   },
 
 
-  attack:function(frame_set) {
+  attack:function(world) {
     this.attacking = true
+    world.sounds.attack.play()
+    
   },
 
   updateAnimation:function(world) {
     if(this.dead){
+      world.sounds.death.play()
       if(this.direction_x < 0)
         this.changeFrameSet(this.frame_sets["death-left"], "loop", 3);
       else
@@ -602,14 +607,14 @@ Game.Player.prototype = {
                 //console.log(x-enemy.x)
             
                 console.log("Hit enemy", i)
-                enemy.die()
+                enemy.die(world)
               }
             }
             else{
               if(x-enemy.x > -dist && x-enemy.x <= 0){
                 //console.log(x-enemy.x)
                 console.log("Hit enemy", i)
-                enemy.die()
+                enemy.die(world)
 
               }
             } 
@@ -659,7 +664,7 @@ Game.Player.prototype = {
         
         //console.log(bomb.x + bomb.width - (this.x + this.width))
         //console.log("Enemy Kill player")
-        bomb.dead = true;
+        bomb.die(world);
         this.dead = true;
       }
   }
@@ -748,7 +753,10 @@ Game.Enemy1.prototype = {
     this.maxRight = 50
   },
 
-  die:function(){
+  die:function(world){
+    if(!this.dead){
+      world.sounds.enemy_death.play()
+    }
     this.dead = true
   },
 
@@ -841,7 +849,10 @@ Game.Enemy2.prototype = {
     return;
   },
 
-  die:function(){
+  die:function(world){
+    if(!this.dead){
+      world.sounds.enemy_death.play()
+    }
     this.dead = true
   },
 
@@ -1143,6 +1154,20 @@ Game.World.prototype = {
     this.enemies_map        = zone.enemies_map
     this.hitModal           = false
 
+    this.sounds         =   {
+                              coin:     new Audio('./sounds/coin.wav'),
+                              explode:  new Audio('./sounds/bombexplode.mp3'),
+                              attack:   new Audio('./sounds/attack.wav'),
+                              jump:     new Audio('./sounds/jump.wav'),
+                              death:    new Audio('./sounds/death.wav'),
+                              enemy_death: new Audio('./sounds/enemy_death.mp3')
+                            }
+    
+    //Set volume of sounds
+    for(var key in this.sounds) {
+      this.sounds[key].volume = 0.4;
+    }                      
+    
     //Create Enemies
     for (let index = zone.enemies_map.length - 1; index > -1; -- index) {
         x = zone.enemies_map[index][1] * 16
@@ -1226,6 +1251,13 @@ Game.World.prototype = {
   },
 
   update:function() {
+    if(track.ended){
+      track_num  = Math.floor(Math.random() * 4)
+      //console.log("Playing Track", track_num)
+      track = music[track_num]
+      track.volume = 0.1
+      track.play()
+    }
 
     this.player.updatePosition(this.gravity, this.friction);
     
@@ -1243,6 +1275,8 @@ Game.World.prototype = {
         this.coins.splice(this.coins.indexOf(coin), 1);
         this.coin_count ++;
         this.level_coin_coint++;
+
+        this.sounds.coin.play()
 
       }
 
