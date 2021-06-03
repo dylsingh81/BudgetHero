@@ -606,14 +606,14 @@ Game.Player.prototype = {
               if(x-enemy.x < dist && x-enemy.x >= 0){
                 //console.log(x-enemy.x)
             
-                console.log("Hit enemy", i)
+                //console.log("Hit enemy", i)
                 enemy.die(world)
               }
             }
             else{
               if(x-enemy.x > -dist && x-enemy.x <= 0){
                 //console.log(x-enemy.x)
-                console.log("Hit enemy", i)
+                //console.log("Hit enemy", i)
                 enemy.die(world)
 
               }
@@ -1076,6 +1076,9 @@ Game.World = function(friction = 0.85, gravity = 2) {
       binNum = this.getCoinBin(playerX, playerY)
       //console.log(this.is_bin)
       if(binNum > -1 && this.is_bin && this.coin_count > 0){
+        var sounds = Object.assign({}, this.sounds);
+        var dep_sound = sounds.deposit
+        dep_sound.play()
         this.coin_bins[binNum] += 1
         this.coin_count--
       }
@@ -1090,6 +1093,9 @@ Game.World = function(friction = 0.85, gravity = 2) {
       binNum = this.getCoinBin(playerX, playerY)
       //console.log(this.is_bin)
       if(binNum > -1 && this.is_bin && this.coin_bins[binNum] > 0){
+        var sounds = Object.assign({}, this.sounds);
+        var wit_sound = sounds.withdraw
+        wit_sound.play()
         this.coin_bins[binNum] -= 1
         this.coin_count++
       }
@@ -1164,6 +1170,8 @@ Game.World.prototype = {
                               enemy_death: new Audio('./sounds/enemy_death.mp3'),
                               lock:    new Audio('./sounds/lock.mp3'),
                               unlock:    new Audio('./sounds/unlock.mp3'),
+                              deposit:new Audio('./sounds/deposit.mp3'),
+                              withdraw: new Audio('./sounds/withdraw.mp3'),
                             }
     
     //Set volume of sounds
