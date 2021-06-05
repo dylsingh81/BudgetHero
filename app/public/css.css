@@ -149,13 +149,13 @@ canvas { image-rendering: -moz-crisp-edges;
 /*  #####################################     End  Button         ######################################################## */
 
 :root {
-  --shadow-color: #FF9E9E;
+  --shadow-color: #f0ff24;
   --shadow-color-light: white;
 }
 
 
 .logo-1 {
-  color: rgb(32, 7, 73);
+  color: rgb(43, 10, 97);
   animation: neon 3s infinite;
   user-select: none;
   font-size: 80px;

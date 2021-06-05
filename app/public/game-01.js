@@ -979,6 +979,8 @@ Game.TileSet.prototype = { constructor: Game.TileSet };
 Game.World = function(friction = 0.85, gravity = 2) {
   
   this.collider     = new Game.Collider();
+  
+  this.gameData           = {}
 
   this.friction     = friction;
   this.gravity      = gravity;
@@ -1160,7 +1162,6 @@ Game.World.prototype = {
     this.enemies_map        = zone.enemies_map
     this.hitModal           = false
     this.doorsOpen          = false
-
     this.sounds         =   {
                               coin:     new Audio('./sounds/coin.wav'),
                               explode:  new Audio('./sounds/bombexplode.mp3'),
@@ -1312,7 +1313,9 @@ Game.World.prototype = {
 
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
-        logData(this.level, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
+        this.level += 1;
+        //console.log(this.level, this.level_num_coins)
+        this.logData(this.level, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
         this.level_coin_coint = 0
       };
 
@@ -1361,17 +1364,20 @@ Game.World.prototype = {
     this.player.setCenterY   (respawnY);
     this.player.setOldCenterY(respawnY);
     return
+  },
+  
+  logData:function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
+    //console.log("Log of data")
+    //console.log(level_num,level_num_coins, coins_collected)
+    console.log(this.gameData, this.game_num)
+    level_num = "level-"+ level_num
+    game_num = "game-" + this.game_num
+    this.gameData[game_num].indvGameData[level_num] = {
+      is_bin: is_bin,
+      currentBins : coin_bins,
+      percentageCollectedFromLevel: coins_collected/level_num_coins
+    }
+    console.log(this.gameData)
   }
 
 };
-
-function logData(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
-  //console.log("Log of data")
-  //console.log(level_num,level_num_coins, coins_collected)
-  if(is_bin){
-    console.log("Current bins", coin_bins)
-  }
-  else{
-    console.log("Percentage Coins Collected: ", coins_collected/level_num_coins)
-  }
-}

@@ -43,9 +43,15 @@ app.post('/ip', (request, response) => {
             }
             data.num_times_played = 1
             database.insert(data);
+            newTimesPlayed = 1
         }
-
+            
+      responseData = {
+        num_times_played: newTimesPlayed
+      }
+      console.log(responseData)
+      response.json(responseData);
     })
-    //response.json(data);
+
 });
 

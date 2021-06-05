@@ -10,6 +10,27 @@
   3. The AssetsManager class has been changed to load both images and json.
 
 */
+const playButton = document.getElementById("StartButton")
+playButton.addEventListener('click', async event => {
+  fetch('https://api.ipify.org/?format=json')
+    .then(results => results.json())
+    .then(data => storeIP(data))
+
+  async function storeIP(data){
+    var data = { ip: data.ip, gameData: {}};
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+    const response = await fetch('/ip', options);
+    const json = await response.json();
+    console.log(json);
+    document.num_times_played = json.num_times_played
+  }  
+})
 
 function startGame() {
 
@@ -271,7 +292,7 @@ function startGame() {
         });
         //console.log(zone)
         game.world.setup(zone);
-        
+
         engine.start();
 
       });
@@ -293,6 +314,11 @@ function startGame() {
   var engine         = new Engine(1000/30, render, update);
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
+
+  //console.log(document.num_times_played)
+  var game_num = "game-"+document.num_times_played
+  game.world.game_num = document.num_times_played
+  game.world.gameData[game_num] = {indvGameData:  {} }
 
   var attackBarContainer = document.createElement("div");
   attackBarContainer.id = "attackBarContanier"
@@ -427,23 +453,3 @@ toggleControlModal = function(e){
   $('#control-modal').modal('toggle');
 }
 
-const playButton = document.getElementById("StartButton")
-playButton.addEventListener('click', async event => {
-  fetch('https://api.ipify.org/?format=json')
-    .then(results => results.json())
-    .then(data => storeIP(data))
-
-  async function storeIP(data){
-    var data = { ip: data.ip, gameData: {}, date: new Date()};
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    };
-    const response = await fetch('/ip', options);
-    const json = await response.json();
-    //console.log(json);
-  }  
-})
