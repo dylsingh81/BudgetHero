@@ -1366,18 +1366,30 @@ Game.World.prototype = {
     return
   },
   
-  logData:function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
+  logData: async function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
     //console.log("Log of data")
-    //console.log(level_num,level_num_coins, coins_collected)
-    console.log(this.gameData, this.game_num)
+    //console.log(this.gameData, this.game_num)
     level_num = "level-"+ level_num
     game_num = "game-" + this.game_num
     this.gameData[game_num].indvGameData[level_num] = {
       is_bin: is_bin,
-      currentBins : coin_bins,
+      currentBins : coin_bins.slice(),
       percentageCollectedFromLevel: coins_collected/level_num_coins
     }
-    console.log(this.gameData)
-  }
+
+
+
+    var data = { ip: ipAddr, gameData: this.gameData};
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    };
+    const response = await fetch('/gameData', options);
+    const json = await response.json();
+    console.log(json);
+  } 
 
 };

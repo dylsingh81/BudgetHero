@@ -10,6 +10,10 @@
   3. The AssetsManager class has been changed to load both images and json.
 
 */
+let ipAddr = 0
+let loadedGameData = undefined
+let loadedGameNum = undefined
+
 const playButton = document.getElementById("StartButton")
 playButton.addEventListener('click', async event => {
   fetch('https://api.ipify.org/?format=json')
@@ -17,6 +21,7 @@ playButton.addEventListener('click', async event => {
     .then(data => storeIP(data))
 
   async function storeIP(data){
+    ipAddr = data.ip
     var data = { ip: data.ip, gameData: {}};
     const options = {
       method: 'POST',
@@ -27,8 +32,9 @@ playButton.addEventListener('click', async event => {
     };
     const response = await fetch('/ip', options);
     const json = await response.json();
-    console.log(json);
-    document.num_times_played = json.num_times_played
+    //console.log(json);
+    loadedGameNum = json.num_times_played;
+    loadedGameData = json.gameData;
   }  
 })
 
@@ -315,10 +321,25 @@ function startGame() {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
-  //console.log(document.num_times_played)
-  var game_num = "game-"+document.num_times_played
-  game.world.game_num = document.num_times_played
-  game.world.gameData[game_num] = {indvGameData:  {} }
+  let ipWaitCount = 2000
+  while(loadedGameNum == undefined){
+    ipWaitCount -= 1
+    if(ipWaitCount < 0){
+      alert("Server cannot connect to internet - Results will not be stored")
+      break
+    }
+  }
+
+  if(loadedGameData == undefined){
+    loadedGameData = {}
+  }
+  
+  //console.log(loadedGameData)
+
+  game.world.game_num = loadedGameNum
+  loadedGameData["game-"+loadedGameNum] = {"indvGameData": {}}
+  game.world.gameData = loadedGameData
+
 
   var attackBarContainer = document.createElement("div");
   attackBarContainer.id = "attackBarContanier"

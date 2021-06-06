@@ -9,7 +9,7 @@ app.use(express.json({ limit: '1mb' }));
 const database = new Datastore('database.db');
 database.loadDatabase(function (err) {    // Callback is optional
    console.log("Database loaded")
-   //console.log(database.getAllData())
+   console.log(database.getAllData())
 });
 
 /*
@@ -29,12 +29,13 @@ app.post('/ip', (request, response) => {
 
     //Check if IP Exists
     var ip = data.ip
+    var gameData = undefined
     database.find({ip}, (err, data_query) => {
         //IP Exists Update Number of time Played
         if(data_query.length == 1){
           newTimesPlayed = data_query[0].num_times_played+1
           database.update({ ip: ip }, { $set: { num_times_played: newTimesPlayed} })
-          
+          gameData = data_query[0].gameData
         }
         //Else Create IP
         else{
@@ -47,11 +48,31 @@ app.post('/ip', (request, response) => {
         }
             
       responseData = {
-        num_times_played: newTimesPlayed
+        num_times_played: newTimesPlayed,
+        gameData: gameData
       }
-      console.log(responseData)
+      //console.log(responseData)
       response.json(responseData);
     })
 
 });
+
+
+app.post('/gameData', (request, response) => {
+  const data = request.body;
+  //Check if IP Exists
+  var ip = data.ip
+  var newGameData = data.gameData
+  database.find({ip}, (err, data_query) => {
+      //IP Exists Update Number of time Played
+      if(data_query.length == 1){ 
+        database.update({ ip: ip }, { $set: { gameData: newGameData} })
+      }
+      //Else Create IP
+      else{
+          console.log("Error - Logging IP without database entry")
+      }
+  })
+});
+
 
