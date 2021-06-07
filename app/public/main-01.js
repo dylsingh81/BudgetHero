@@ -14,6 +14,8 @@ let ipAddr = 0
 let loadedGameData = undefined
 let loadedGameNum = undefined
 
+let paused = false
+
 const playButton = document.getElementById("StartButton")
 playButton.addEventListener('click', async event => {
   fetch('https://api.ipify.org/?format=json')
@@ -227,21 +229,12 @@ function startGame() {
 
   };
 
-  let paused = false
   var update = function() {
 
     if (controller.pause)   {
-      console.log(paused)
-      if(paused){
         togglePauseModal();
         controller.pause = false;
-        
-        paused = !paused
-      } 
-      else{
-        paused = !paused
-        controller.pause = false;
-      }
+      
     }
 
     if (controller.left.active  ) { game.world.player.moveLeft ();                                                                 }
@@ -491,6 +484,7 @@ toggleControlModal = function(e){
 
 
 togglePauseModal = function(e){
+  $('#pause-modal').modal({backdrop: 'static', keyboard: false})  
   $('#pause-modal').modal('toggle');
 }
 
