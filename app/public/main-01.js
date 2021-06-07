@@ -112,7 +112,7 @@ function startGame() {
 
   var keyDownUp = function(event) {
 
-    controller.keyDownUp(event.type, event.keyCode);
+    controller.keyDownUp(event.type, event.keyCode, event);
 
   };
 
@@ -227,7 +227,22 @@ function startGame() {
 
   };
 
+  let paused = false
   var update = function() {
+
+    if (controller.pause)   {
+      console.log(paused)
+      if(paused){
+        togglePauseModal();
+        controller.pause = false;
+        
+        paused = !paused
+      } 
+      else{
+        paused = !paused
+        controller.pause = false;
+      }
+    }
 
     if (controller.left.active  ) { game.world.player.moveLeft ();                                                                 }
     if (controller.right.active ) { game.world.player.moveRight();                                                                 }
@@ -472,5 +487,10 @@ setupModal = function(display){
 
 toggleControlModal = function(e){
   $('#control-modal').modal('toggle');
+}
+
+
+togglePauseModal = function(e){
+  $('#pause-modal').modal('toggle');
 }
 

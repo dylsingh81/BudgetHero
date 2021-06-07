@@ -23,7 +23,7 @@ canvas { image-rendering: -moz-crisp-edges;
 
 .game-label{
   color:#f8dc26; 
-  font-size:2.0em; 
+  font-size:1.5em; 
   position:fixed;
   border-radius: 10px;
 }
@@ -243,4 +243,10 @@ button:hover::after, button:focus::after {
     height: 300px;
     opacity: 0;
   }
+}
+
+
+
+.outsideBtn{
+  position: relative;
 }

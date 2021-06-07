@@ -9,15 +9,18 @@ const Controller = function() {
   this.attack = false;
   this.deposit = false
   this.withdraw = false
+  this.pause = false;
 
-  this.keyDownUp = function(type, key_code) {
+  this.keyDownUp = function(type, key_code, event) {
 
     var down = (type == "keydown") ? true : false;
 
     switch(key_code) {
       case 37: this.left.getInput(down);  break;
       case 38: this.up.getInput(down);    break;
-      case 39: this.right.getInput(down);
+      case 39: this.right.getInput(down); break;
+      
+      case 27: this.escPressed(event, down); break;
     }
 
   };
@@ -33,6 +36,14 @@ const Controller = function() {
 
   this.dPressed = function(){
     this.deposit = true
+  }
+
+  this.escPressed = function(event, down){
+    //console.log(down, event.repeat)
+    if(down && !event.repeat){
+      //console.log("Esc Pressed")
+      this.pause = true
+    }
   }
 
   this.keyPress = function(type, key_code) {
@@ -65,7 +76,6 @@ Controller.ButtonInput.prototype = {
 
     if (this.down != down) this.active = down;
     this.down = down;
-
   }
 
 };
