@@ -233,8 +233,13 @@ function startGame() {
 
     if (controller.pause)   {
         togglePauseModal();
+        paused = !paused
         controller.pause = false;
       
+    }
+
+    if(paused){
+      return
     }
 
     if (controller.left.active  ) { game.world.player.moveLeft ();                                                                 }
