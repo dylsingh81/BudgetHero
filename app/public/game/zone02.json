@@ -60,6 +60,8 @@
   "sprite_sheet_path": "images/sprites.png",
   "coin_sheet_path": "images/coin_sheet.png",
   "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
+  "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
+  "bomb_path": "./maps/tilesets/enemies sprites/bomb2.png",
     
     
   "tile_sheet_size": 16,

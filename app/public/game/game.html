@@ -45,22 +45,6 @@
          track = music[track_num]
          track.volume = 0.1
          //console.log("Playing Track", track_num)
-
-
-         $("#StartButton").click(function () {
-           $("#SplashScreen").fadeOut(1000,function(){
-             track.play()
-             $("#coin-label").fadeIn(7000,"linear")
-             $("#health-label").fadeIn(7000,"linear")
-             $("#SplashScreen").hide(0,"linear",function(){
-               $("#GameCanvas").fadeIn(4000, "linear", function(){
-                  
-                  everythingLoaded = true
-               });
-         });
-         
-         });
-         });
              
       </script>
       <div class="modal" tabindex="-1" role="dialog" id ="pie-chart-modal">

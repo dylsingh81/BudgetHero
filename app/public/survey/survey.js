@@ -8,28 +8,28 @@ var json = {
       questions: [
         {
           type: "radiogroup",
-          name: "Health care",
+          name: "Health_care",
           title: "Health care",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Anti-terrorism defenses in the U.S.",
+          name: "Anti_terrorism_defenses_in_the_US",
           title: "Anti-terrorism defenses in the U.S.",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Veterans benefits and services",
+          name: "Veterans_benefits_and_services",
           title: "Veterans benefits and services",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Social Security",
+          name: "Social_Security",
           title: "Social Security",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
@@ -37,36 +37,36 @@ var json = {
 
         {
           type: "radiogroup",
-          name: "Rebuilding highways, bridges and roads",
+          name: "Rebuilding_highways_bridges_and_roads",
           title: "Rebuilding highways, bridges and roads",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Economic assistance to needy people in the U.S.",
+          name: "Economic_assistance_to_needy_people_in_the_US",
           title: "Economic assistance to needy people in the U.S.",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Scientific research",
+          name: "Scientific_research",
           title: "Scientific research",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Military defense",
+          name: "Military_defense",
           title: "Military defense",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Government assistance for the unemployed ",
-          title: "Government assistance for the unemployed ",
+          name: "Government_assistance_for_the_unemployed",
+          title: "Government assistance for the unemployed",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
@@ -79,14 +79,14 @@ var json = {
         },
         {
           type: "radiogroup",
-          name: "Environmental protection",
+          name: "Environmental_protection",
           title: "Environmental protection",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
         },
         {
           type: "radiogroup",
-          name: "Economic assistance to needy people around the world",
+          name: "Economic_assistance_to_needy_people_around_the_world",
           title: "Economic assistance to needy people around the world",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
@@ -94,10 +94,10 @@ var json = {
         {
           type: "radiogroup",
           name: "Education",
-          title: "Educationy",
+          title: "Education",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
-        },
+        }
       ],
     },
   ],
@@ -106,6 +106,7 @@ var json = {
 window.survey = new Survey.Model(json);
 
 survey.onComplete.add(function (sender) {
+  console.log("Here")
   document.querySelector("#surveyResult").innerHTML =
     "<a class=\"btn btn-primary\" href=\"/game/game.html\" >Click Here to Go to the Game</a>"
 
@@ -118,7 +119,6 @@ survey.onComplete.add(function (sender) {
     async function storeIP(data, sender){
       ipAddr = data.ip
       sendData = sender.data
-      console.log(sendData)
       var data = { ip: data.ip, surveyData: sendData};
       const options = {
         method: 'POST',
@@ -129,8 +129,7 @@ survey.onComplete.add(function (sender) {
       };
     const response = await fetch('/surveyData', options);
     const json = await response.json();
-  }  
-    //"Result JSON:\n" + JSON.stringify(sender.data, null, 3);
+  } 
 });
 
 survey.showProgressBar = "bottom";

@@ -6,7 +6,7 @@
     },
     "doors" : [
   
-      { "x":440, "y":59, "width":16, "height":32,
+      { "x":420, "y":59, "width":16, "height":32,
         "destination_zone":"02", "destination_x":25, "destination_y":200}
   
     ],
@@ -34,7 +34,7 @@
       5272,5273,5274,5275,5275,5952,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829,4828,4829],
   
     "collision_map": [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-      2,-2,0,0,-2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
+       2,-2,0,0,-2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
       -2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,15,15,15,15,
       -2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,
       -2,0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0,-1,
@@ -58,9 +58,11 @@
   
     "tile_set_path": "./maps/final_maps/level2/level2tiles.png",
     "background_image_path": "./maps/final_maps/level2/level2bg.png",  
-    "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
     "sprite_sheet_path": "images/sprites.png",
     "coin_sheet_path": "images/coin_sheet.png",
+    "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
+    "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
+    "bomb_path": "./maps/tilesets/enemies sprites/bomb2.png",
     "tile_sheet_size": 16,
     "tile_set_columns": 84,
     "is_bin": false,

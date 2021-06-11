@@ -1366,7 +1366,7 @@ Game.World.prototype = {
     return
   },
   
-  logData: async function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
+  logData: function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
     //console.log("Log of data")
     //console.log(this.gameData, this.game_num)
     level_num = "level-"+ level_num
@@ -1376,9 +1376,6 @@ Game.World.prototype = {
       currentBins : coin_bins.slice(),
       percentageCollectedFromLevel: coins_collected/level_num_coins
     }
-
-
-
     var data = { ip: ipAddr, gameData: this.gameData};
     const options = {
       method: 'POST',
@@ -1387,9 +1384,7 @@ Game.World.prototype = {
       },
       body: JSON.stringify(data)
     };
-    const response = await fetch('/gameData', options);
-    const json = await response.json();
-    console.log(json);
+    fetch('/gameData', options);
   } 
 
 };

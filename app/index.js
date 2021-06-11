@@ -6,7 +6,7 @@ app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
-const database = new Datastore('database.json');
+const database = new Datastore('database.db');
 database.loadDatabase(function (err) {    // Callback is optional
    console.log("Database loaded")
    console.log(database.getAllData())
@@ -76,6 +76,7 @@ app.post('/gameData', (request, response) => {
           console.log("Error - Logging IP without database entry")
       }
   })
+  response.json("Success");
 });
 
 app.post('/surveyData', (request, response) => {
@@ -93,7 +94,6 @@ app.post('/surveyData', (request, response) => {
         
         var survey_name = "survey-" + newTimesPlayed
         newSurveyData[survey_name] = rec_surveyData
-        //console.log(newSurveyData, data_query[0])
         
         database.update({ ip: ip }, { $set: { num_survey_times_played: newTimesPlayed} })
         database.update({ ip: ip }, { $set: { surveyData: newSurveyData} })
@@ -103,6 +103,7 @@ app.post('/surveyData', (request, response) => {
           if(data_query.length >1){
             console.log("DB ERROR?")
           }
+          
           data.num_times_played = 0
           data.num_survey_times_played = 1
           data.surveyData = {

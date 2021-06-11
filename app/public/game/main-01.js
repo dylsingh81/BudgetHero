@@ -15,9 +15,17 @@ let loadedGameData = undefined
 let loadedGameNum = undefined
 
 let paused = false
+let clicked = 0
 
 const playButton = document.getElementById("StartButton")
 playButton.addEventListener('click', async event => {
+
+  if(clicked > 0){
+    return
+  }
+  clicked += 1
+
+
   fetch('https://api.ipify.org/?format=json')
     .then(results => results.json())
     .then(data => storeIP(data))
@@ -38,7 +46,18 @@ playButton.addEventListener('click', async event => {
     loadedGameNum = json.num_times_played;
     loadedGameData = json.gameData;
 
-    startGame()
+    $("#SplashScreen").fadeOut(1000,function(){
+      track.play()
+      startGame()
+      $("#coin-label").fadeIn(7000,"linear")
+      $("#health-label").fadeIn(7000,"linear")
+      $("#SplashScreen").hide(0,"linear",function(){
+        $("#GameCanvas").fadeIn(4000, "linear", function(){
+           
+        });
+    });
+    
+    });
   }  
 })
 
@@ -233,10 +252,6 @@ function startGame() {
 
   var update = function() {
 
-    if(everythingLoaded == false)
-    {
-      resize()
-    }
 
     if (controller.pause)   {
         togglePauseModal();
@@ -297,6 +312,7 @@ function startGame() {
 
     game.update();
 
+    
     /* This if statement checks to see if a door has been selected by the player.
     If the player collides with a door, he selects it. The engine is then stopped
     and the assets_manager loads the door's level. */
@@ -318,7 +334,6 @@ function startGame() {
         });
         //console.log(zone)
         game.world.setup(zone);
-
         engine.start();
 
       });
@@ -326,6 +341,8 @@ function startGame() {
       return;
 
     }
+
+    
 
   };
 
