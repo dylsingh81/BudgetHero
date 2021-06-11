@@ -1313,7 +1313,6 @@ Game.World.prototype = {
 
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
-        this.level += 1;
         //console.log(this.level, this.level_num_coins)
         this.logData(this.level, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
         this.level_coin_coint = 0

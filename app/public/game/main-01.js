@@ -318,6 +318,7 @@ function startGame() {
     and the assets_manager loads the door's level. */
     if (game.world.door) {
       
+      game.world.level += 1;
       //Toggle Modal Off
       display.closeModal()
 

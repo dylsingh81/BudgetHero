@@ -1,0 +1,1651 @@
+{
+  "ip": "69.121.255.88",
+  "surveyData": {
+    "survey-1": {
+      "Health_care": "Increase",
+      "Anti_terrorism_defenses_in_the_US": "Increase",
+      "Veterans_benefits_and_services": "Increase",
+      "Social_Security": "Increase",
+      "Rebuilding_highways_bridges_and_roads": "Increase",
+      "Economic_assistance_to_needy_people_in_the_US": "Increase",
+      "Scientific_research": "Increase",
+      "Military_defense": "Increase",
+      "Government_assistance_for_the_unemployed": "Increase",
+      "Medicare": "Increase",
+      "Environmental_protection": "Increase",
+      "Economic_assistance_to_needy_people_around_the_world": "Increase",
+      "Education": "Increase"
+    },
+    "survey-2": {
+      "Health_care": "Decrease",
+      "Anti_terrorism_defenses_in_the_US": "Increase",
+      "Veterans_benefits_and_services": "Increase",
+      "Social_Security": "Increase",
+      "Rebuilding_highways_bridges_and_roads": "Increase",
+      "Economic_assistance_to_needy_people_in_the_US": "Increase",
+      "Scientific_research": "Increase",
+      "Military_defense": "Increase",
+      "Government_assistance_for_the_unemployed": "Increase",
+      "Medicare": "Increase",
+      "Environmental_protection": "Increase",
+      "Economic_assistance_to_needy_people_around_the_world": "Increase",
+      "Education": "Increase"
+    }
+  },
+  "num_times_played": 156,
+  "num_survey_times_played": 2,
+  "gameData": {
+    "game-2": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 3, 0, 0, 1, 0, 0, 1, 3, 0, 6, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 3, 0, 0, 1, 0, 0, 1, 3, 0, 6, 0, 0],
+          "percentageCollectedFromLevel": 0.4666666666666667
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 3, 0, 0, 1, 0, 0, 1, 3, 0, 6, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-3": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0],
+          "percentageCollectedFromLevel": 0.5333333333333333
+        },
+        "level-6": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-9": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-10": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-11": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-12": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 7, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-4": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.9166666666666666
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-5": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-9": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-10": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-6": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.6666666666666666
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-7": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        }
+      }
+    },
+    "game-8": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.6666666666666666
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-9": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-68": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-9": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-10": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-69": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-70": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        }
+      }
+    },
+    "game-71": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-72": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-73": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-74": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        }
+      }
+    },
+    "game-75": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.6666666666666666
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-9": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-10": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-11": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-76": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        }
+      }
+    },
+    "game-83": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-84": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-85": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-86": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-87": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-88": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-89": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-90": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-92": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-93": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-94": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-95": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-96": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-97": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-98": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-99": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-100": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-101": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-102": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-103": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-104": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-105": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-106": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-107": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-108": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-110": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-111": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-112": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-113": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-114": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-115": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-116": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-118": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-119": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-120": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-122": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-123": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-124": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-125": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-126": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-127": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-128": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-129": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-131": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-135": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-136": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-137": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-138": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.9166666666666666
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-7": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-8": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-9": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-10": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-11": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-12": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-139": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-140": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.6666666666666666
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-141": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.9166666666666666
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-142": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.75
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-143": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-6": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-7": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-8": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-9": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-10": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-11": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-12": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 5, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-144": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-145": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        }
+      }
+    },
+    "game-146": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-148": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-3": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        }
+      }
+    },
+    "game-152": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0],
+          "percentageCollectedFromLevel": 0.4666666666666667
+        },
+        "level-6": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-153": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.9166666666666666
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0.4
+        },
+        "level-6": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-7": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-8": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-9": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-10": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-11": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 3, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    },
+    "game-154": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.5833333333333334
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-155": {
+      "indvGameData": {
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.6666666666666666
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0],
+          "percentageCollectedFromLevel": 0.3333333333333333
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-9": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-10": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0],
+          "percentageCollectedFromLevel": 0.8333333333333334
+        },
+        "level-11": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-12": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-13": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-14": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0],
+          "percentageCollectedFromLevel": 0.5333333333333333
+        },
+        "level-15": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-16": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 25, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-17": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 25, 0],
+          "percentageCollectedFromLevel": null
+        }
+      }
+    },
+    "game-156": {
+      "indvGameData": {
+        "level-0": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-1": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0
+        },
+        "level-2": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "percentageCollectedFromLevel": 0.75
+        },
+        "level-3": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-4": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-5": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0],
+          "percentageCollectedFromLevel": 0.4666666666666667
+        },
+        "level-6": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-7": {
+          "is_bin": true,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 0],
+          "percentageCollectedFromLevel": null
+        },
+        "level-8": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 0],
+          "percentageCollectedFromLevel": 0.16666666666666666
+        },
+        "level-9": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 0],
+          "percentageCollectedFromLevel": 1
+        },
+        "level-10": {
+          "is_bin": false,
+          "currentBins": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 10, 0],
+          "percentageCollectedFromLevel": 0
+        }
+      }
+    }
+  },
+  "_id": "TS3F022UbcAgy1u6"
+}
