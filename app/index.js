@@ -6,7 +6,7 @@ app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
-const database = new Datastore('database.db');
+const database = new Datastore('database.json');
 database.loadDatabase(function (err) {    // Callback is optional
    console.log("Database loaded")
    console.log(database.getAllData())
@@ -43,6 +43,9 @@ app.post('/ip', (request, response) => {
               console.log("DB ERROR?")
             }
             data.num_times_played = 1
+            data.num_survey_times_played = 1
+            
+            data.surveyData = {}
             database.insert(data);
             newTimesPlayed = 1
         }
@@ -77,18 +80,45 @@ app.post('/gameData', (request, response) => {
 
 app.post('/surveyData', (request, response) => {
   const data = request.body;
+
+  var rec_surveyData = data.surveyData
   //Check if IP Exists
   var ip = data.ip
-  var newGameData = data.gameData
   database.find({ip}, (err, data_query) => {
       //IP Exists Update Number of time Played
-      if(data_query.length == 1){ 
-        database.update({ ip: ip }, { $set: { gameData: newGameData} })
+      if(data_query.length == 1){
+        
+        var newTimesPlayed = data_query[0].num_survey_times_played+1
+        var newSurveyData = data_query[0].surveyData
+        
+        var survey_name = "survey-" + newTimesPlayed
+        newSurveyData[survey_name] = rec_surveyData
+        //console.log(newSurveyData, data_query[0])
+        
+        database.update({ ip: ip }, { $set: { num_survey_times_played: newTimesPlayed} })
+        database.update({ ip: ip }, { $set: { surveyData: newSurveyData} })
       }
       //Else Create IP
       else{
-          console.log("Error - Logging IP without database entry")
+          if(data_query.length >1){
+            console.log("DB ERROR?")
+          }
+          data.num_times_played = 0
+          data.num_survey_times_played = 1
+          data.surveyData = {
+            "survey-1": rec_surveyData
+          }
+          data.gameData = {}
+          database.insert(data);
+          newTimesPlayed = 1
       }
+    /*
+    responseData = {
+      num_times_played: newTimesPlayed,
+      gameData: gameData
+    }
+    //console.log(responseData)
+    response.json(responseData);*/
   })
 });
 

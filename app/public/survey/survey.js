@@ -106,8 +106,31 @@ var json = {
 window.survey = new Survey.Model(json);
 
 survey.onComplete.add(function (sender) {
-  document.querySelector("#surveyResult").textContent =
-    "Result JSON:\n" + JSON.stringify(sender.data, null, 3);
+  document.querySelector("#surveyResult").innerHTML =
+    "<a class=\"btn btn-primary\" href=\"/game/game.html\" >Click Here to Go to the Game</a>"
+
+
+    //SEND JSON TO SERVER FOR DB
+    fetch('https://api.ipify.org/?format=json')
+    .then(results => results.json())
+    .then(data => storeIP(data, sender))
+
+    async function storeIP(data, sender){
+      ipAddr = data.ip
+      sendData = sender.data
+      console.log(sendData)
+      var data = { ip: data.ip, surveyData: sendData};
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      };
+    const response = await fetch('/surveyData', options);
+    const json = await response.json();
+  }  
+    //"Result JSON:\n" + JSON.stringify(sender.data, null, 3);
 });
 
 survey.showProgressBar = "bottom";
@@ -130,4 +153,3 @@ var HelloApp = ng.core
 document.addEventListener("DOMContentLoaded", function () {
   ng.platformBrowserDynamic.bootstrap(HelloApp);
 });
-y;

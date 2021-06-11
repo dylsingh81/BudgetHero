@@ -233,8 +233,6 @@ function startGame() {
 
   var update = function() {
 
-    
-    console.log(everythingLoaded)
     if(everythingLoaded == false)
     {
       resize()
