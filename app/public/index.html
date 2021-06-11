@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+      
 <style>
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
@@ -17,6 +20,17 @@ body, html {height: 100%}
 </style>
 <body>
 
+  <script>
+    beginButton = function(e){
+      if(Math.random() < 0.5){
+        window.location.href = "./survey/survey.html";
+      }
+      else{
+        window.location.href = "./game/game.html";
+      }
+    }
+  </script>
+
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
     <img src="images/sbu.png" alt="SBU" width="75" height="60">
@@ -25,7 +39,7 @@ body, html {height: 100%}
     <h1 class="w3-jumbo w3-animate-top">... you will be redirected to a survey or game... </h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
     <center>
-      <a class="w3-large w3-center" href="/game/game.html" id="beginButton">Click Here to Begin</a>
+      <button class="btn btn-info" style="margin-top:10px" onclick="beginButton()" id="beginButton">Click Here to Begin</button>
     </center>
   </div>
   <div class="w3-display-bottomleft w3-padding-large">

@@ -33,7 +33,6 @@
         </canvas>
       </div>
       
-      <script src = "main-01.js"></script>
       <script>
          let everythingLoaded = false
          const music = [new Audio('./music/bgm1.mp3'),
@@ -155,8 +154,12 @@
                         </div>
       
                      </div>
-                     <a class="btn btn-secondary" href="index.html">Back To Home Page</a>
-                     <button class="btn btn-primary">Surrender (go to survey)</button>
+                     
+                     <script src = "main-01.js"></script>
+                     <div style="text-align: center; margin-top: 10px">
+                        <button onclick="continueBtn()" class="btn btn-success">Continue</button>
+                        <button onclick="surrenderBtn()" class="btn btn-danger">Surrender</button>
+                     </div>
                   </div>
 
                </div>

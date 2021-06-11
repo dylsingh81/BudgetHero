@@ -518,3 +518,12 @@ togglePauseModal = function(e){
   $('#pause-modal').modal('toggle');
 }
 
+continueBtn = function(e){
+  togglePauseModal();
+  paused = !paused
+}
+
+surrenderBtn = function(e){
+  alert("YOU LOSE!")
+}
+
