@@ -75,4 +75,21 @@ app.post('/gameData', (request, response) => {
   })
 });
 
+app.post('/surveyData', (request, response) => {
+  const data = request.body;
+  //Check if IP Exists
+  var ip = data.ip
+  var newGameData = data.gameData
+  database.find({ip}, (err, data_query) => {
+      //IP Exists Update Number of time Played
+      if(data_query.length == 1){ 
+        database.update({ ip: ip }, { $set: { gameData: newGameData} })
+      }
+      //Else Create IP
+      else{
+          console.log("Error - Logging IP without database entry")
+      }
+  })
+});
+
 

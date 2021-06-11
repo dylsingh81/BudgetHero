@@ -35,7 +35,7 @@
       
       <script src = "main-01.js"></script>
       <script>
-         
+         let everythingLoaded = false
          const music = [new Audio('./music/bgm1.mp3'),
                   new Audio('./music/bgm2.mp3'),
                   new Audio('./music/bgm3.mp3'),
@@ -49,13 +49,13 @@
 
          $("#StartButton").click(function () {
            $("#SplashScreen").fadeOut(1000,function(){
-              
              track.play()
-             startGame()
              $("#coin-label").fadeIn(7000,"linear")
              $("#health-label").fadeIn(7000,"linear")
              $("#SplashScreen").hide(0,"linear",function(){
                $("#GameCanvas").fadeIn(4000, "linear", function(){
+                  
+                  everythingLoaded = true
                });
          });
          

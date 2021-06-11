@@ -37,6 +37,8 @@ playButton.addEventListener('click', async event => {
     //console.log(json);
     loadedGameNum = json.num_times_played;
     loadedGameData = json.gameData;
+
+    startGame()
   }  
 })
 
@@ -230,6 +232,13 @@ function startGame() {
   };
 
   var update = function() {
+
+    
+    console.log(everythingLoaded)
+    if(everythingLoaded == false)
+    {
+      resize()
+    }
 
     if (controller.pause)   {
         togglePauseModal();
