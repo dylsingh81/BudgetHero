@@ -1160,7 +1160,9 @@ Game.World.prototype = {
     this.tile_set           = new Game.TileSet(zone.tile_set_columns, zone.tile_sheet_size);
     this.is_bin             = zone.is_bin
     this.spawn_point        = zone.spawn_point
-    this.level_num_coins    = zone.coins.length 
+    this.level_num_coins    = zone.coins.length
+    this.level_logged       = 0
+    this.levels_log_attempted   = 0 
     this.enemies_map        = zone.enemies_map
     this.hitModal           = false
     this.doorsOpen          = false
@@ -1316,8 +1318,15 @@ Game.World.prototype = {
       if (door.collideObjectCenter(this.player)) {
         this.door = door;
         //console.log(this.level, this.level_num_coins)
-        this.logData(this.level, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
-        this.level_coin_coint = 0
+        this.levels_log_attempted += 1
+        console.log(this.levels_log_attempted, this.level_logged)
+        if(this.levels_log_attempted - this.level_logged == 1){
+          console.log("Log Data")
+          this.logData(this.zone_id, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
+          this.level_coin_coint = 0
+          this.levels_logged += 1
+          this.level_logged_attempted = this.level_logged
+        }//Else repeated log
       };
 
     }

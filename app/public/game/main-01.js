@@ -317,8 +317,6 @@ function startGame() {
     If the player collides with a door, he selects it. The engine is then stopped
     and the assets_manager loads the door's level. */
     if (game.world.door) {
-      
-      game.world.level += 1;
       //Toggle Modal Off
       display.closeModal()
 
@@ -338,7 +336,7 @@ function startGame() {
         engine.start();
 
       });
-
+      
       return;
 
     }
