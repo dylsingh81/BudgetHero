@@ -81,44 +81,26 @@ app.post('/surveyData', (request, response) => {
   const data = request.body;
 
   var rec_surveyData = data.surveyData
-  //Check if IP Exists
-  var ip = data.ip
-  database.find({ip}, (err, data_query) => {
-      //IP Exists Update Number of time Played
+  //Check if ID Exists
+  var cookie_id = data.cookie_id
+  database.find({cookie_id}, (err, data_query) => {
+      //ID Exists Update Number of time Played
       if(data_query.length == 1){
         
-        var newTimesPlayed = data_query[0].num_survey_times_played+1
+        var newTimesPlayed = data_query[0].survey_played_num+1
         var newSurveyData = data_query[0].surveyData
         
         var survey_name = "survey-" + newTimesPlayed
         newSurveyData[survey_name] = rec_surveyData
         
-        database.update({ ip: ip }, { $set: { num_survey_times_played: newTimesPlayed} })
-        database.update({ ip: ip }, { $set: { surveyData: newSurveyData} })
+        database.update({ cookie_id: cookie_id }, { $set: { survey_played_num: newTimesPlayed} })
+        database.update({ cookie_id: cookie_id }, { $set: { surveyData: newSurveyData} })
       }
-      //Else Create IP
       else{
-          if(data_query.length >1){
-            console.log("DB ERROR?")
-          }
-          
-          data.num_times_played = 0
-          data.num_survey_times_played = 1
-          data.surveyData = {
-            "survey-1": rec_surveyData
-          }
-          data.gameData = {}
-          database.insert(data);
-          newTimesPlayed = 1
+        console.log("error w db")
       }
-    /*
-    responseData = {
-      num_times_played: newTimesPlayed,
-      gameData: gameData
-    }
-    //console.log(responseData)
-    response.json(responseData);*/
   })
+  response.json("Success");
 });
 
 
@@ -135,6 +117,8 @@ app.post('/createCookie', (request, response) => {
     let cookie_id = docs[0].user_index
     let responseData = {"cookie_id": cookie_id}
     
+    database.update(toFind, { $set: { user_index: cookie_id+1} })
+    
     newUser = {}
     newUser.cookie_id = cookie_id
     newUser.game_played_num = 0
@@ -142,10 +126,8 @@ app.post('/createCookie', (request, response) => {
     newUser.gameData = {}       
     newUser.surveyData = {}
     database.insert(newUser);
-    database.update(toFind, { $set: { user_index: cookie_id+1} })
-
-    response.json(responseData);
     
+    response.json(responseData);
   });
 });
 

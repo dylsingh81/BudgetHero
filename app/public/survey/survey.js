@@ -6,8 +6,11 @@ async function handleNewConnection() {
   if (cookieExists) {
     //Get cookie ID from DB and store in variable
     cookieId = getCookieValue("id")
+    cookieId = parseInt(cookieId)
+    console.log("Loaded Cookie:", cookieId)
   } 
   else {
+    console.log("Here - send create cookie")
     //Get Next ID from server && Create Entry in DB on server
     var data = {};
     const options = {
@@ -45,7 +48,7 @@ var json = {
           title: "Health care",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
-        },/*
+        },
         {
           type: "radiogroup",
           name: "Anti_terrorism_defenses_in_the_US",
@@ -130,21 +133,21 @@ var json = {
           title: "Education",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
-        },*/
+        },
       ],
     },
   ],
 };
 
 window.survey = new Survey.Model(json);
-
+sent = false
 survey.onComplete.add(function (sender) {
-  console.log("Here");
   document.querySelector("#surveyResult").innerHTML =
     '<a class="btn btn-primary" href="/game/game.html" >Click Here to Go to the Game</a>';
 
 
   async function sendSurveyData(cookie_id, sender) {
+
     sendData = sender.data;
     var data = { cookie_id: cookieId, surveyData: sendData };
     const options = {
@@ -156,7 +159,10 @@ survey.onComplete.add(function (sender) {
     };
     fetch("/surveyData", options);
   }
-  sendSurveyData(cookieId,sender)
+  if(!sent){
+    sendSurveyData(cookieId,sender) 
+    sent = true
+  }
 });
 
 survey.showProgressBar = "bottom";
