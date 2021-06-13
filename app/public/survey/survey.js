@@ -1,10 +1,43 @@
+var cookieId = undefined;
+
+async function handleNewConnection() {
+  //Check if current ID cookie exists.
+  let cookieExists = checkACookieExists("id");
+  if (cookieExists) {
+    //Get cookie ID from DB and store in variable
+    cookieId = getCookieValue("id")
+  } 
+  else {
+    //Get Next ID from server && Create Entry in DB on server
+    var data = {};
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    response = await fetch("/createCookie", options);
+    json = await response.json();
+
+    cookieId = json.cookie_id
+
+    //Create Cookie using ID
+    createCookie("id", cookieId)
+    console.log("Cookie Created:", cookieId)
+  }
+}
+
+handleNewConnection()
+
 Survey.StylesManager.applyTheme("modern");
 
 var json = {
-  title:"Survey",
+  title: "Survey",
   pages: [
     {
-      title: "If you were making up the budget for the federal government this year, would you increase spending, decrease spending, or keep spending the same for:", 
+      title:
+        "If you were making up the budget for the federal government this year, would you increase spending, decrease spending, or keep spending the same for:",
       questions: [
         {
           type: "radiogroup",
@@ -12,7 +45,7 @@ var json = {
           title: "Health care",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
-        },
+        },/*
         {
           type: "radiogroup",
           name: "Anti_terrorism_defenses_in_the_US",
@@ -97,7 +130,7 @@ var json = {
           title: "Education",
           isRequired: true,
           choices: ["Increase", "Decrease", "Remain The Same"],
-        }
+        },*/
       ],
     },
   ],
@@ -106,30 +139,24 @@ var json = {
 window.survey = new Survey.Model(json);
 
 survey.onComplete.add(function (sender) {
-  console.log("Here")
+  console.log("Here");
   document.querySelector("#surveyResult").innerHTML =
-    "<a class=\"btn btn-primary\" href=\"/game/game.html\" >Click Here to Go to the Game</a>"
+    '<a class="btn btn-primary" href="/game/game.html" >Click Here to Go to the Game</a>';
 
 
-    //SEND JSON TO SERVER FOR DB
-    fetch('https://api.ipify.org/?format=json')
-    .then(results => results.json())
-    .then(data => storeIP(data, sender))
-
-    async function storeIP(data, sender){
-      ipAddr = data.ip
-      sendData = sender.data
-      var data = { ip: data.ip, surveyData: sendData};
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      };
-    const response = await fetch('/surveyData', options);
-    const json = await response.json();
-  } 
+  async function sendSurveyData(cookie_id, sender) {
+    sendData = sender.data;
+    var data = { cookie_id: cookieId, surveyData: sendData };
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch("/surveyData", options);
+  }
+  sendSurveyData(cookieId,sender)
 });
 
 survey.showProgressBar = "bottom";

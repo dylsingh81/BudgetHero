@@ -7,23 +7,21 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
 const database = new Datastore('database.db');
+
+first = false
+if(first){
+  let data = {
+    "user_index": 0
+  }
+  database.insert(data)
+}
+
 database.loadDatabase(function (err) {    // Callback is optional
    console.log("Database loaded")
    console.log(database.getAllData())
 });
 
-/*
-app.get('/api', (request, response) => {
-    console.log("Here")
-    database.find({}, (err, data) => {
-      if (err) {
-        response.end();
-        return;
-      }
-      response.json(data);
-    });
-  });
-*/
+
 app.post('/ip', (request, response) => {
     const data = request.body;
 
@@ -123,4 +121,31 @@ app.post('/surveyData', (request, response) => {
   })
 });
 
+
+app.post('/createCookie', (request, response) => {
+
+  var toFind = {};
+  var firstTerm = "user_index";
+  toFind[firstTerm];
+  
+  database.find(toFind, function(err, docs) {
+    if(docs == []){
+      console.log("DB Error - Should not happen ever")
+    }
+    let cookie_id = docs[0].user_index
+    let responseData = {"cookie_id": cookie_id}
+    
+    newUser = {}
+    newUser.cookie_id = cookie_id
+    newUser.game_played_num = 0
+    newUser.survey_played_num = 0
+    newUser.gameData = {}       
+    newUser.surveyData = {}
+    database.insert(newUser);
+    database.update(toFind, { $set: { user_index: cookie_id+1} })
+
+    response.json(responseData);
+    
+  });
+});
 

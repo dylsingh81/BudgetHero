@@ -1319,9 +1319,9 @@ Game.World.prototype = {
         this.door = door;
         //console.log(this.level, this.level_num_coins)
         this.levels_log_attempted += 1
-        console.log(this.levels_log_attempted, this.level_logged)
+        //console.log(this.levels_log_attempted, this.level_logged)
         if(this.levels_log_attempted - this.level_logged == 1){
-          console.log("Log Data")
+          //console.log("Log Data")
           this.logData(this.zone_id, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
           this.level_coin_coint = 0
           this.levels_logged += 1
