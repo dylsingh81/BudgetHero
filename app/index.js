@@ -22,58 +22,41 @@ database.loadDatabase(function (err) {    // Callback is optional
 });
 
 
-app.post('/ip', (request, response) => {
-    const data = request.body;
-
-    //Check if IP Exists
-    var ip = data.ip
-    var gameData = undefined
-    database.find({ip}, (err, data_query) => {
-        //IP Exists Update Number of time Played
-        if(data_query.length == 1){
-          newTimesPlayed = data_query[0].num_times_played+1
-          database.update({ ip: ip }, { $set: { num_times_played: newTimesPlayed} })
-          gameData = data_query[0].gameData
-        }
-        //Else Create IP
-        else{
-            if(data_query.length >1){
-              console.log("DB ERROR?")
-            }
-            data.num_times_played = 1
-            data.num_survey_times_played = 1
-            
-            data.surveyData = {}
-            database.insert(data);
-            newTimesPlayed = 1
-        }
-            
-      responseData = {
-        num_times_played: newTimesPlayed,
-        gameData: gameData
-      }
-      //console.log(responseData)
-      response.json(responseData);
-    })
-
-});
-
-
 app.post('/gameData', (request, response) => {
   const data = request.body;
-  //Check if IP Exists
-  var ip = data.ip
-  var newGameData = data.gameData
-  database.find({ip}, (err, data_query) => {
-      //IP Exists Update Number of time Played
-      if(data_query.length == 1){ 
-        database.update({ ip: ip }, { $set: { gameData: newGameData} })
+
+  var rec_gameData = data.gameData
+  //Check if ID Exists
+  var cookie_id = data.cookie_id
+  
+  let responseData = {}
+  database.find({cookie_id}, (err, data_query) => {
+      //ID Exists Update Number of time Played
+      if(data_query.length == 1){
+        
+        var newTimesPlayed = data_query[0].game_played_num+1
+        var newGameData = data_query[0].gameData
+        
+        var game_name = "game-" + newTimesPlayed
+        newGameData[game_name] = rec_gameData
+        
+        database.update({ cookie_id: cookie_id }, { $set: { game_played_num: newTimesPlayed} })
+        database.update({ cookie_id: cookie_id }, { $set: { gameData: newGameData} })
+        responseData = {"num_times_played": newTimesPlayed, "gameData": newGameData}   
+        response.json(responseData);
       }
-      //Else Create IP
       else{
-          console.log("Error - Logging IP without database entry")
+        console.log("error w db")
+        response.json(responseData);
       }
   })
+});
+
+app.post('/gameDataLevel', (request, response) => {
+  const data = request.body;
+  var rec_gameData = data.gameData
+  var cookie_id = data.cookie_id
+  database.update({ cookie_id: cookie_id }, { $set: { gameData: rec_gameData} })
   response.json("Success");
 });
 
@@ -126,7 +109,6 @@ app.post('/createCookie', (request, response) => {
     newUser.gameData = {}       
     newUser.surveyData = {}
     database.insert(newUser);
-    
     response.json(responseData);
   });
 });

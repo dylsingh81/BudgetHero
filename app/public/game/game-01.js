@@ -1386,7 +1386,8 @@ Game.World.prototype = {
       currentBins : coin_bins.slice(),
       percentageCollectedFromLevel: coins_collected/level_num_coins
     }
-    var data = { ip: ipAddr, gameData: this.gameData};
+    console.log(this.gameData)
+    var data = { cookie_id: cookieId, gameData: this.gameData};
     const options = {
       method: 'POST',
       headers: {
@@ -1394,7 +1395,7 @@ Game.World.prototype = {
       },
       body: JSON.stringify(data)
     };
-    fetch('/gameData', options);
+    fetch('/gameDataLevel', options);
   } 
 
 };

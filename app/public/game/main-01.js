@@ -1,64 +1,71 @@
-//old main 07
-// Frank Poth 04/06/2018
-
-/* Changes:
-
-  1. The update function now check on every frame for game.world.door. If a door
-     is selected, the game engine stops and the door's level is loaded.
-  2. When the game is first initialized at the bottom of this file, game.world is
-     loaded using it's default values defined in its constructor.
-  3. The AssetsManager class has been changed to load both images and json.
-
-*/
-let ipAddr = 0
 let loadedGameData = undefined
 let loadedGameNum = undefined
 
 let paused = false
-let clicked = 0
+var cookieId = undefined;
+
+
 
 const playButton = document.getElementById("StartButton")
 playButton.addEventListener('click', async event => {
+  //Check if current ID cookie exists.
+  let cookieExists = checkACookieExists("id");
+  if (cookieExists) {
+      //Get cookie ID from DB and store in variable
+      cookieId = getCookieValue("id")
+      cookieId = parseInt(cookieId)
+      console.log("Loaded Cookie:", cookieId)
+  } else {
+      console.log("Here - send create cookie")
+      //Get Next ID from server && Create Entry in DB on server
+      var data = {};
+      const options = {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+      };
+      let response = await fetch("/createCookie", options);
+      let json = await response.json();
 
-  if(clicked > 0){
-    return
+      cookieId = json.cookie_id
+
+      //Create Cookie using ID
+      createCookie("id", cookieId)
+      console.log("Cookie Created:", cookieId)
   }
-  clicked += 1
 
-
-  fetch('https://api.ipify.org/?format=json')
-    .then(results => results.json())
-    .then(data => storeIP(data))
-
-  async function storeIP(data){
-    ipAddr = data.ip
-    var data = { ip: data.ip, gameData: {}};
-    const options = {
+  var data = {
+      cookie_id: cookieId,
+      gameData: {}
+  };
+  const options = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    };
-    const response = await fetch('/ip', options);
-    const json = await response.json();
-    //console.log(json);
-    loadedGameNum = json.num_times_played;
-    loadedGameData = json.gameData;
+  };
 
-    $("#SplashScreen").fadeOut(1000,function(){
+  console.log("COOKIE ID:", cookieId)
+
+  const response = await fetch('/gameData', options);
+  const json = await response.json();
+  //console.log(json);
+  loadedGameNum = json.num_times_played;
+  loadedGameData = json.gameData;
+
+  //console.log(loadedGameNum)
+
+  $("#SplashScreen").fadeOut(1000, function() {
       track.play()
       startGame()
-      $("#coin-label").fadeIn(7000,"linear")
-      $("#health-label").fadeIn(7000,"linear")
-      $("#SplashScreen").hide(0,"linear",function(){
-        $("#GameCanvas").fadeIn(4000, "linear", function(){
-           
-        });
-    });
-    
-    });
-  }  
+      $("#coin-label").fadeIn(7000, "linear")
+      $("#health-label").fadeIn(7000, "linear")
+      $("#SplashScreen").hide(0, "linear", function() {
+          $("#GameCanvas").fadeIn(4000, "linear", function() {});});
+  });
 })
 
 function startGame() {
@@ -357,11 +364,11 @@ function startGame() {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
-  let ipWaitCount = 2000
+  let ipWaitCount = 1000
   while(loadedGameNum == undefined){
     ipWaitCount -= 1
     if(ipWaitCount < 0){
-      alert("Server cannot connect to internet - Results will not be stored")
+      alert("Results will not be stored")
       break
     }
   }
