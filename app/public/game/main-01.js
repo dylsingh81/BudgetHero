@@ -4,8 +4,6 @@ let loadedGameNum = undefined
 let paused = false
 var cookieId = undefined;
 
-
-
 const playButton = document.getElementById("StartButton")
 playButton.addEventListener('click', async event => {
   //Check if current ID cookie exists.
@@ -259,7 +257,12 @@ function startGame() {
 
   var update = function() {
 
-
+    if(game.world.health <= 0){
+      //End game, go to end screen
+      engine.stop()
+      endGame()
+    }
+  
     if (controller.pause)   {
         togglePauseModal();
         paused = !paused
@@ -529,6 +532,24 @@ continueBtn = function(e){
 }
 
 surrenderBtn = function(e){
-  alert("YOU LOSE!")
+  togglePauseModal();
+  endGame()
 }
 
+endGame = function(e){
+  let canvas = document.getElementById("GameCanvas")
+  let coin_label = document.getElementById("coin-label")
+  let health_label = document.getElementById("health-label")
+  let endGameScreen = document.getElementById("tudo")
+
+  if(canvas != null){
+    canvas.parentElement.removeChild(canvas)
+  }
+  if(coin_label != null){
+    coin_label.parentElement.removeChild(coin_label)
+  }
+  if(health_label != null){
+    health_label.parentElement.removeChild(health_label)
+  }
+  endGameScreen.hidden = false
+}
