@@ -46,7 +46,7 @@ app.post('/gameData', (request, response) => {
         response.json(responseData);
       }
       else{
-        console.log("error w db")
+        console.log("error w db", "finding cookie id:", cookie_id)
         response.json(responseData);
       }
   })

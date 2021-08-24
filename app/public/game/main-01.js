@@ -540,7 +540,7 @@ endGame = function(e){
   let canvas = document.getElementById("GameCanvas")
   let coin_label = document.getElementById("coin-label")
   let health_label = document.getElementById("health-label")
-  let endGameScreen = document.getElementById("tudo")
+  let endGameScreen = document.getElementById("gameOverScreen")
 
   if(canvas != null){
     canvas.parentElement.removeChild(canvas)

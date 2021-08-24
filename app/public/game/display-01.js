@@ -221,6 +221,7 @@ function drawBinLabels(str, x, y, ctx){
   }
 }
 
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);

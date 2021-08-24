@@ -34,7 +34,7 @@
         </canvas>
       </div>
       
-      <div id="tudo" hidden>
+      <div id="gameOverScreen" hidden>
          <div class="gameover">
             <p> GAME </p>
             <p> OVER </p>
@@ -85,8 +85,7 @@
             <div class="modal-content" id="controls-content">
                <div class="modal-header">
                   <h5 class="modal-title">Controls</h5>
-                  <button type="button" id="controls-close-1" aria-label="Close" onclick="toggleControlModal()">
-                  <span aria-hidden="true">&times;</span>
+                  <span style="cursor: pointer;" aria-hidden="true" onclick="toggleControlModal()">&times;</span>
                   </button>
                </div>
                <div class="modal-body" id="controls-container">
@@ -121,9 +120,9 @@
                   </div>
 
                </div>
-               <div class="modal-footer">
+               <!-- <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" id="pie-modal-close-2" onclick="toggleControlModal()">Close</button>
-                  </div>
+               </div> -->
             </div>
          </div>
       </div>

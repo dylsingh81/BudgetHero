@@ -1,68 +1,76 @@
 /* Frank Poth 02/28/2018 */
 
-* { box-sizing:border-box; margin:0; padding:0; }
-
-html { height:100%; width:100%; }
-
-body {
-
-  align-content:center;
-  align-items:space-around;
-  background-color:#0f0f0f;
-  display:grid;
-  justify-items:center;
-  height:100%;
-  width:100%;
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-canvas { image-rendering: -moz-crisp-edges;
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  align-content: center;
+  align-items: space-around;
+  background-color: #0f0f0f;
+  display: grid;
+  justify-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+canvas {
+  image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
-  image-rendering: crisp-edges; }
+  image-rendering: crisp-edges;
+}
 
-.game-label{
-  color:#f8dc26; 
-  font-size:1.5em; 
-  position:fixed;
+.game-label {
+  color: #f8dc26;
+  font-size: 1.5em;
+  position: fixed;
   border-radius: 10px;
 }
 
-
-#pie-modal-content{
-  background-color: rgba(176,154,157,0.8) !important;
+#pie-modal-content {
+  background-color: rgba(176, 154, 157, 0.8) !important;
 }
 
-#SplashScreen{
+#SplashScreen {
   width: 100vw;
   height: 100vh;
   align-items: center;
   text-align: center;
 }
 
-
-
-#controls-content{
-  background: rgba(255, 114, 184, 0.897);
+#controls-content {
+  background: #0f0f0f;
   color: rgb(43, 43, 43);
   font-weight: bold;
+  user-select: none;
+  color: white;
 }
 
-
-
-
-
-
-
-
-
+#pause-content {
+  background: #0f0f0f;
+  color: rgb(43, 43, 43);
+  font-weight: bold;
+  user-select: none;
+  color: white;
+}
 
 /*  #####################################          Button         ######################################################## */
 
 .play-btn {
   width: 100px;
   height: 100px;
-  background: radial-gradient( rgba(2, 8, 83, 0.8) 60%, rgba(255, 255, 255, 1) 62%);
+  background: radial-gradient(
+    rgba(2, 8, 83, 0.8) 60%,
+    rgba(255, 255, 255, 1) 62%
+  );
   border-radius: 50%;
   position: relative;
   display: block;
@@ -108,7 +116,7 @@ canvas { image-rendering: -moz-crisp-edges;
   animation-timing-function: steps;
   opacity: 1;
   border-radius: 50%;
-  border: 5px solid rgba(255, 255, 255, .75);
+  border: 5px solid rgba(255, 255, 255, 0.75);
   top: -25%;
   left: -25%;
   background: rgba(198, 16, 0, 0);
@@ -119,14 +127,14 @@ canvas { image-rendering: -moz-crisp-edges;
     -webkit-transform: scale(0.6);
     transform: scale(0.6);
     opacity: 1;
-    box-shadow: inset 0px 0px 25px 3px rgba(255, 255, 255, 0.75), 0px 0px 25px 10px rgba(255, 255, 255, 0.75);
+    box-shadow: inset 0px 0px 25px 3px rgba(255, 255, 255, 0.75),
+      0px 0px 25px 10px rgba(255, 255, 255, 0.75);
   }
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 0;
     box-shadow: none;
-
   }
 }
 
@@ -135,14 +143,14 @@ canvas { image-rendering: -moz-crisp-edges;
     -webkit-transform: scale(0.6);
     transform: scale(0.6);
     opacity: 1;
-    box-shadow: inset 0px 0px 25px 3px rgba(255, 255, 255, 0.75), 0px 0px 25px 10px rgba(255, 255, 255, 0.75);
+    box-shadow: inset 0px 0px 25px 3px rgba(255, 255, 255, 0.75),
+      0px 0px 25px 10px rgba(255, 255, 255, 0.75);
   }
   100% {
     -webkit-transform: scale(1, 1);
     transform: scale(1);
     opacity: 0;
     box-shadow: none;
-
   }
 }
 
@@ -153,7 +161,6 @@ canvas { image-rendering: -moz-crisp-edges;
   --shadow-color-light: white;
 }
 
-
 .logo-1 {
   color: rgb(43, 10, 97);
   animation: neon 3s infinite;
@@ -163,26 +170,39 @@ canvas { image-rendering: -moz-crisp-edges;
 
 @keyframes neon {
   0% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
-    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+    text-shadow: -1px -1px 1px var(--shadow-color-light),
+      -1px 1px 1px var(--shadow-color-light),
+      1px -1px 1px var(--shadow-color-light),
+      1px 1px 1px var(--shadow-color-light), 0 0 3px var(--shadow-color-light),
+      0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+      0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color),
+      0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color),
+      0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
   }
   50% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 5px var(--shadow-color-light), 0 0 15px var(--shadow-color-light), 0 0 25px var(--shadow-color-light),
-    0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 60px var(--shadow-color), 0 0 80px var(--shadow-color), 0 0 110px var(--shadow-color), 0 0 210px var(--shadow-color);
+    text-shadow: -1px -1px 1px var(--shadow-color-light),
+      -1px 1px 1px var(--shadow-color-light),
+      1px -1px 1px var(--shadow-color-light),
+      1px 1px 1px var(--shadow-color-light), 0 0 5px var(--shadow-color-light),
+      0 0 15px var(--shadow-color-light), 0 0 25px var(--shadow-color-light),
+      0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color),
+      0 0 60px var(--shadow-color), 0 0 80px var(--shadow-color),
+      0 0 110px var(--shadow-color), 0 0 210px var(--shadow-color);
   }
   100% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
-    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+    text-shadow: -1px -1px 1px var(--shadow-color-light),
+      -1px 1px 1px var(--shadow-color-light),
+      1px -1px 1px var(--shadow-color-light),
+      1px 1px 1px var(--shadow-color-light), 0 0 3px var(--shadow-color-light),
+      0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+      0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color),
+      0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color),
+      0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
   }
 }
 
-
-
-
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -196,38 +216,41 @@ html, body {
 .button {
   min-width: 300px;
   min-height: 60px;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 22px;
   text-transform: uppercase;
   letter-spacing: 1.3px;
   font-weight: 700;
   color: #e9e9e9;
   background: rgba(2, 8, 83, 0.8);
-background: linear-gradient(90deg, rgba(2, 8, 83, 0.8) 0%, rgba(2, 8, 83, 0.8) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 8, 83, 0.8) 0%,
+    rgba(2, 8, 83, 0.8) 100%
+  );
   border: none;
   border-radius: 1000px;
-  box-shadow: 12px 12px 24px rgba(3, 10, 104, 0.8);;
+  box-shadow: 12px 12px 24px rgba(3, 10, 104, 0.8);
   transition: all 0.3s ease-in-out 0s;
   cursor: pointer;
   outline: none;
   position: relative;
   padding: 10px;
-  }
+}
 
-
-
-.button:hover, .button:focus {
+.button:hover,
+.button:focus {
   color: #313133;
   transform: translateY(-6px);
 }
 
-button:hover::before, button:focus::before {
+button:hover::before,
+button:focus::before {
   opacity: 1;
 }
 
-
-
-button:hover::after, button:focus::after {
+button:hover::after,
+button:focus::after {
   animation: none;
   display: none;
 }
@@ -245,176 +268,262 @@ button:hover::after, button:focus::after {
   }
 }
 
-
-
-.outsideBtn{
+.outsideBtn {
   position: relative;
 }
 
-
 /* ######################################################################################################### */
 
-@-webkit-keyframes animacao1 { 0% {background: #17094d;}
-							   50% {background: #1b0b5a;}
-							   100% {background: #1d0b61;} }
+@-webkit-keyframes animacao1 {
+  0% {
+    background: #17094d;
+  }
+  50% {
+    background: #1b0b5a;
+  }
+  100% {
+    background: #1d0b61;
+  }
+}
 
-@-moz-keyframes animacao1 { 0% {background: #17094d;}
-							50% {background: #1b0b5a;}
-							100% {background: #1d0b61;} }
+@-moz-keyframes animacao1 {
+  0% {
+    background: #17094d;
+  }
+  50% {
+    background: #1b0b5a;
+  }
+  100% {
+    background: #1d0b61;
+  }
+}
 
-@keyframes animacao1 { 0% {background: #17094d;}
-							   50% {background: #1b0b5a;}
-							   100% {background: #1d0b61;} }
+@keyframes animacao1 {
+  0% {
+    background: #17094d;
+  }
+  50% {
+    background: #1b0b5a;
+  }
+  100% {
+    background: #1d0b61;
+  }
+}
 
+#gameOverScreen {
+  width: 750px;
+  height: 580px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 40px;
+  -webkit-animation-name: animacao1;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
 
-#tudo {width: 750px;
-		height: 580px;
-		margin: auto;
-		margin-top: 20px;
-    	border-radius: 40px;
-    	-webkit-animation-name: animacao1;
-		-webkit-animation-duration: 1s;
-		-webkit-animation-timing-function:  linear;
-		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-direction: alternate;
+  -moz-animation-name: animacao1;
+  -moz-animation-duration: 1s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
 
-		-moz-animation-name: animacao1;
-		-moz-animation-duration: 1s;
-		-moz-animation-timing-function:  linear;
-		-moz-animation-iteration-count: infinite;
-		-moz-animation-direction: alternate; 
+  animation-name: animacao1;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 
-		animation-name: animacao1;
-		animation-duration: 1s;
-		animation-timing-function:  linear;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;}
+.gameover {
+  width: 750px;
+  height: auto;
+  padding-top: 60px;
+  background: none;
+}
 
+.gameover p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 160px;
+  font-family: "Black Ops One", cursive;
+  line-height: 120px;
+  text-align: center;
+  text-shadow: 5px 5px #000000;
+  color: #ffffff;
+}
 
-.gameover {width:750px;
-			height: auto;
-			padding-top: 60px;
-			background: none;}
+.continue {
+  width: 750px;
+  height: auto;
+  padding-top: 40px;
+}
 
-.gameover p {margin-top: 0px;
-			margin-bottom: 0px;
-			font-size: 160px;
-			font-family: 'Black Ops One', cursive;
-			line-height: 120px;
-			text-align: center;
-			text-shadow: 5px 5px #000000;
-			color: #ffffff;}
+.continue p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-shadow: 2.5px 2.5px #000000;
+}
 
-.continue	{width: 750px;
-			height: auto;
-			padding-top: 40px;}
+.opcoes {
+  width: 550px;
+  height: auto;
+  padding-top: 50px;
+  margin: auto;
+}
 
-.continue p {margin-top: 0px;
-			margin-bottom: 0px;
-			text-align: center;
-			font-size: 40px;
-			font-weight: bold;
-			font-family: corbel;
-			color: #ffffff;
-			text-shadow: 2.5px 2.5px #000000;}
+.yes a {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 2.5px 2.5px #000000;
+  padding: 25px 40px 25px 40px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  background: #006400;
+  margin-right: 30px;
+  float: left;
+}
 
-.opcoes {width: 550px;
-		height: auto;
-		padding-top: 50px;
-		margin: auto;}
+@-webkit-keyframes animacao2 {
+  from {
+    -webkit-transform: scale(1);
+  }
+  to {
+    -webkit-transform: scale(1.2);
+  }
+}
 
-.yes a {text-align: center;
-		font-size: 30px;
-		font-weight: bold;
-		font-family: corbel;
-		color: #ffffff;
-		text-decoration: none;
-		text-shadow: 2.5px 2.5px #000000;
-		padding: 25px 40px 25px 40px;
-    border: 1px solid #000000;
-		border-radius: 20px;
-		background: #006400;
-		margin-right: 30px;
-		float: left;}
+@-moz-keyframes animacao2 {
+  from {
+    -moz-transform: scale(1);
+  }
+  to {
+    -moz-transform: scale(1.1);
+  }
+}
 
+@keyframes animacao2 {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
 
+.yes a:hover {
+  -webkit-animation-name: animacao2;
+  -webkit-animation-duration: 0.8s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
 
-@-webkit-keyframes animacao2 { from {-webkit-transform: scale(1);} 
-								to {-webkit-transform: scale(1.2);} }
+  -moz-animation-name: animacao2;
+  -moz-animation-duration: 0.8s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
 
-@-moz-keyframes animacao2 { from {-moz-transform: scale(1);} 
-								to {-moz-transform: scale(1.1);} }
+  animation-name: animacao2;
+  animation-duration: 0.8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 
-@keyframes animacao2 { from {transform: scale(1);} 
-								to {transform: scale(1.1);} }
+.no a {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: corbel;
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 1.5px 1.5px #fb3733;
+  padding: 25px 50px 25px 50px;
+  border-radius: 20px;
+  background: #000000;
+  float: left;
+}
 
+@-webkit-keyframes animacao3 {
+  0% {
+    -webkit-transform: translate(-5px, 0px);
+  }
+  25% {
+    -webkit-transform: translate(-2.5px, 0px);
+  }
+  50% {
+    -webkit-transform: translate(0px, 0px);
+  }
+  75% {
+    -webkit-transform: translate(2.5px, 0px);
+  }
+  100% {
+    -webkit-transform: translate(5px, 0px);
+  }
+}
 
-.yes a:hover {-webkit-animation-name: animacao2;
-		-webkit-animation-duration: 0.8s;
-		-webkit-animation-timing-function:  linear;
-		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-direction: alternate;
+@-moz-keyframes animacao3 {
+  0% {
+    -moz-transform: translate(-5px, 0px);
+  }
+  25% {
+    -moz-transform: translate(-2.5px, 0px);
+  }
+  50% {
+    -moz-transform: translate(0px, 0px);
+  }
+  75% {
+    -moz-transform: translate(2.5px, 0px);
+  }
+  100% {
+    -moz-transform: translate(5px, 0px);
+  }
+}
 
-		-moz-animation-name: animacao2;
-		-moz-animation-duration: 0.8s;
-		-moz-animation-timing-function:  linear;
-		-moz-animation-iteration-count: infinite;
-		-moz-animation-direction: alternate;
+@keyframes animacao3 {
+  0% {
+    transform: translate(-5px, 0px);
+  }
+  25% {
+    transform: translate(-2.5px, 0px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  75% {
+    transform: translate(2.5px, 0px);
+  }
+  100% {
+    transform: translate(5px, 0px);
+  }
+}
 
-		animation-name: animacao2;
-		animation-duration: 0.8s;
-		animation-timing-function:  linear;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;}
+.no a:hover {
+  -webkit-animation-name: animacao3;
+  -webkit-animation-duration: 0.15s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
 
+  -moz-animation-name: animacao3;
+  -moz-animation-duration: 0.15s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: alternate;
 
-
-.no a {text-align: center;
-	font-size: 30px;
-	font-weight: bold;
-	font-family: corbel;
-	color: #ffffff;
-	text-decoration: none;
-	text-shadow: 1.5px 1.5px #FB3733;
-	padding: 25px 50px 25px 50px;
-	border-radius: 20px;
-	background: #000000;
-	float: left;}
-
-
-@-webkit-keyframes animacao3 { 0% {-webkit-transform: translate(-5px,0px);} 
-							   25% {-webkit-transform: translate(-2.5px, 0px);}
-							   50% {-webkit-transform: translate(0px, 0px);}
-							   75% {-webkit-transform: translate(2.5px, 0px);}
-							   100% {-webkit-transform: translate(5px, 0px);} }
-
-@-moz-keyframes animacao3 { 0% {-moz-transform: translate(-5px,0px);} 
-							   25% {-moz-transform: translate(-2.5px, 0px);}
-							   50% {-moz-transform: translate(0px, 0px);}
-							   75% {-moz-transform: translate(2.5px, 0px);}
-							   100% {-moz-transform: translate(5px, 0px);} }
-
-@keyframes animacao3 { 0% {transform: translate(-5px,0px);} 
-							   25% {transform: translate(-2.5px, 0px);}
-							   50% {transform: translate(0px, 0px);}
-							   75% {transform: translate(2.5px, 0px);}
-							   100% {transform: translate(5px, 0px);} }
-
-
-.no a:hover {-webkit-animation-name: animacao3;
-		-webkit-animation-duration: 0.15s;
-		-webkit-animation-timing-function:  linear;
-		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-direction: alternate;
-
-		-moz-animation-name: animacao3;
-		-moz-animation-duration: 0.15s;
-		-moz-animation-timing-function:  linear;
-		-moz-animation-iteration-count: infinite;
-		-moz-animation-direction: alternate;
-
-		animation-name: animacao3;
-		animation-duration: 0.15s;
-		animation-timing-function:  linear;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;}
+  animation-name: animacao3;
+  animation-duration: 0.15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
