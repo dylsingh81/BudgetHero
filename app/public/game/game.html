@@ -35,16 +35,24 @@
       </div>
       
       <div id="gameOverScreen" hidden>
-         <div class="gameover">
-            <p> GAME </p>
-            <p> OVER </p>
+         <div class="container-sm border p-5 rounded-2 border-danger">
+            <span class="row  blink-text" style="font-size: 20vh;"> Game Over </span>
+            <span class="row text-center justify-content-center" style="font-size: large; color: whitesmoke;"> Select an option: </span>
+            <div class="row mt-3">
+               <a class="col btn-primary btn me-3 p-3" href="/game/game.html">RESTART GAME</a> 
+               <a class="col btn-secondary btn me-3 p-3" href="/survey/survey.html"> GO TO SURVEY </a> 
+            </div>
          </div>
-      
-         <div class="continue"> <p> SELECT AN OPTION: </p> </div>
-      
-         <div class="opcoes">
-            <div class="yes"> <a href="/game/game.html"> RESTART </a> </div>
-            <div class="no"> <a href="/survey/survey.html"> GO TO SURVEY </a> </div>
+      </div>
+
+      <div id="gameWinScreen" hidden>
+         <div class="container-sm border p-5 rounded-2 border-success">
+            <span class="row blink-text" style="font-size: 12vh; color: green;"> Congratulations. You Win! </span>
+            <span class="row text-center justify-content-center" style="font-size: large; color: whitesmoke;"> Select an option: </span>
+            <div class="row mt-3">
+               <a class="col btn-secondary btn me-3 p-3" href="/game/game.html">REPLAY GAME</a> 
+               <a class="col btn-primary btn me-3 p-3" href="/survey/survey.html"> GO TO SURVEY </a> 
+            </div>
          </div>
       </div>
 
