@@ -159,13 +159,13 @@ function startGame() {
       coin_p.style.right = rectangle.left + "px";
       coin_p.style.top  = rectangle.top + "px";
       coin_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
-      coin_p.style.backgroundColor = "rgba(0,0,0,0.5)"
+      //coin_p.style.backgroundColor = "rgba(0,0,0,0.5)"
       coin_p.style.padding = "5px"
 
       health_p.style.left = rectangle.left + "px";
       health_p.style.top  = rectangle.top + "px";
       health_p.style.fontSize = (game.world.tile_set.tile_size * rectangle.height / game.world.height)/1.8 + "px";
-      health_p.style.backgroundColor = "rgba(0,0,0,0.5P)"
+      //health_p.style.backgroundColor = "rgba(0,0,0,0.5)"
       health_p.style.padding = "5px"
 
       attackBarContainer.style.position = "absolute"
