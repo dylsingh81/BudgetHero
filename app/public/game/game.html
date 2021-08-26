@@ -34,7 +34,7 @@
         </canvas>
       </div>
       
-      <div id="gameOverScreen" hidden>
+      <div id="gameOverScreen" style="display: none;">
          <div class="container-sm border p-5 rounded-2 border-danger">
             <span class="row  blink-text" style="font-size: 20vh;"> Game Over </span>
             <span class="row text-center justify-content-center" style="font-size: large; color: whitesmoke;"> Select an option: </span>
@@ -45,7 +45,7 @@
          </div>
       </div>
 
-      <div id="gameWinScreen" hidden>
+      <div id="gameWinScreen" style="display: none;">
          <div class="container-sm border p-5 rounded-2 border-success">
             <span class="row blink-text" style="font-size: 12vh; color: green;"> Congratulations. You Win! </span>
             <span class="row text-center justify-content-center" style="font-size: large; color: whitesmoke;"> Select an option: </span>
@@ -68,7 +68,10 @@
          track = music[track_num]
          track.volume = 0.1
          //console.log("Playing Track", track_num)
-             
+         let menu = new Audio('./music/menuMusic.mp3')
+         menu.currentTime = 3
+         menu.volume=0.1
+         menu.play()
       </script>
       <div class="modal" tabindex="-1" role="dialog" id ="pie-chart-modal">
          <div class="modal-dialog" role="document">

@@ -52,6 +52,7 @@ canvas {
   font-weight: bold;
   user-select: none;
   color: white;
+  border: #b9a521 double 1px;
 }
 
 #pause-content {

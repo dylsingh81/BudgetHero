@@ -1182,7 +1182,8 @@ Game.World.prototype = {
     //Set volume of sounds
     for(var key in this.sounds) {
       this.sounds[key].volume = 0.4;
-    }                      
+    }
+    this.sounds.jump.volume = 0.2;               
     
     //Create Enemies
     for (let index = zone.enemies_map.length - 1; index > -1; -- index) {

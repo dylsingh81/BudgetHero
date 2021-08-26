@@ -58,6 +58,7 @@ playButton.addEventListener('click', async event => {
 
   $("#SplashScreen").fadeOut(1000, function() {
       track.play()
+      menu.pause()
       startGame()
       $("#coin-label").fadeIn(7000, "linear")
       $("#health-label").fadeIn(7000, "linear")
@@ -536,20 +537,39 @@ surrenderBtn = function(e){
   endGame()
 }
 
-endGame = function(e){
-  let canvas = document.getElementById("GameCanvas")
-  let coin_label = document.getElementById("coin-label")
-  let health_label = document.getElementById("health-label")
-  let endGameScreen = document.getElementById("gameOverScreen")
+endGame = function (e) {
+  track.pause()
+  let loseGameAudio = new Audio('./music/gameOver.mp3')
+  loseGameAudio.currentTime = 0
+  loseGameAudio.volume=0.1
+  loseGameAudio.play()
+  
+  $("#coin-label").stop().fadeOut(500, "linear");
+  $("#health-label").stop().fadeOut(500, "linear");
+  
+  $("#GameCanvas").fadeOut(700, function () {
+    $("#GameCanvas").hide(0, "linear", function () {
+      $("#gameOverScreen").fadeIn(500, "linear", function () {});
+    });
+  });
+  return;
+};
 
-  if(canvas != null){
-    canvas.parentElement.removeChild(canvas)
-  }
-  if(coin_label != null){
-    coin_label.parentElement.removeChild(coin_label)
-  }
-  if(health_label != null){
-    health_label.parentElement.removeChild(health_label)
-  }
-  endGameScreen.hidden = false
+winGame = function (e) {
+  track.pause()
+  
+  let winGameAudio = new Audio('./music/gameWin.mp3')
+  winGameAudio.currentTime = 0
+  winGameAudio.volume=0.1
+  winGameAudio.play()
+  
+  $("#coin-label").stop().fadeOut(500, "linear");
+  $("#health-label").stop().fadeOut(500, "linear");
+  
+  $("#GameCanvas").fadeOut(700, function () {
+    $("#GameCanvas").hide(0, "linear", function () {
+      $("#gameWinScreen").fadeIn(500, "linear", function () {});
+    });
+  });
+  return;
 }
