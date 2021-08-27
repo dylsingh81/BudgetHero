@@ -7,7 +7,7 @@
     "doors" : [
   
       { "x":420, "y":59, "width":16, "height":32,
-        "destination_zone":"02", "destination_x":25, "destination_y":200}
+        "destination_zone":"06", "destination_x":10, "destination_y":240}
   
     ],
   
@@ -54,10 +54,10 @@
     
     
     "enemies_map": [[0,24,15]],
-    "id":"01",
+    "id":"05",
   
-    "tile_set_path": "./maps/final_maps/level2/level2tiles.png",
-    "background_image_path": "./maps/final_maps/level2/level2bg.png",  
+    "tile_set_path": "./maps/final_maps/level4/level4tiles.png",
+    "background_image_path": "./maps/final_maps/level4/level4bg.png",  
     "sprite_sheet_path": "images/sprites.png",
     "coin_sheet_path": "images/coin_sheet.png",
     "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",

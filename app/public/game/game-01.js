@@ -991,9 +991,9 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.rows         = 18;
 
   this.tile_set     = new Game.TileSet(9, 16);
-  this.player       = new Game.Player(20, 200);
+  this.player       = new Game.Player(10, 240);
 
-  this.zone_id      = "01";
+  this.zone_id      = "00";
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.

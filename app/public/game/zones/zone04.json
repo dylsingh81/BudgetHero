@@ -6,7 +6,7 @@
   "doors" : [
 
     { "x":440, "y":230, "width":32, "height":40,
-      "destination_zone":"00", "destination_x":100, "destination_y":100 }
+      "destination_zone":"05", "destination_x":10, "destination_y":240 }
 
   ],
 
@@ -59,10 +59,13 @@
   "background_image_path": "./maps/final_maps/binning/bin_bg.png",
   "sprite_sheet_path": "images/sprites.png",
   "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
+  "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
+  "bomb_path": "./maps/tilesets/enemies sprites/bomb2.png",
+  "coin_sheet_path": "images/coin_sheet.png",
   "tile_sheet_size": 16,
   "tile_set_columns": 9,
   "is_bin": true,
   
   "coins":[],
-  "is_last_level": true
+  "is_last_level": false
 }

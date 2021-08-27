@@ -8,7 +8,7 @@
     "doors" : [
   
       { "x":440, "y":230, "width":16, "height":40,
-        "destination_zone":"01", "destination_x":25, "destination_y":230}
+        "destination_zone":"01", "destination_x":10, "destination_y":240}
   
     ],
   
@@ -54,7 +54,7 @@
       15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15],
 
     
-    "enemies_map": [[0,14,15],[1,12,15]],
+    "enemies_map": [],
     
   
     "id":"00",
