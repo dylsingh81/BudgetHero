@@ -78,7 +78,7 @@ function startGame() {
   two constants to construct a url that points to the appropriate zone file. */
   /* I updated this after I made the video. I decided to move the zone files into
   the 06 folder because I won't be using these levels again in future parts. */
-  const ZONE_PREFIX = "zone";
+  const ZONE_PREFIX = "zones/zone";
   const ZONE_SUFFIX = ".json";
 
       /////////////////
