@@ -1008,6 +1008,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.pie_chart    = undefined;
   this.tile_sheet_size = 16;
   this.canAttack    = true
+  this.gameDone     = false
 
   //Handle all binning functions
   {
@@ -1164,6 +1165,7 @@ Game.World.prototype = {
     this.level_logged       = 0
     this.levels_log_attempted   = 0 
     this.enemies_map        = zone.enemies_map
+    this.is_last_level      = zone.is_last_level
     this.hitModal           = false
     this.doorsOpen          = false
     this.sounds         =   {
@@ -1178,6 +1180,7 @@ Game.World.prototype = {
                               deposit:new Audio('./sounds/deposit.mp3'),
                               withdraw: new Audio('./sounds/withdraw.mp3'),
                             }
+                          
     
     //Set volume of sounds
     for(var key in this.sounds) {
@@ -1328,6 +1331,13 @@ Game.World.prototype = {
           this.levels_logged += 1
           this.level_logged_attempted = this.level_logged
         }//Else repeated log
+
+        
+        if(this.is_last_level){
+          this.gameDone = true
+          return
+        }
+  
       };
 
     }

@@ -333,6 +333,12 @@ function startGame() {
 
       engine.stop();
 
+      
+      if(game.world.gameDone){
+        winGame()
+        return
+      }
+
       /* Here I'm requesting the JSON file to use to populate the game.world object. */
       assets_manager.requestJSON(ZONE_PREFIX + game.world.door.destination_zone + ZONE_SUFFIX, (zone) => {
         assets_manager.requestImage(zone.tile_set_path, (image) => {

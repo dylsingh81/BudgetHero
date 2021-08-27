@@ -63,9 +63,11 @@
     "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
     "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
     "bomb_path": "./maps/tilesets/enemies sprites/bomb2.png",
+
     "tile_sheet_size": 16,
     "tile_set_columns": 84,
     "is_bin": false,
-    "coins":[[7, 14],[12, 14],[14, 13],[16, 14],[21, 14],[27, 8],[1, 4],[1, 5],[1, 6],[1, 7],[3, 1],[2,1]]
+    "coins":[[7, 14],[12, 14],[14, 13],[16, 14],[21, 14],[27, 8],[1, 4],[1, 5],[1, 6],[1, 7],[3, 1],[2,1]],
+    "is_last_level": false
   }
   

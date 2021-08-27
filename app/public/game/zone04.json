@@ -63,5 +63,6 @@
   "tile_set_columns": 9,
   "is_bin": true,
   
-  "coins":[]
+  "coins":[],
+  "is_last_level": true
 }
