@@ -1,6 +1,3 @@
-/* In this example, the controller only alerts the user whenever they press a key,
-but it also defines the ButtonInput class, which is used for tracking button states. */
-
 const Controller = function() {
 
   this.left  = new Controller.ButtonInput();

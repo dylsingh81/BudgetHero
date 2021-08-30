@@ -1,19 +1,3 @@
-// Frank Poth 04/18/2018
-
-/* Changes since part 6:
-
-  1. Added the coins array to the zone file.
-  2. Moved the collideObject method out of Game.Door and into Game.Object.
-  3. Renamed collideObject to collideObjectCenter and made a new collideObject function for rectangular collision detection.
-  4. Added the Game.Coin class and Game.Grass class.
-  5. Added frames for coins and grass to the tile_set.
-  6. Made a slight change to the Game.Animator constructor.
-  7. Added coin_count to count coins  .
-  8. Added the grass array to the zone file. Also reflected in Game.World
-
-*/
-
-
 const left_attacks = ["attack-left-up", "attack-left-down", "attack-left-jab"];
 const right_attacks = ["attack-right-up", "attack-right-down", "attack-right-jab"];
 
@@ -993,7 +977,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(10, 240);
 
-  this.zone_id      = "00";
+  this.zone_id      = "10";
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.
@@ -1001,7 +985,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.level        = 0
   this.doors        = [];
   this.door         = undefined;
-  this.health       = 3;
+  this.health       = 5;
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
@@ -1397,7 +1381,7 @@ Game.World.prototype = {
       currentBins : coin_bins.slice(),
       percentageCollectedFromLevel: coins_collected/level_num_coins
     }
-    console.log(this.gameData)
+    //console.log(this.gameData)
     var data = { cookie_id: cookieId, gameData: this.gameData};
     const options = {
       method: 'POST',

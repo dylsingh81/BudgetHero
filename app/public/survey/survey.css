@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
 .gamebutton {
   display: block;
   background: #4e9caf;
@@ -18,4 +20,30 @@ body {
   background-color: #d3d3d3;
   padding-top: 36px;
   padding-bottom: 36px;
+}
+
+
+#surveyStatusMenu{
+  min-height: 15vh;
+  height: min-content;
+  width: 20vw;
+  background-color: #fff;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 5%;
+  margin-top: 1%;
+  text-align: center;
+}
+
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.sv-container-modern__title{
+  padding-top: 1em;
+}
+
+.sv-header__text{
+  text-decoration: underline;
 }

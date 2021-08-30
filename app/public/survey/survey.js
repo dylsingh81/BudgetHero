@@ -5,12 +5,11 @@ async function handleNewConnection() {
   let cookieExists = checkACookieExists("id");
   if (cookieExists) {
     //Get cookie ID from DB and store in variable
-    cookieId = getCookieValue("id")
-    cookieId = parseInt(cookieId)
-    console.log("Loaded Cookie:", cookieId)
-  } 
-  else {
-    console.log("Here - send create cookie")
+    cookieId = getCookieValue("id");
+    cookieId = parseInt(cookieId);
+    console.log("Loaded Cookie:", cookieId);
+  } else {
+    console.log("Here - send create cookie");
     //Get Next ID from server && Create Entry in DB on server
     var data = {};
     const options = {
@@ -23,15 +22,15 @@ async function handleNewConnection() {
     response = await fetch("/createCookie", options);
     json = await response.json();
 
-    cookieId = json.cookie_id
+    cookieId = json.cookie_id;
 
     //Create Cookie using ID
-    createCookie("id", cookieId)
-    console.log("Cookie Created:", cookieId)
+    createCookie("id", cookieId);
+    console.log("Cookie Created:", cookieId);
   }
 }
 
-handleNewConnection()
+handleNewConnection();
 
 Survey.StylesManager.applyTheme("modern");
 
@@ -140,14 +139,12 @@ var json = {
 };
 
 window.survey = new Survey.Model(json);
-sent = false
+sent = false;
 survey.onComplete.add(function (sender) {
   document.querySelector("#surveyResult").innerHTML =
     '<a class="btn btn-primary" href="/game/game.html" >Click Here to Go to the Game</a>';
 
-
   async function sendSurveyData(cookie_id, sender) {
-
     sendData = sender.data;
     var data = { cookie_id: cookieId, surveyData: sendData };
     const options = {
@@ -159,13 +156,67 @@ survey.onComplete.add(function (sender) {
     };
     fetch("/surveyData", options);
   }
-  if(!sent){
-    sendSurveyData(cookieId,sender) 
-    sent = true
+  if (!sent) {
+    sendSurveyData(cookieId, sender);
+    sent = true;
   }
 });
 
-survey.showProgressBar = "bottom";
+//Dash of breakdown of spending
+function updateDash() {
+  let inc = document.querySelectorAll('.list-group-item-success').length
+  let dec = document.querySelectorAll('.list-group-item-danger').length
+  let same = document.querySelectorAll('.list-group-item-secondary').length
+
+  document.getElementById("rts-span").innerHTML = same
+  document.getElementById("inc-span").innerHTML = inc
+  document.getElementById("dec-span").innerHTML = dec
+
+}
+
+survey.onValueChanged.add(function (sender, options) {
+  var ul = document.getElementById("choice-list");
+  classToSwitch = ""
+  switch(options.value) {
+    case "Increase":
+      classToSwitch = "list-group-item list-group-item-success"
+      break;
+    case "Decrease":
+      classToSwitch = "list-group-item list-group-item-danger"
+      break;  
+    case "Remain The Same":
+      classToSwitch = "list-group-item list-group-item-secondary"
+      break;
+  }
+
+
+  const listItems = ul.getElementsByTagName("li");
+  for (let i = 0; i <= listItems.length - 1; i++) {
+    if (listItems[i].id == options.name) {
+      //edit option
+      listItems[i].className = classToSwitch
+      updateDash()
+      return;
+    }
+  }
+  //Create new option
+  var li = document.createElement("li");
+  li.id = options.name;
+  li.className = classToSwitch
+  li.style.fontSize = "12px";
+  li.appendChild(
+    document.createTextNode(
+      options.name.replace(/_/g, " ")
+    )
+  );
+  ul.appendChild(li);
+  updateDash()
+  return;
+
+  //chosen.push(options.name)
+});
+
+//survey.showProgressBar = "bottom";
 
 function onAngularComponentInit() {
   Survey.SurveyNG.render("surveyElement", { model: survey });

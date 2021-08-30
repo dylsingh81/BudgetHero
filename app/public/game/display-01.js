@@ -1,10 +1,3 @@
-// Frank Poth 04/03/2018
-
-/* Changes:
-1. Removed the TileSheet class from part 3 and added the Game.World.TileSet class to Game.
-2. Changed the drawMap function to be as generic as posible.
-3. Changed the drawPlayer function to the drawObject function. */
-
 const Display = function(canvas) {
 
   this.buffer  = document.createElement("canvas").getContext("2d"),
