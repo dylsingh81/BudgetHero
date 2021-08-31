@@ -82,7 +82,7 @@ app.post('/surveyData', (request, response) => {
         database.update({ cookie_id: cookie_id }, { $set: { surveyData: newSurveyData} })
       }
       else{
-        console.log("error w db")
+        console.log("error w db", data_query.length)
       }
   })
   response.json("Success");
@@ -111,6 +111,7 @@ app.post('/createCookie', (request, response) => {
     newUser.gameData = {}       
     newUser.surveyData = {}
     database.insert(newUser);
+    console.log("new user created", newUser)
     response.json(responseData);
   });
 });
