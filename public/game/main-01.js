@@ -376,12 +376,14 @@ function startGame() {
 
   let ipWaitCount = 1000;
   while(loadedGameNum == undefined){
+    document.body.style.cursor = "wait";
     ipWaitCount -= 1
     if(ipWaitCount < 0){
       alert("Results will not be stored")
       break
     }
   }
+  document.body.style.cursor = "default";
 
   if(loadedGameData == undefined){
     loadedGameData = {}
