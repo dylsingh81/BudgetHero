@@ -374,7 +374,7 @@ function startGame() {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
-  let ipWaitCount = 1000
+  let ipWaitCount = -1;
   while(loadedGameNum == undefined){
     ipWaitCount -= 1
     if(ipWaitCount < 0){
