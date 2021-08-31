@@ -18,32 +18,66 @@ app.post("/gameData", (request, response) => {
   var cookie_id = data.cookie_id;
 
   let responseData = {};
-  database.find({ cookie_id }, (err, data_query) => {
-    //ID Exists Update Number of time Played
-    if (data_query.length == 1) {
-      var newTimesPlayed = data_query[0].game_played_num + 1;
-      var newGameData = data_query[0].gameData;
+
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      console.log("error", err);
+      return;
+    }
+    var dbo = db.db("mydb");
+
+    //Find information to use for update
+    dbo.collection("users").findOne({ cookie_id }, function (err, result) {
+      if (err) {
+        console.log("error", err);
+        return;
+      }
+
+      var newTimesPlayed = result.game_played_num + 1;
+      var newGameData = result.gameData;
 
       var game_name = "game-" + newTimesPlayed;
       newGameData[game_name] = rec_gameData;
 
-      database.update(
-        { cookie_id: cookie_id },
-        { $set: { game_played_num: newTimesPlayed } }
-      );
-      database.update(
-        { cookie_id: cookie_id },
-        { $set: { gameData: newGameData } }
-      );
+      //Update Number of time Played
+      dbo
+        .collection("users")
+        .updateOne(
+          { cookie_id: cookie_id },
+          { $set: { game_played_num: newTimesPlayed } },
+          function (err, res) {
+            if (err) {
+              console.log("error", err);
+              return;
+            } else {
+              console.log("Updated user", cookie_id, "times played");
+            }
+          }
+        );
+
+      //Update Game Data
+      dbo
+        .collection("users")
+        .updateOne(
+          { cookie_id: cookie_id },
+          { $set: { gameData: newGameData } },
+          function (err, res) {
+            if (err) {
+              console.log("error", err);
+              return;
+            } else {
+              console.log("Updated user", cookie_id, "game data");
+            }
+            db.close();
+          }
+        );
+
       responseData = {
         num_times_played: newTimesPlayed,
         gameData: newGameData,
       };
       response.json(responseData);
-    } else {
-      console.log("error w db", "finding cookie id:", cookie_id);
-      response.json(responseData);
-    }
+    });
   });
 });
 
@@ -51,10 +85,32 @@ app.post("/gameDataLevel", (request, response) => {
   const data = request.body;
   var rec_gameData = data.gameData;
   var cookie_id = data.cookie_id;
-  database.update(
-    { cookie_id: cookie_id },
-    { $set: { gameData: rec_gameData } }
-  );
+
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      console.log("error", err);
+      return;
+    }
+    var dbo = db.db("mydb");
+
+    //Update Number of time Played
+    dbo
+      .collection("users")
+      .updateOne(
+        { cookie_id: cookie_id },
+        { $set: { gameData: rec_gameData } },
+        function (err, res) {
+          if (err) {
+            console.log("error", err);
+            return;
+          } else {
+            console.log("Updated game" , cookie_id, "level data");
+          }
+          db.close()
+        }
+      );
+  });
+
   response.json("Success");
 });
 
@@ -64,26 +120,60 @@ app.post("/surveyData", (request, response) => {
   var rec_surveyData = data.surveyData;
   //Check if ID Exists
   var cookie_id = data.cookie_id;
-  database.find({ cookie_id }, (err, data_query) => {
-    //ID Exists Update Number of time Played
-    if (data_query.length == 1) {
-      var newTimesPlayed = data_query[0].survey_played_num + 1;
-      var newSurveyData = data_query[0].surveyData;
+
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      console.log("error", err);
+      return;
+    }
+    var dbo = db.db("mydb");
+
+    //Find information to use for update
+    dbo.collection("users").findOne({ cookie_id }, function (err, result) {
+      if (err) {
+        console.log("error", err);
+        return;
+      }
+
+      var newTimesPlayed = result.survey_played_num + 1;
+      var newSurveyData = result.surveyData;
 
       var survey_name = "survey-" + newTimesPlayed;
       newSurveyData[survey_name] = rec_surveyData;
 
-      database.update(
-        { cookie_id: cookie_id },
-        { $set: { survey_played_num: newTimesPlayed } }
-      );
-      database.update(
-        { cookie_id: cookie_id },
-        { $set: { surveyData: newSurveyData } }
-      );
-    } else {
-      console.log("error w db", data_query.length);
-    }
+      //Update Number of time Played
+      dbo
+        .collection("users")
+        .updateOne(
+          { cookie_id: cookie_id },
+          { $set: { survey_played_num: newTimesPlayed } },
+          function (err, res) {
+            if (err) {
+              console.log("error", err);
+              return;
+            } else {
+              console.log("Updated", cookie_id, "user times survey");
+            }
+          }
+        );
+
+      //Update Survey Data
+      dbo
+        .collection("users")
+        .updateOne(
+          { cookie_id: cookie_id },
+          { $set: { surveyData: newSurveyData } },
+          function (err, res) {
+            if (err) {
+              console.log("error", err);
+              return;
+            } else {
+              console.log("Updated", cookie_id, "user survey data");
+            }
+            db.close();
+          }
+        );
+    });
   });
   response.json("Success");
 });
@@ -97,14 +187,14 @@ app.post("/createCookie", (request, response) => {
   MongoClient.connect(url, function (err, db) {
     if (err) {
       console.log("error", err);
-      return
+      return;
     }
     var dbo = db.db("mydb");
 
     dbo.collection("user-index").findOne(query, function (err, result) {
       if (err) {
         console.log("error", err);
-        return
+        return;
       }
 
       //Returns current user index up next
@@ -118,7 +208,7 @@ app.post("/createCookie", (request, response) => {
         .updateOne(query, newvalues, function (err, res) {
           if (err) {
             console.log("error", err);
-            return
+            return;
           } else {
             console.log("1 document updated");
           }
@@ -132,9 +222,9 @@ app.post("/createCookie", (request, response) => {
           newUser.surveyData = {};
 
           dbo.collection("users").insertOne(newUser, function (err, res) {
-            if (err){
+            if (err) {
               console.log("error", err);
-              return
+              return;
             }
             //console.log("new user created", newUser);
             db.close();
