@@ -24,6 +24,10 @@ playButton.addEventListener('click', async event => {
           },
           body: JSON.stringify(data),
       };
+
+      
+     
+
       let response = await fetch("/createCookie", options);
       let json = await response.json();
 
@@ -48,8 +52,16 @@ playButton.addEventListener('click', async event => {
 
   console.log("COOKIE ID:", cookieId)
 
+   //Disable play button
+   $('#StartButton').replaceWith($('#StartButton').clone());
+   document.body.style.cursor = "wait";
+
   const response = await fetch('/gameData', options);
   const json = await response.json();
+
+  document.body.style.cursor = "default";
+
+
   //console.log(json);
   loadedGameNum = json.num_times_played;
   loadedGameData = json.gameData;
@@ -374,16 +386,6 @@ function startGame() {
   var coin_p         = document.createElement("p");
   var health_p       = document.createElement("p");
 
-  let ipWaitCount = 1000;
-  while(loadedGameNum == undefined){
-    document.body.style.cursor = "wait";
-    ipWaitCount -= 1
-    if(ipWaitCount < 0){
-      alert("Results will not be stored")
-      break
-    }
-  }
-  document.body.style.cursor = "default";
 
   if(loadedGameData == undefined){
     loadedGameData = {}
