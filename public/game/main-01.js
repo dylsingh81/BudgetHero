@@ -55,6 +55,7 @@ playButton.addEventListener('click', async event => {
    //Disable play button
    $('#StartButton').replaceWith($('#StartButton').clone());
    document.body.style.cursor = "wait";
+   $('#StartButton').css("cursor", "wait");
 
   const response = await fetch('/gameData', options);
   const json = await response.json();
