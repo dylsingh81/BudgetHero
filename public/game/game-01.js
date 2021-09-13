@@ -985,7 +985,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.level        = 0
   this.doors        = [];
   this.door         = undefined;
-  this.health       = 5;
+  this.health       = 3;
 
   this.height       = this.tile_set.tile_size * this.rows;
   this.width        = this.tile_set.tile_size * this.columns;
@@ -1307,6 +1307,8 @@ Game.World.prototype = {
         this.door = door;
         //console.log(this.level, this.level_num_coins)
         this.levels_log_attempted += 1
+        //Health is max of 5, and health + 1
+        this.health = Math.min(5, this.health + 1)
         //console.log(this.levels_log_attempted, this.level_logged)
         if(this.levels_log_attempted - this.level_logged == 1){
           //console.log("Log Data")
