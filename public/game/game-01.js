@@ -1374,13 +1374,15 @@ Game.World.prototype = {
   logData: function(level_num, level_num_coins, coins_collected, is_bin, coin_bins){
     //console.log("Log of data")
     //console.log(this.gameData, this.game_num)
-    level_num = "level-"+ level_num
+    level_num_full = "level-"+ level_num
     game_num = "game-" + this.game_num
-    this.gameData[game_num].indvGameData[level_num] = {
+    this.gameData[game_num].indvGameData[level_num_full] = {
       is_bin: is_bin,
       currentBins : coin_bins.slice(),
       percentageCollectedFromLevel: coins_collected/level_num_coins
     }
+
+    this.gameData[game_num].indvGameData.lastLevel = parseInt(level_num)
     //console.log(this.gameData)
     var data = { cookie_id: cookieId, gameData: this.gameData};
     const options = {
