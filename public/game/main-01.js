@@ -278,7 +278,7 @@ function startGame() {
     }
   
     if (controller.pause) {
-      console.log(paused)
+      //console.log(paused)
       if (document.getElementById("pie-chart-modal").style.display == "none") {
         document.getElementById("pie-chart-modal").style.display = null;
 
