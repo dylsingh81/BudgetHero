@@ -179,6 +179,7 @@ app.post("/surveyData", (request, response) => {
 });
 
 app.post("/createCookie", (request, response) => {
+  first = request.body.first
   var query = {};
   var firstTerm = "user_index";
   query[firstTerm];
@@ -220,6 +221,7 @@ app.post("/createCookie", (request, response) => {
           newUser.survey_played_num = 0;
           newUser.gameData = {};
           newUser.surveyData = {};
+          newUser.first = first;
 
           dbo.collection("users").insertOne(newUser, function (err, res) {
             if (err) {

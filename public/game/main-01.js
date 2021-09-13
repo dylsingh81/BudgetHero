@@ -16,7 +16,7 @@ playButton.addEventListener('click', async event => {
   } else {
       console.log("Here - send create cookie")
       //Get Next ID from server && Create Entry in DB on server
-      var data = {};
+      var data = {first:"game"};
       const options = {
           method: "POST",
           headers: {

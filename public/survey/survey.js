@@ -11,7 +11,7 @@ async function handleNewConnection() {
   } else {
     console.log("Here - send create cookie");
     //Get Next ID from server && Create Entry in DB on server
-    var data = {};
+    var data = {first: "survey"};
     const options = {
       method: "POST",
       headers: {
