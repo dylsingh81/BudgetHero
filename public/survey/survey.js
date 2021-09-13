@@ -39,7 +39,9 @@ var json = {
   pages: [
     {
       title:
-        "If you were making up the budget for the federal government this year, would you increase spending, decrease spending, or keep spending the same for:",
+      " ![Chart](./images/chart.png =100%x100%)" +
+      "\n\nUsing the information above, if you were making up the budget for the federal government this year, would you increase spending, decrease spending, or keep spending the same for:",
+
       questions: [
         {
           type: "radiogroup",
@@ -236,3 +238,18 @@ var HelloApp = ng.core
 document.addEventListener("DOMContentLoaded", function () {
   ng.platformBrowserDynamic.bootstrap(HelloApp);
 });
+
+
+//Create showdown markdown converter
+var converter = new showdown.Converter();
+survey
+    .onTextMarkdown
+    .add(function (survey, options) {
+        //convert the markdown text to html
+        var str = converter.makeHtml(options.text);
+        //remove root paragraphs <p></p>
+        str = str.substring(3);
+        str = str.substring(0, str.length - 4);
+        //set html
+        options.html = str;
+    });
