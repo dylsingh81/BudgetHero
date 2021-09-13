@@ -57,11 +57,11 @@
   
     "tile_set_path": "./maps/final_maps/level5/level5tiles.png",
     "background_image_path": "./maps/final_maps/level5/level5bg.png",  
-    "sprite_sheet_path": "images/sprites.png",
-    "coin_sheet_path": "images/coin_sheet.png",
-    "enemy1_path": "./maps/tilesets/enemies sprites/goblin/goblin_spritesheet.png",
-    "enemy2_path": "./maps/tilesets/enemies sprites/bomber_goblin/goblin_bomber_spritesheet.png",
-    "bomb_path": "./maps/tilesets/enemies sprites/bomb2.png",
+    "sprite_sheet_path": "./images/sprites.png",
+    "enemy1_path": "./images/enemies_sprites/goblin/goblin_spritesheet.png",
+    "enemy2_path": "./images/enemies_sprites/bomber_goblin/goblin_bomber_spritesheet.png",
+    "bomb_path": "./images/enemies_sprites/bomb2.png",
+    "coin_sheet_path": "./images/coin_sheet.png",
 
     "tile_sheet_size": 16,
     "tile_set_columns": 84,
