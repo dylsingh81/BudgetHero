@@ -142,7 +142,7 @@ window.survey = new Survey.Model(json);
 sent = false;
 survey.onComplete.add(function (sender) {
   document.querySelector("#surveyResult").innerHTML =
-    '<a class="btn btn-primary" href="/game/game.html" >Click Here to Go to the Game</a>';
+    '<a class="btn btn-primary" href="../game/game.html" >Click Here to Go to the Game</a>';
 
   async function sendSurveyData(cookie_id, sender) {
     sendData = sender.data;
