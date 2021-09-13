@@ -19,7 +19,7 @@ async function handleNewConnection() {
       },
       body: JSON.stringify(data),
     };
-    response = await fetch("/createCookie", options);
+    response = await fetch("../createCookie", options);
     json = await response.json();
 
     cookieId = json.cookie_id;
@@ -154,7 +154,7 @@ survey.onComplete.add(function (sender) {
       },
       body: JSON.stringify(data),
     };
-    fetch("/surveyData", options);
+    fetch("../surveyData", options);
   }
   if (!sent) {
     sendSurveyData(cookieId, sender);

@@ -28,7 +28,7 @@ playButton.addEventListener('click', async event => {
       
      
 
-      let response = await fetch("/createCookie", options);
+      let response = await fetch("../createCookie", options);
       let json = await response.json();
 
       cookieId = json.cookie_id
@@ -57,7 +57,7 @@ playButton.addEventListener('click', async event => {
    document.body.style.cursor = "wait";
    $('#StartButton').css("cursor", "wait");
 
-  const response = await fetch('/gameData', options);
+  const response = await fetch('../gameData', options);
   const json = await response.json();
 
   document.body.style.cursor = "default";
@@ -91,7 +91,7 @@ function startGame() {
   two constants to construct a url that points to the appropriate zone file. */
   /* I updated this after I made the video. I decided to move the zone files into
   the 06 folder because I won't be using these levels again in future parts. */
-  const ZONE_PREFIX = "zones/zone";
+  const ZONE_PREFIX = "./zones/zone";
   const ZONE_SUFFIX = ".json";
 
       /////////////////
@@ -257,9 +257,9 @@ function startGame() {
 
 
     
-    coin_p.innerHTML = "<img src=\"images/coin.gif\" width = 30 px alt=\"Coins!\"> x "+ game.world.coin_count
+    coin_p.innerHTML = "<img src=\"./images/coin.gif\" width = 30 px alt=\"Coins!\"> x "+ game.world.coin_count
     
-    let heart_IMG_HTML = "<img src=\"images/heart.gif\" width = 30 px alt=\"Heart!\">"
+    let heart_IMG_HTML = "<img src=\"./images/heart.gif\" width = 30 px alt=\"Heart!\">"
     let health_HTML = ""
     for (var i = 0; i < game.world.health; i++) {
         health_HTML += heart_IMG_HTML
@@ -277,11 +277,21 @@ function startGame() {
       endGame()
     }
   
-    if (controller.pause)   {
-        togglePauseModal();
-        paused = !paused
+    if (controller.pause) {
+      console.log(paused)
+      if (document.getElementById("pie-chart-modal").style.display == "none") {
+        document.getElementById("pie-chart-modal").style.display = null;
+
+        paused = false;
         controller.pause = false;
-      
+        return;
+      }
+      document.getElementById("pie-chart-modal").style.display = null;
+
+
+      togglePauseModal();
+      paused = !paused;
+      controller.pause = false;
     }
 
     if(paused){
@@ -421,7 +431,7 @@ function startGame() {
   coin_p.className = "game-label"
   coin_p.id = "coin-label"
   coin_p.style.display = "none"
-  coin_p.innerHTML = "<img src=\"images/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
+  coin_p.innerHTML = "<img src=\"./images/coin.gif\" width = 30 px alt=\"Warning!\"> x0"
   document.body.appendChild(coin_p);
   health_p.className = "game-label"
   health_p.innerHTML = "Health: 3";

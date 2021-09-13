@@ -65,7 +65,7 @@ const Display = function(canvas) {
   };
 
   this.toggleModal= function(bin_data){
-    console.log("Here")
+    //console.log("Here")
     $('#pie-chart-modal').modal('toggle');
  
     const open = $('#pie-chart-modal').is(':visible')

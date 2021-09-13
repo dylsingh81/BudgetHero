@@ -1390,7 +1390,7 @@ Game.World.prototype = {
       },
       body: JSON.stringify(data)
     };
-    fetch('/gameDataLevel', options);
+    fetch('../gameDataLevel', options);
   } 
 
 };
