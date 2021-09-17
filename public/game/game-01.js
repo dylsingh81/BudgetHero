@@ -977,7 +977,7 @@ Game.World = function(friction = 0.85, gravity = 2) {
   this.tile_set     = new Game.TileSet(9, 16);
   this.player       = new Game.Player(10, 240);
 
-  this.zone_id      = "00";
+  this.zone_id      = "10";
 
   this.coins        = [];// the array of coins in this zone;
   this.coin_count   = 0;// the number of coins you have.
@@ -1308,9 +1308,9 @@ Game.World.prototype = {
         //console.log(this.level, this.level_num_coins)
         this.levels_log_attempted += 1
         //Health is max of 5, and health + 1
-        this.health = Math.min(5, this.health + 1)
         //console.log(this.levels_log_attempted, this.level_logged)
         if(this.levels_log_attempted - this.level_logged == 1){
+          this.health = Math.min(5, this.health + 1)
           //console.log("Log Data")
           this.logData(this.zone_id, this.level_num_coins, this.level_coin_coint, this.is_bin, this.coin_bins)
           this.level_coin_coint = 0
