@@ -25,8 +25,7 @@ playButton.addEventListener('click', async event => {
           body: JSON.stringify(data),
       };
 
-      
-     
+      document.body.style.cursor = "wait";
 
       let response = await fetch("../createCookie", options);
       let json = await response.json();
