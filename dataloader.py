@@ -1,8 +1,3 @@
-"""
-author-gh: @adithya8
-editor-gh: ykl7
-"""
-
 import argparse
 import json
 import csv
