@@ -32,107 +32,137 @@ async function handleNewConnection() {
 
 handleNewConnection();
 
-Survey.StylesManager.applyTheme("modern");
+small = 50;
+
+Survey.StylesManager.applyTheme("bootstrap");
+
 
 var json = {
   title: "Please Fill out the Survey Below:",
   pages: [
     {
       title:
-      " ![Chart](./images/chart.png =100%x100%)" +
-      "\n\nUsing the information above, if you were making up the budget for the federal government this year, would you increase spending, decrease spending, or keep spending the same for:",
+      " ![Chart](./images/chart.png =90%x90%)" +
+      "\n\n\nUsing the information above, if you were making up the budget for the federal government this year, input the percentage changes you would make:",
 
       questions: [
         {
-          type: "radiogroup",
           name: "Economic_assistance_to_needy_people_around_the_world",
           title: "Economic assistance to needy people around the world",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 1,
         },
         {
-          type: "radiogroup",
           name: "Economic_assistance_to_needy_people_in_the_US",
           title: "Economic assistance to needy people in the U.S.",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 10,
         },
         {
-          type: "radiogroup",
           name: "Anti_terrorism_defenses_in_the_US",
           title: "Anti-terrorism defenses in the U.S.",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,     
+          defaultValue: 7,
+   
         },
         {
-          type: "radiogroup",
           name: "Health_care",
           title: "Health care",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 14,
         },
         {
-          type: "radiogroup",
           name: "Rebuilding_highways_bridges_and_roads",
           title: "Rebuilding highways, bridges and roads",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 3,
         },
         {
-          type: "radiogroup",
           name: "Environmental_protection",
           title: "Environmental protection",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 1,
         },
         {
-          type: "radiogroup",
           name: "Medicare",
           title: "Medicare",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 15,
         },
         {
-          type: "radiogroup",
           name: "Education",
           title: "Education",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 5,
         },
         {
-          type: "radiogroup",
           name: "Government_assistance_for_the_unemployed",
           title: "Government assistance for the unemployed",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 9,
         },
         {
-          type: "radiogroup",
           name: "Scientific_research",
           title: "Scientific research",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 1,
         },
         {
-          type: "radiogroup",
           name: "Military_defense",
           title: "Military defense",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 8,
         },
         {
-          type: "radiogroup",
           name: "Social_Security",
           title: "Social Security",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,
+          defaultValue: 22,
         },
         {
-          type: "radiogroup",
           name: "Veterans_benefits_and_services",
           title: "Veterans benefits and services",
           isRequired: true,
-          choices: ["Increase", "Decrease", "Remain The Same"],
+          type: "nouislider",
+          rangeMin: 0,
+          rangeMax: small ? small : 100,  
+          defaultValue: 4,        
         },
       ],
     },
@@ -143,7 +173,7 @@ window.survey = new Survey.Model(json);
 sent = false;
 survey.onComplete.add(function (sender) {
   document.querySelector("#surveyResult").innerHTML =
-    '<a class="btn btn-primary" href="../game/game.html" >Click Here to Go to the Game</a>';
+    '<br><br><br><a class="btn btn-primary" href="../game/game.html" >Click Here to Go to the Game</a>';
 
   async function sendSurveyData(cookie_id, sender) {
     sendData = sender.data;
@@ -163,61 +193,116 @@ survey.onComplete.add(function (sender) {
   }
 });
 
+let totalPercent = 0;
+//Get sum of all default values
+json.pages[0].questions.forEach((question) => {
+  totalPercent += question.defaultValue;
+});
+document.getElementById("pec-span").innerHTML = totalPercent + "%";
+
+
+const names = json.pages[0].questions.map((question) => question.title);
+const titles = json.pages[0].questions.map((question) => question.name);
+const values = json.pages[0].questions.map((question) => question.defaultValue);
+const choices = document.getElementById("choice-list");
+//Create list element for each name
+names.forEach((name) => {
+  title = titles[names.indexOf(name)];
+
+  const li = document.createElement("li");
+  li.innerHTML = name;
+  li.id = title;
+  li.style.fontSize = "0.75em";
+  li.className = "list-group-item d-flex justify-content-between align-items-center"
+
+  //Create span for list element
+  const span = document.createElement("span");
+  span.id = title + "-span";
+  span.className = "badge bg-primary rounded-pill";
+  span.style.fontSize = "1em";
+  span.innerHTML = values[names.indexOf(name)] + "%";
+  li.appendChild(span);
+
+  choices.appendChild(li);
+});
+
+var prevElement = null;
+
 //Dash of breakdown of spending
-function updateDash() {
-  let inc = document.querySelectorAll('.list-group-item-success').length
-  let dec = document.querySelectorAll('.list-group-item-danger').length
-  let same = document.querySelectorAll('.list-group-item-secondary').length
+function updateDash(senderData,data) {
+  key = data.name
+  value = data.value
 
-  document.getElementById("rts-span").innerHTML = same
-  document.getElementById("inc-span").innerHTML = inc
-  document.getElementById("dec-span").innerHTML = dec
+  const listElement = document.getElementById(key);
+  listElement.className = "list-group-item d-flex justify-content-between align-items-center list-group-item-primary";
+  if(prevElement != listElement && prevElement != null){
+    prevElement.className = "list-group-item d-flex justify-content-between align-items-center";
+  }
+  prevElement = listElement;
 
+  const span = document.getElementById(key + "-span");
+  //Update span element
+  span.innerHTML = value + "%";
+  
+
+  //Get total of all values
+  let total = 0;
+  for (let key2 in senderData) {
+    total += senderData[key2];
+  }
+  if(total == 100){
+    document.getElementById("tot-pec-span").style.color = "green";
+    document.getElementById("pec-warning").innerHTML = "";
+    //Get all questions from survey
+    clearErrors();
+  }
+  else{
+    document.getElementById("tot-pec-span").style.color = "red";
+    document.getElementById("pec-warning").innerHTML = " - Need 100% To Complete";
+  }
+  document.getElementById("pec-span").innerHTML = total + "%";
 }
 
+function clearErrors() {
+  if(!survey || !survey.currentPage) return;
+  var questions = survey.currentPage.questions;
+  console.log(survey.currentPage)
+  for(var i = 0; i < questions.length; i ++) {
+    questions[i].clearErrors()
+    //cssTitle: "sv-title sv-question__title sv-question__title--required sv-question__title--error"
+  }
+}
+
+
 survey.onValueChanged.add(function (sender, options) {
-  var ul = document.getElementById("choice-list");
-  classToSwitch = ""
-  switch(options.value) {
-    case "Increase":
-      classToSwitch = "list-group-item list-group-item-success"
-      break;
-    case "Decrease":
-      classToSwitch = "list-group-item list-group-item-danger"
-      break;  
-    case "Remain The Same":
-      classToSwitch = "list-group-item list-group-item-secondary"
-      break;
-  }
-
-
-  const listItems = ul.getElementsByTagName("li");
-  for (let i = 0; i <= listItems.length - 1; i++) {
-    if (listItems[i].id == options.name) {
-      //edit option
-      listItems[i].className = classToSwitch
-      updateDash()
-      return;
-    }
-  }
-  //Create new option
-  var li = document.createElement("li");
-  li.id = options.name;
-  li.className = classToSwitch
-  li.style.fontSize = "12px";
-  li.appendChild(
-    document.createTextNode(
-      options.name.replace(/_/g, " ")
-    )
-  );
-  ul.appendChild(li);
-  updateDash()
-  return;
-
-  //chosen.push(options.name)
+  updateDash(sender.data, options);
 });
 
 //survey.showProgressBar = "bottom";
+
+function surveyValidateQuestion(s, options) {
+  //Get sum of s.data
+  let total = 0;
+  for (let key in s.data) {
+    total += s.data[key];
+  }
+  if (total != 100) {
+    options.error = "Please make sure you use 100% of the spending";
+    return false;
+  }
+}
+
+survey
+    .onValidateQuestion
+    .add(surveyValidateQuestion)
+
+
+survey
+    .onUpdateQuestionCssClasses
+    .add(function (survey, options) {
+        var classes = options.cssClasses
+        console.log(classes)
+    });
 
 function onAngularComponentInit() {
   Survey.SurveyNG.render("surveyElement", { model: survey });

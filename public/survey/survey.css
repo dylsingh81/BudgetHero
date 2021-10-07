@@ -26,7 +26,7 @@ body {
 #surveyStatusMenu{
   min-height: 15vh;
   height: min-content;
-  width: 21.5vw;
+  width: 26vw;
   background-color: #fff;
   position: sticky;
   position: -webkit-sticky;
@@ -46,4 +46,23 @@ body {
 
 .sv-header__text{
   text-decoration: underline;
+}
+
+.sv_complete_btn{
+  background-color: rgb(26, 179, 148);
+  color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 1.214em;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.875em;
+    font-weight: bold;
+    outline: none;
+    padding: 0.5em 2.786em 0.6em;
+    text-align: right;
+}
+
+.card-footer{
+  text-align: right;
 }
