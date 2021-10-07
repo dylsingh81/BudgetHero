@@ -64,10 +64,18 @@ const Display = function(canvas) {
 
   };
 
+
+  const realData = [1, 10, 7, 14, 3, 1, 15, 5, 9, 1, 8, 22, 4]
+
+
   this.toggleModal= function(bin_data){
     //console.log("Here")
     $('#pie-chart-modal').modal('toggle');
- 
+
+    first = (bin_data == "")
+    document.getElementById("pie-title").innerHTML = (first) ? "Budget Info Before Attack" : "New Budget Distribution"
+
+
     const open = $('#pie-chart-modal').is(':visible')
     if((document.getElementById("pie-chart-container").childElementCount) > 0){
       this.removePieChart()
@@ -99,13 +107,12 @@ const Display = function(canvas) {
   }
 
   this.createPieChart = function(bin_data){
-    if(bin_data.every(function(d) { return d == 0 }))
+    if(bin_data.every(function(d) { return d == 0 }) && !first)
     {
       document.getElementById("pie-chart-container").innerHTML = "<div>0 Coins Deposited!<div>"
       return;
     }
     this.addPieChartCanvas()
-
     var ctx = document.getElementById('pie-chart-canvas').getContext('2d');
 
     const labels = [
@@ -128,7 +135,7 @@ const Display = function(canvas) {
       labels: labels,
       datasets: [{
         label: 'Current Economic Distribution',
-        data: bin_data,
+        data: first? realData : bin_data,
         backgroundColor: [
           '#FFDAB9', //Peach
           '#00FFFF', //Aqua

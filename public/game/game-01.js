@@ -122,6 +122,13 @@ Game.Collider = function() {
                }
                if (this.collidePlatformLeft   (object, tile_x            )) return;
                    this.collidePlatformRight  (object, tile_x + tile_size); break;
+      case -4: if (this.collidePlatformTop    (object, tile_y            )) return;
+               if (this.collidePlatformBottom (object, tile_y + tile_size)){
+                world.hitFirstModal = true
+                return; 
+               }
+               if (this.collidePlatformLeft   (object, tile_x            )) return;
+                   this.collidePlatformRight  (object, tile_x + tile_size); break;
 
     }
 
@@ -1151,6 +1158,7 @@ Game.World.prototype = {
     this.enemies_map        = zone.enemies_map
     this.is_last_level      = zone.is_last_level
     this.hitModal           = false
+    this.hitFirstModal      = false
     this.doorsOpen          = false
     this.sounds         =   {
                               coin:     new Audio('./sounds/coin.wav'),

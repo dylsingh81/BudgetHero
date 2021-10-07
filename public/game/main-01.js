@@ -341,7 +341,9 @@ function startGame() {
       })
     }
 
-    if(game.world.hitModal)  {display.toggleModal(game.world.coin_bins); game.world.hitModal = false; }
+    if(game.world.hitModal)       {display.toggleModal(game.world.coin_bins); game.world.hitModal = false; }
+    if(game.world.hitFirstModal)  {display.toggleModal([]); game.world.hitFirstModal = false; }
+
 
     game.update();
 
