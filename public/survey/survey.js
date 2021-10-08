@@ -43,7 +43,7 @@ var json = {
     {
       title:
       " ![Chart](./images/chart.png =90%x90%)" +
-      "\n\n\nUsing the information above, if you were making up the budget for the federal government this year, input the percentage changes you would make:",
+      "\n\n\nThe chart represents the current US Budget. If you were to make up the budget for the federal government this year, what percentages would you allocate to each of the categories?", 
 
       questions: [
         {

@@ -55,6 +55,13 @@ playButton.addEventListener('click', async event => {
    $('#StartButton').replaceWith($('#StartButton').clone());
    document.body.style.cursor = "wait";
    $('#StartButton').css("cursor", "wait");
+   //Fade out the start button
+    
+   $('#StartButton').fadeOut(300, "linear", function () {
+     //Insert spinner
+     document.getElementById("logoTitle").innerHTML = "Budget Hero <br> <h2 style=\"color: antiquewhite;\">Loading...</h2>"
+    });
+
 
   const response = await fetch('../gameData', options);
   const json = await response.json();

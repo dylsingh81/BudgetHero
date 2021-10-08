@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/94439dc3-e9b6-4603-b570-337a16e89fbc/resourceGroups/budgetHero-rg/providers/Microsoft.Web/sites/budgetHero-sbu",
+    "appService.deploySubpath": "."
+}
