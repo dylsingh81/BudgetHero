@@ -266,7 +266,7 @@ function updateDash(senderData,data) {
 function clearErrors() {
   if(!survey || !survey.currentPage) return;
   var questions = survey.currentPage.questions;
-  console.log(survey.currentPage)
+  //console.log(survey.currentPage)
   for(var i = 0; i < questions.length; i ++) {
     questions[i].clearErrors()
     //cssTitle: "sv-title sv-question__title sv-question__title--required sv-question__title--error"
@@ -301,7 +301,7 @@ survey
     .onUpdateQuestionCssClasses
     .add(function (survey, options) {
         var classes = options.cssClasses
-        console.log(classes)
+        //console.log(classes)
     });
 
 function onAngularComponentInit() {
