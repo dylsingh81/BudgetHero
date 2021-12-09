@@ -67,11 +67,57 @@ if __name__ == "__main__":
         else:
             outputDict["order"] = 1
         #Get Game 1 Data
+        #print("Row:", i, ". ID:", data[i]["cookie_id"])
         if(data[i]["gameData"] != {}):
-            game1 = data[i]["gameData"]["game-1"]["indvGameData"]
+            
+            # Create dict matching id to total coins
+            coins = {}
+
+            for game in data[i]["gameData"]:
+                #print(game)
+                # Check if game exists
+                if(data[i]["gameData"][game] == {}):
+                    #gameCoinAmounts.append(-1)
+                    continue
+                gameData = data[i]["gameData"][game]["indvGameData"]
+
+                lastLevel = gameData["lastLevel"]  
+                if lastLevel < 10:
+                    levelName = "level-0" + str(lastLevel)
+                else:
+                    levelName = "level-" + str(lastLevel)
+                
+                bins = gameData[levelName]["currentBins"]
+                
+                # Create pairing between game number and coin amount
+                coins[game] = (sum(bins))
+
+            # Get max key of coins
+            if(coins != {}):
+                maxKey = max(coins, key=coins.get)
+            else:
+                maxKey = -1
+            gamePlayedNum = data[i]["game_played_num"]
+            #print(maxKey, gamePlayedNum, coins)
+
+            gnum = maxKey # "game-" + str(gamePlayedNum)
+            #print(data[i]["gameData"][gnum])
+            if(maxKey == -1):
+                continue
+
+            if (data[i]["gameData"][gnum] == {}):
+                print("No data for game " + str(gamePlayedNum))
+                continue
+
+
+
+            game1 = data[i]["gameData"][gnum]["indvGameData"]
             #Get Bin Data
             lastLevel = game1["lastLevel"]  
-            levelName = "level-0" + str(lastLevel)
+            if lastLevel < 10:
+                levelName = "level-0" + str(lastLevel)
+            else:
+                levelName = "level-" + str(lastLevel)
             for j in range(len(game1[levelName]["currentBins"])):
                 outputDict["bin_" + str(j)] = game1[levelName]["currentBins"][j]
     
