@@ -2,7 +2,7 @@ const express = require("express");
 
 const { MongoClient } = require("mongodb");
 const url =
-  "mongodb+srv://admin:123@cluster0.u4ohv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://nede:Password123@cluster0.j9wcy.mongodb.net/";
 
 const app = express();
 const port = process.env.PORT || 3000;
