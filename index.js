@@ -15,12 +15,15 @@ app.post("/gameData", (request, response) => {
   var cookie_id = data.cookie_id;
 
   let responseData = {};
+  response.json("Success");
+
 });
 
 app.post("/gameDataLevel", (request, response) => {
   const data = request.body;
   var rec_gameData = data.gameData;
   var cookie_id = data.cookie_id;
+  response.json("Success");
 });
 
 app.post("/surveyData", (request, response) => {
@@ -35,4 +38,6 @@ app.post("/createCookie", (request, response) => {
   var query = {};
   var firstTerm = "user_index";
   query[firstTerm];
+  let responseData = { cookie_id: 1 };
+  response.json(responseData);
 });
