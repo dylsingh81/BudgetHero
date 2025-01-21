@@ -14,7 +14,7 @@ const Controller = function() {
 
     switch(key_code) {
       case 37: this.left.getInput(down);  break;
-      case 38: this.up.getInput(down);    break;
+      case 32: this.up.getInput(down);    break;
       case 39: this.right.getInput(down); break;
       
       case 27: this.escPressed(event, down); break;
@@ -46,7 +46,7 @@ const Controller = function() {
   this.keyPress = function(type, key_code) {
     
     switch(key_code) {
-      case 32: this.spacePressed(); break;
+      case 88: this.spacePressed(); break;
       case 68: case 100: this.dPressed(); break; // d + D key
       case 87: case 119: this.wPressed(); break; // w + W Key
     }
